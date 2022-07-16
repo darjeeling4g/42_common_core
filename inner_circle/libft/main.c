@@ -121,8 +121,8 @@ int main()
 	printf("ft_strrchr : %s, %s, %s\n", ft_strrchr(j, 'g'), ft_strrchr(j, 'h'), ft_strrchr(j, 0));
 	printf("strrchr : %s, %s, %s\n", strrchr(j, 'g'), strrchr(j, 'h'), strrchr(j, 0));
 	printf("============<ft_memchr>==============\n");
-	printf("ft_memchr : %s, %s, %s\n", ft_memchr(j, 'g', 12), ft_memchr(j, 'h', 12), ft_memchr(j, 0, 12));
-	printf("memchr : %s, %s, %s\n", memchr(j, 'g', 12), memchr(j, 'h', 12), memchr(j, 0, 12));
+	printf("ft_memchr : %s, %s, %s\n", (char *)ft_memchr(j, 'g', 12), (char *)ft_memchr(j, 'h', 12), (char *)ft_memchr(j, 0, 12));
+	printf("memchr : %s, %s, %s\n", (char *)memchr(j, 'g', 12), (char *)memchr(j, 'h', 12), (char *)memchr(j, 0, 12));
 	printf("============<ft_memcmp>==============\n");
 	printf("ft_memcmp : %d, %d\n", ft_memcmp(g, i, 4), ft_memcmp(g, i, 5));
 	printf("memcmp : %d, %d\n", memcmp(g, i, 4), memcmp(g, i, 5));
