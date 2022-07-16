@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:25:07 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/12 02:33:18 by siyang           ###   ########.fr       */
+/*   Updated: 2022/07/16 15:20:15 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void ft_bzero(void *s, size_t n)
 	i = 0;
 	while (i < n)
 	{
-		*temp = 0;
-		temp++;
+		temp[i] = 0;
 		i++;
 	}
 }

@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/12 11:23:25 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/16 15:23:16 by siyang           ###   ########.fr       */
+/*   Created: 2022/07/16 17:20:14 by siyang            #+#    #+#             */
+/*   Updated: 2022/07/16 17:22:04 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_memcmp(const void *s1, const void *s2, size_t n)
-{
-	const unsigned char *p1;
-	const unsigned char *p2;
-	size_t i;
+#include <stdlib.h>
 
-	p1 = s1;
-	p2 = s2;
-	i = 0;
-	while (i < n)
-	{
-		if (p1[i] != p2[i])
-			return ((int)(p1[i] - p2[i]));
-		i++;
-	}
-	return(0);
+void *ft_calloc(size_t count, size_t size)
+{
+
 }

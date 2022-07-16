@@ -6,13 +6,14 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/12 12:07:19 by siyang           ###   ########.fr       */
+/*   Updated: 2022/07/16 17:17:59 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "./ft_isalpha.c"
 #include "./ft_isdigit.c"
 #include "./ft_isalnum.c"
@@ -32,6 +33,8 @@
 #include "./ft_strrchr.c"
 #include "./ft_memchr.c"
 #include "./ft_memcmp.c"
+#include "./ft_strnstr.c"
+#include "./ft_atoi.c"
 
 int main()
 {
@@ -126,5 +129,27 @@ int main()
 	printf("============<ft_memcmp>==============\n");
 	printf("ft_memcmp : %d, %d\n", ft_memcmp(g, i, 4), ft_memcmp(g, i, 5));
 	printf("memcmp : %d, %d\n", memcmp(g, i, 4), memcmp(g, i, 5));
+	printf("============<ft_strnstr>==============\n");
+	char *haystack = "find needle in this string";
+	char *needle = "needle";
+	printf("ft_strnstr : %s\n", ft_strnstr(haystack, needle, 15));
+	printf("strnstr : %s\n", strnstr(haystack, needle, 15));
+	printf("============<ft_atoi>==============\n");
+	printf("ft_atoi : %d\n", ft_atoi("2147483647"));
+	printf("atoi : %d\n", atoi("2147483647"));
+	printf("ft_atoi : %d\n", ft_atoi("-2147483648"));
+	printf("atoi : %d\n", atoi("-2147483648"));
+	printf("ft_atoi : %d\n", ft_atoi("2147483648"));
+	printf("atoi : %d\n", atoi("2147483648"));
+	printf("ft_atoi : %d\n", ft_atoi("-2147483648"));
+	printf("atoi : %d\n", atoi("-2147483648"));
+	printf("ft_atoi : %d\n", ft_atoi("+2147483647"));
+	printf("atoi : %d\n", atoi("+2147483647"));
+	printf("ft_atoi : %d\n", ft_atoi("   +2147483647string"));
+	printf("atoi : %d\n", atoi("   +2147483647string"));
+	printf("ft_atoi : %d\n", ft_atoi("   +-2147483647string"));
+	printf("atoi : %d\n", atoi("   +-2147483647string"));
+	printf("ft_atoi : %d\n", ft_atoi("   +   2147483647string"));
+	printf("atoi : %d\n", atoi("   +   2147483647string"));
 	return (0);
  }

@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:35:28 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/12 14:03:53 by siyang           ###   ########.fr       */
+/*   Updated: 2022/07/16 15:24:08 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void *ft_memcpy(void *dst, const void *src, size_t n)
 	i = 0; 
 	while (i < n)
 	{
-		*temp_dst = *temp_src;
-		temp_dst++;
-		temp_src++;
+		temp_dst[i] = temp_src[i];
 		i++;
 	}
 	return (dst);
