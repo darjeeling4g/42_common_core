@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/16 17:20:14 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/17 20:48:11 by siyang           ###   ########.fr       */
+/*   Created: 2022/07/17 14:47:55 by siyang            #+#    #+#             */
+/*   Updated: 2022/07/17 20:48:37 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-void *ft_calloc(size_t count, size_t size)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *ptr;
-	size_t i;
+	char	*ptr;
+	char	*temp;
 
-	if (count == 0 || size == 0)
-	{
-		size = 1;
-		count = 1;
+	ptr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	temp = ptr;
+	while (*s1)
+	{	
+		*temp = *s1;
+		temp++;
+		s1++;
 	}
-	ptr = malloc(size * count);	
-	i = 0;
-	while (i < size * count)
+	while (*s2)
 	{
-		ptr[i] = 0;
-		i++;
+		*temp= *s2;
+		temp++;
+		s2++;
 	}
-	return ((void *)ptr);
+	*temp = '\0';
+	return (ptr);
 }

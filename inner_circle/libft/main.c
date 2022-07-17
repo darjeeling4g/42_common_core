@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/17 12:55:32 by siyang           ###   ########.fr       */
+/*   Updated: 2022/07/17 20:54:43 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 #include "./ft_isalpha.c"
 #include "./ft_isdigit.c"
 #include "./ft_isalnum.c"
@@ -36,6 +37,27 @@
 #include "./ft_strnstr.c"
 #include "./ft_atoi.c"
 #include "./ft_calloc.c"
+#include "./ft_strdup.c"
+#include "./ft_substr.c"
+#include "./ft_strjoin.c"
+//#include "./ft_strtrim.c"
+//#include "./ft_split.c"
+//#include "./ft_itoa.c"
+//#include "./ft_strmapi.c"
+//#include "./ft_striteri.c"
+//#include "./ft_putchar_fd.c"
+//#include "./ft_pusstr_fd.c"
+//#include "./ft_putendl_fd.c"
+//#include "./ft_putnbr_fd.c"
+//#include "./ft_lstnew.c"
+//#include "./ft_lstadd_front.c"
+//#include "./ft_lstsize.c"
+//#include "./ft_lstlast.c"
+//#include "./ft_lstadd_back.c"
+//#include "./ft_lstdelone.c"
+//#include "./ft_lstclear.c"
+//#include "./ft_lstiter.c"
+//#include "./ft_lstmap.c"
 
 int main()
 {
@@ -84,10 +106,10 @@ int main()
 	printf("============<ft_memcpy>==============\n");
 	char c[] = "ft_memcpy";
 	char d[] = "memcpy";
-	ft_memcpy(c+1, c, 9);
-	memcpy(d+1, d, 6);
-	printf("ft_memcpy : %s\n", c);
-	printf("memcpy : %s\n", d);
+	ft_memcpy(a, c, 9);
+	memcpy(b, d, 6);
+	printf("ft_memcpy : %s\n", a);
+	printf("memcpy : %s\n", b);
 	printf("============<ft_memmove>==============\n");
 	char e[] = "ft_memmove";
 	char f[] = "memmove";
@@ -153,9 +175,24 @@ int main()
 	printf("ft_atoi : %d\n", ft_atoi("   +   2147483647string"));
 	printf("atoi : %d\n", atoi("   +   2147483647string"));
 	printf("============<ft_calloc>==============\n");
-	char *p1 = ft_calloc(3, 1);
-	char *p2 = calloc(3, 1);
+	char *p1 = ft_calloc(5, 1);
+	char *p2 = calloc(5, 1);
 	printf("ft_calloc : %d, %d\n", p1[0], p1[4]);
 	printf("calloc : %d, %d\n", p2[0], p2[4]);
+	free(p1);
+	free(p2);
+	p1 = ft_calloc(0, 1);
+	p2 = calloc(0, 1);
+	printf("ft_calloc : %d\n", p1[0]);
+	printf("calloc : %d\n", p2[0]);
+	free(p1);
+	free(p2);
+	printf("============<ft_strdup>==============\n");
+	printf("ft_strdup : %s\n", ft_strdup("test string"));
+	printf("strdup : %s\n", strdup("test string"));
+	printf("============<ft_substr>==============\n");
+	printf("ft_substr : %s\n", ft_substr("test string", 5, 6));
+	printf("============<ft_strjoin>==============\n");
+	printf("ft_strjoin : %s\n", ft_strjoin("test", "string"));
 	return (0);
  }

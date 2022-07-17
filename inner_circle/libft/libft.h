@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/16 17:20:14 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/17 20:48:11 by siyang           ###   ########.fr       */
+/*   Created: 2022/07/17 18:01:06 by siyang            #+#    #+#             */
+/*   Updated: 2022/07/17 20:44:37 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef LIBFT_H
+#define LIBFT_H
+
 #include <stdlib.h>
 
-void *ft_calloc(size_t count, size_t size)
+typedef struct s_list
 {
-	char *ptr;
-	size_t i;
+	void			*content;
+	struct	s_list	*next;
+}	t_list;
 
-	if (count == 0 || size == 0)
-	{
-		size = 1;
-		count = 1;
-	}
-	ptr = malloc(size * count);	
-	i = 0;
-	while (i < size * count)
-	{
-		ptr[i] = 0;
-		i++;
-	}
-	return ((void *)ptr);
-}
+#endif
