@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/16 17:17:59 by siyang           ###   ########.fr       */
+/*   Updated: 2022/07/17 12:55:32 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 #include "./ft_memcmp.c"
 #include "./ft_strnstr.c"
 #include "./ft_atoi.c"
+#include "./ft_calloc.c"
 
 int main()
 {
@@ -151,5 +152,10 @@ int main()
 	printf("atoi : %d\n", atoi("   +-2147483647string"));
 	printf("ft_atoi : %d\n", ft_atoi("   +   2147483647string"));
 	printf("atoi : %d\n", atoi("   +   2147483647string"));
+	printf("============<ft_calloc>==============\n");
+	char *p1 = ft_calloc(3, 1);
+	char *p2 = calloc(3, 1);
+	printf("ft_calloc : %d, %d\n", p1[0], p1[4]);
+	printf("calloc : %d, %d\n", p2[0], p2[4]);
 	return (0);
  }
