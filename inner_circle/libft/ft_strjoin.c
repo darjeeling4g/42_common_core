@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -27,7 +27,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	while (*s2)
 	{
-		*temp= *s2;
+		*temp = *s2;
 		temp++;
 		s2++;
 	}

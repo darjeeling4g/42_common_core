@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 char	*ft_strdup(const char *s1)
 {
@@ -25,7 +25,7 @@ char	*ft_strdup(const char *s1)
 	i = 0;
 	while (i < len)
 	{
-		ptr[i]  = s1[i];
+		ptr[i] = s1[i];
 		i++;
 	}
 	ptr[len] = '\0';

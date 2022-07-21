@@ -10,9 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-char *ft_strchr(const char *s, int c)
+#include "libft.h"
+
+char	*ft_strchr(const char *s, int c)
 {
-	unsigned char value;
+	unsigned char	value;
 
 	value = (unsigned char)c;
 	while (*s != value)
