@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/17 20:54:43 by siyang           ###   ########.fr       */
+/*   Updated: 2022/07/25 23:28:58 by yangsiseon       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,9 @@ int main()
 	printf("ft_substr : %s\n", ft_substr("test string", 5, 6));
 	printf("============<ft_strjoin>==============\n");
 	printf("ft_strjoin : %s\n", ft_strjoin("test", "string"));
+	printf("============<ft_strtrim>==============\n");
+	printf("ft_strtrim : %s\n", ft_strtrim("acbabbctestcabcbaacbba", "abc"));
+	printf("ft_strtrim : %s\n", ft_strtrim("acbabbctestcabcbaacbba", ""));
+	printf("ft_strtrim : %s\n", ft_strtrim("", "abc"));
 	return (0);
  }

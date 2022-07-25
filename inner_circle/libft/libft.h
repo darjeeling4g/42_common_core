@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 18:01:06 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/17 20:44:37 by siyang           ###   ########.fr       */
+/*   Updated: 2022/07/25 23:46:13 by yangsiseon       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 char	*ft_strtrim(char const *s1, char const *set);
+char	**ft_split(char const *s, char c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 22:04:16 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/12 14:04:40 by siyang           ###   ########.fr       */
+/*   Updated: 2022/07/25 23:44:18 by yangsiseon       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 		i = len;
 		while (i > 0)
 		{
-			temp_dst[i-1] = temp_src[i-1];
+			temp_dst[i - 1] = temp_src[i - 1];
 			i--;
 		}
 	}
