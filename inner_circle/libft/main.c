@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/25 23:28:58 by yangsiseon       ###   ########.fr       */
+/*   Updated: 2022/07/26 01:18:36 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,5 +155,10 @@ int main()
 	printf("ft_strtrim : %s\n", ft_strtrim("acbabbctestcabcbaacbba", "abc"));
 	printf("ft_strtrim : %s\n", ft_strtrim("acbabbctestcabcbaacbba", ""));
 	printf("ft_strtrim : %s\n", ft_strtrim("", "abc"));
+	printf("============<ft_split>==============\n");
+	char **split = ft_split("ccccstring1ccccstring2cstring3ccc", 'c');
+	printf("ft_split : %s\n", split[0]);
+	printf("ft_split : %s\n", split[1]);
+	printf("ft_split : %s\n", split[2]);
 	return (0);
  }
