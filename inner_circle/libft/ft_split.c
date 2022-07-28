@@ -6,7 +6,7 @@
 /*   By: yangsiseon <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 23:30:06 by yangsiseon        #+#    #+#             */
-/*   Updated: 2022/07/26 13:36:35 by siyang           ###   ########.fr       */
+/*   Updated: 2022/07/26 17:30:15 by yangsiseon       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	**ft_split(char const *s, char c)
 	size_t	count;
 	size_t	len;
 	size_t	i;
-	size_t	j;
 
 	count = count_str(s, c);
 	ptr = malloc(sizeof(char *) * (count + 1));
@@ -33,13 +32,7 @@ char	**ft_split(char const *s, char c)
 			s++;
 		len = len_str(s, c);
 		ptr[i] = malloc(len + 1);
-		j = 0;
-		while (j < len)
-		{
-			ptr[i][j] =  s[j];
-			j++;
-		}
-		ptr[i][len] = '\0';
+		ft_strlcpy(ptr[i], s, len + 1);
 		s = s + len;
 		i++;
 	}
