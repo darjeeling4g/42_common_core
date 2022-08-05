@@ -3,7 +3,7 @@ SRCS	= ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c f
 
 OBJS	= ${SRCS:.c=.o}
 
-GCC		= gcc
+CC		= cc
 
 RM		= rm -f
 
@@ -12,7 +12,7 @@ CFLAGS	= -Wall -Wextra -Werror
 NAME	= libft.a
 
 .c.o:
-			${GCC} ${CFLAG} -c $< -o ${<:.c=.o}
+			${CC} ${CFLAG} -c $< -o ${<:.c=.o}
 
 all:		${NAME}
 

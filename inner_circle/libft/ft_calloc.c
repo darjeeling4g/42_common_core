@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 17:20:14 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/17 20:48:11 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/05 18:38:15 by yangsiseon       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	*ft_calloc(size_t count, size_t size)
 		count = 1;
 	}
 	ptr = malloc(size * count);
+	if (ptr == NULL)
+		return (NULL);
 	i = 0;
 	while (i < size * count)
 	{

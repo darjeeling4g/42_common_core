@@ -6,7 +6,7 @@
 /*   By: yangsiseon <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 22:31:41 by yangsiseon        #+#    #+#             */
-/*   Updated: 2022/07/25 23:27:21 by yangsiseon       ###   ########.fr       */
+/*   Updated: 2022/08/05 18:34:40 by yangsiseon       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 		len--;
 	}
 	ptr = malloc(len + 1);
+	if (ptr == NULL)
+		return (NULL);
 	ft_strlcpy(ptr, s1, len + 1);
 	return (ptr);
 }

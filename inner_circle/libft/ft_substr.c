@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 14:24:05 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/17 20:48:46 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/05 18:37:11 by yangsiseon       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 
 	ptr = malloc(len + 1);
+	if (ptr == NULL)
+		return (NULL);
 	i = 0;
 	while (i < len)
 	{

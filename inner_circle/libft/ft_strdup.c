@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 13:32:21 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/17 20:48:29 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/05 18:37:43 by yangsiseon       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*ft_strdup(const char *s1)
 	while (s1[len] != '\0')
 		len++;
 	ptr = malloc(len + 1);
+	if (ptr == NULL)
+		return (NULL);
 	i = 0;
 	while (i < len)
 	{
