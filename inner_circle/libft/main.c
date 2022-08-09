@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/05 17:21:12 by yangsiseon       ###   ########.fr       */
+/*   Updated: 2022/08/09 22:47:19 by yangsiseon       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,5 +160,10 @@ int main()
 	printf("ft_split : %s\n", sp[0]);
 	printf("ft_split : %s\n", sp[1]);
 	printf("ft_split : %s\n", sp[2]);
+	printf("============<ft_itoa>==============\n");
+	printf("ft_itoa : %s\n", ft_itoa(+0));
+	printf("ft_itoa : %s\n", ft_itoa(-0));
+	printf("ft_itoa : %s\n", ft_itoa(+2147483647));
+	printf("ft_itoa : %s\n", ft_itoa(-2147483648));
 	return (0);
  }
