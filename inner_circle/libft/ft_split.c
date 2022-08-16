@@ -6,17 +6,16 @@
 /*   By: yangsiseon <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 23:30:06 by yangsiseon        #+#    #+#             */
-/*   Updated: 2022/08/05 18:21:51 by yangsiseon       ###   ########.fr       */
+/*   Updated: 2022/08/16 17:18:04 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-static size_t count_str(char const *s, char c);
-static size_t len_str(char const *s, char c);
-static char	**null_guard(char **ptr, size_t i);
-	
+static size_t	count_str(char const *s, char c);
+static size_t	len_str(char const *s, char c);
+static char		**null_guard(char **ptr, size_t i);
+
 char	**ft_split(char const *s, char c)
 {
 	char	**ptr;

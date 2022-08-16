@@ -6,7 +6,7 @@
 /*   By: yangsiseon <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 18:42:50 by yangsiseon        #+#    #+#             */
-/*   Updated: 2022/08/09 22:56:32 by yangsiseon       ###   ########.fr       */
+/*   Updated: 2022/08/16 17:17:16 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_itoa(int n)
 
 static int	len_num(int n)
 {
-	int len;
+	int	len;
 
 	if (n == 0)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/09 22:47:19 by yangsiseon       ###   ########.fr       */
+/*   Updated: 2022/08/16 17:40:51 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include "libft.h"
+
+char test_function(unsigned int i, char c)
+{
+	(void)i;
+	c = c - 32;
+	return (c);
+}
 
 int main()
 {
@@ -165,5 +172,7 @@ int main()
 	printf("ft_itoa : %s\n", ft_itoa(-0));
 	printf("ft_itoa : %s\n", ft_itoa(+2147483647));
 	printf("ft_itoa : %s\n", ft_itoa(-2147483648));
+	printf("============<ft_strmapi>==============\n");
+	printf("ft_strmapi : %s\n", ft_strmapi("test_string", test_function));
 	return (0);
  }
