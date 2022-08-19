@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/18 19:09:32 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/19 11:56:28 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,5 +191,15 @@ int main()
 	ft_putendl_fd("test string", 1);
 	printf("============<ft_putnbr_fd>==============\n");
 	ft_putnbr_fd(2147483647, 1);
+	printf("============<ft_lstfunction>==============\n");
+	t_list	*lst;
+	t_list	l1, l2, l3;
+	lst = &l1;
+	l1.next = &l2;
+	l2.next = &l3;
+	l3.next = NULL;
+	ft_lstadd_front(&lst, ft_lstnew("new"));
+	printf("ft_lstsize : %d\n", ft_lstsize(lst));
+	printf("ft_lstsize : %d\n", ft_lstsize(NULL));
 	return (0);
  }
