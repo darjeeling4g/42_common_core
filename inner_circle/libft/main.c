@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/16 17:40:51 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/18 19:09:32 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ char test_function(unsigned int i, char c)
 	(void)i;
 	c = c - 32;
 	return (c);
+}
+void test_function2(unsigned int i, char *c)
+{
+	(void)i;
+	printf("%c", (*c - 32));
 }
 
 int main()
@@ -174,5 +179,17 @@ int main()
 	printf("ft_itoa : %s\n", ft_itoa(-2147483648));
 	printf("============<ft_strmapi>==============\n");
 	printf("ft_strmapi : %s\n", ft_strmapi("test_string", test_function));
+	printf("============<ft_striteri>==============\n");
+	char *striteri = "striteri";
+	ft_striteri(striteri, test_function2);
+	printf("ft_striteri : %s\n", striteri);
+	printf("============<ft_putchar_fd>==============\n");
+	ft_putchar_fd('c', 1);
+	printf("============<ft_putstr_fd>==============\n");
+	ft_putstr_fd("test string", 1);
+	printf("============<ft_putendl_fd>==============\n");
+	ft_putendl_fd("test string", 1);
+	printf("============<ft_putnbr_fd>==============\n");
+	ft_putnbr_fd(2147483647, 1);
 	return (0);
  }
