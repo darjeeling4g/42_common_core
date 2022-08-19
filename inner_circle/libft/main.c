@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/19 11:56:28 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/19 13:41:14 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,8 +198,10 @@ int main()
 	l1.next = &l2;
 	l2.next = &l3;
 	l3.next = NULL;
-	ft_lstadd_front(&lst, ft_lstnew("new"));
+	ft_lstadd_front(&lst, ft_lstnew("l0"));
+	printf("ft_lstadd_front : %s\n", (char*)(lst->content));
 	printf("ft_lstsize : %d\n", ft_lstsize(lst));
-	printf("ft_lstsize : %d\n", ft_lstsize(NULL));
+	ft_lstadd_back(&lst, ft_lstnew("l4"));
+	printf("ft_lstadd_back : %s\n", (char*)(ft_lstlast(lst)->content));
 	return (0);
  }
