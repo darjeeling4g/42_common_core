@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/19 13:41:14 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/24 20:55:23 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,16 +192,23 @@ int main()
 	printf("============<ft_putnbr_fd>==============\n");
 	ft_putnbr_fd(2147483647, 1);
 	printf("============<ft_lstfunction>==============\n");
-	t_list	*lst;
-	t_list	l1, l2, l3;
+	t_list	**lst;
+	t_list	*l1, *l2, *l3;
+	l1 = malloc (sizeof(t_list));
+	l2 = malloc (sizeof(t_list));
+	l3 = malloc (sizeof(t_list));
 	lst = &l1;
-	l1.next = &l2;
-	l2.next = &l3;
-	l3.next = NULL;
-	ft_lstadd_front(&lst, ft_lstnew("l0"));
-	printf("ft_lstadd_front : %s\n", (char*)(lst->content));
-	printf("ft_lstsize : %d\n", ft_lstsize(lst));
-	ft_lstadd_back(&lst, ft_lstnew("l4"));
-	printf("ft_lstadd_back : %s\n", (char*)(ft_lstlast(lst)->content));
+	l1->next = l2;
+	l1->content = "l1";
+	l2->next = l3;
+	l2->content = "l2";
+	l3->next = NULL;
+	l3->content = "l3";
+	ft_lstadd_front(lst, ft_lstnew("l0"));
+	printf("ft_lstadd_front : %s\n", (char*)((*lst)->content));
+	printf("ft_lstsize : %d\n", ft_lstsize(*lst));
+	ft_lstadd_back(lst, ft_lstnew("l4"));
+	printf("ft_lstadd_back : %s\n", (char*)(ft_lstlast(*lst)->content));
+	printf("ft_lstsize : %d\n", ft_lstsize(*lst));
 	return (0);
- }
+}
