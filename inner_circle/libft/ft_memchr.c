@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 11:02:15 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/12 11:22:19 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/26 21:42:44 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	const char	*p;
-	size_t		i;
+	const unsigned char	*p;
+	size_t				i;
 
 	p = s;
 	i = 0;

@@ -74,6 +74,7 @@ re:			fclean all
 
 bonus:		$(OBJS_BONUS)
 			ar rc $(NAME) $(OBJS) $(OBJS_BONUS)
+#			make OBJS='$(OBJS) $(OBJS_BONUS)'
 
 .PHONY:		all clean fclean re bonus
 
