@@ -5,6 +5,23 @@ It will contain a lot of general purpose functions your programs will rely upon.
 
 ## Part 1 - Libc functions
 
+<details>
+<summary>INDEX</summary>
+
+1. [isalpha](#ft\_isalpha)
+1. [isdigit](#ft\_isdigit)
+1. [isalpha](#ft\_isalpha)
+1. [isalpha](#ft\_isalpha)
+1. [isalpha](#ft\_isalpha)
+1. [isalpha](#ft\_isalpha)
+1. [isalpha](#ft\_isalpha)
+1. [isalpha](#ft\_isalpha)
+1. [isalpha](#ft\_isalpha)
+1. [isalpha](#ft\_isalpha)
+1. [isalpha](#ft\_isalpha)
+
+</details>
+
 ### form
 - Detail
 
@@ -96,3 +113,4 @@ It will contain a lot of general purpose functions your programs will rely upon.
 	}
 	```
 
+## Reference
