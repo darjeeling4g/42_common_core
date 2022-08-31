@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 13:17:24 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/19 14:12:16 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/31 16:53:18 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	if (lst == NULL)
-		lst = &new;
-	else if (*lst == NULL)
+	t_list	*last;
+
+	if (lst == NULL || new == NULL)
+		return ;
+	if (*lst == NULL)
 		*lst = new;
 	else
 	{
-		if (new != NULL)
-			new->next = NULL;
-		ft_lstlast(*lst)->next = new;
+		last = *lst;
+		while (last->next)
+			last = last->next;
+		last->next = new;
 	}
 }

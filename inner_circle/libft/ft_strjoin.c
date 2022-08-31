@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 14:47:55 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/05 18:36:36 by yangsiseon       ###   ########.fr       */
+/*   Updated: 2022/08/31 08:08:45 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*ptr;
 	char	*temp;
 
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
 	ptr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (ptr == NULL)
 		return (NULL);

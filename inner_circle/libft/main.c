@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/24 20:55:23 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/31 15:38:14 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int main()
 	memcpy(b, d, 6);
 	printf("ft_memcpy : %s\n", a);
 	printf("memcpy : %s\n", b);
+	printf("ft_memcpy : %s\n", ft_memcpy(NULL ,NULL, 9));
+	printf("memcpy : %s\n", memcpy(NULL ,NULL, 6));
 	printf("============<ft_memmove>==============\n");
 	char e[] = "ft_memmove";
 	char f[] = "memmove";
@@ -90,8 +92,12 @@ int main()
 	char g[] = "string";
 	char h[] = "string";
 	char i[] = "test";
+	printf("ft_strlcpy : %zu\n", ft_strlcpy(g, i, 0));
+	printf("ft_strlcpy : %s\n", g);
 	printf("ft_strlcpy : %zu\n", ft_strlcpy(g, i, 5));
 	printf("ft_strlcpy : %s\n", g);
+	printf("strlcpy : %zu\n", strlcpy(h, i, 0));
+	printf("strlcpy : %s\n", h);
 	printf("strlcpy : %zu\n", strlcpy(h, i, 5));
 	printf("strlcpy : %s\n", h);
 	printf("============<ft_strlcat>==============\n");
@@ -126,6 +132,8 @@ int main()
 	char *needle = "needle";
 	printf("ft_strnstr : %s\n", ft_strnstr(haystack, needle, 15));
 	printf("strnstr : %s\n", strnstr(haystack, needle, 15));
+	printf("ft_strnstr : %s\n", ft_strnstr("", "coucou", -1));
+	printf("strnstr : %s\n", strnstr("", "coucou", -1));
 	printf("============<ft_atoi>==============\n");
 	printf("ft_atoi : %d\n", ft_atoi("2147483647"));
 	printf("atoi : %d\n", atoi("2147483647"));
@@ -156,11 +164,26 @@ int main()
 	printf("calloc : %d\n", p2[0]);
 	free(p1);
 	free(p2);
+	size_t max = SIZE_MAX;
+	printf("max value : %zu\n", max * 1);
+	printf("max value : %zu\n", max * 2);
+	printf("max value : %zu\n", max * 3);
+	printf("max value : %zu\n", max * 4);
+	printf("max value : %zu\n", max * 100000);
+	printf("max value : %zu\n", max * (max-1));
+	printf("max value : %zu\n", max * max);
+	p1 = calloc(max, max);
+	p2 = ft_calloc(max, max);
+	printf("calloc : %d\n", p1 == NULL);
+	printf("ft_calloc : %d\n", p2 == NULL);
 	printf("============<ft_strdup>==============\n");
 	printf("ft_strdup : %s\n", ft_strdup("test string"));
 	printf("strdup : %s\n", strdup("test string"));
 	printf("============<ft_substr>==============\n");
 	printf("ft_substr : %s\n", ft_substr("test string", 5, 6));
+	printf("ft_substr : %s\n", ft_substr("test string", 5, 0));
+	printf("ft_substr : %s\n", ft_substr("test string", 20, 6));
+	printf("ft_substr : %s\n", ft_substr("test string", 11, 5));
 	printf("============<ft_strjoin>==============\n");
 	printf("ft_strjoin : %s\n", ft_strjoin("test", "string"));
 	printf("============<ft_strtrim>==============\n");
@@ -191,6 +214,7 @@ int main()
 	ft_putendl_fd("test string", 1);
 	printf("============<ft_putnbr_fd>==============\n");
 	ft_putnbr_fd(2147483647, 1);
+	ft_putnbr_fd(-2147483648, 1);
 	printf("============<ft_lstfunction>==============\n");
 	t_list	**lst;
 	t_list	*l1, *l2, *l3;

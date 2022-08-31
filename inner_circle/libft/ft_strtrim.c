@@ -6,7 +6,7 @@
 /*   By: yangsiseon <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 22:31:41 by yangsiseon        #+#    #+#             */
-/*   Updated: 2022/08/05 18:34:40 by yangsiseon       ###   ########.fr       */
+/*   Updated: 2022/08/31 08:16:07 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	len;
 	char	*ptr;
 
+	if (s1 == NULL || set == NULL)
+		return (NULL);
 	while (*s1)
 	{
 		if (ft_strchr(set, *s1) == NULL)

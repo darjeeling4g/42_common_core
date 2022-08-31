@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 05:23:15 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/18 05:28:19 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/31 09:19:09 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	write(fd, s, ft_strlen(s));
+	if (s != NULL)
+		write(fd, s, ft_strlen(s));
 }

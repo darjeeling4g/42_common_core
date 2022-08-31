@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 18:55:21 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/18 19:00:51 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/31 10:02:07 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_putendl_fd(char *s, int fd)
 {
+	if (s == NULL)
+		return ;
 	write(fd, s, ft_strlen(s));
 	write(fd, "\n", 1);
 }

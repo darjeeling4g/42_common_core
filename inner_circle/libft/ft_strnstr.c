@@ -6,11 +6,13 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 11:42:10 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/16 16:15:18 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/31 14:57:05 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static size_t	reset_maxlen(const char *haystack, size_t len);
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
@@ -19,6 +21,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 
 	if (needle[0] == '\0')
 		return ((char *)haystack);
+	len = reset_maxlen(haystack, len);
 	i = 0;
 	while (i < len)
 	{
@@ -38,4 +41,15 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 		i++;
 	}
 	return (NULL);
+}
+
+static size_t	reset_maxlen(const char *haystack, size_t len)
+{
+	size_t	maxlen;
+
+	maxlen = ft_strlen(haystack);
+	if (maxlen < len)
+		return (maxlen);
+	else
+		return (len);
 }

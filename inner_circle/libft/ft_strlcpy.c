@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:01:57 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/12 08:56:03 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/31 00:39:22 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		src++;
 		srclen++;
 	}
-	*dst = '\0';
+	if (dstsize != 0)
+		*dst = '\0';
 	return (srclen);
 }

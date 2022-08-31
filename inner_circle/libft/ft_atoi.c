@@ -6,7 +6,7 @@
 /*   By: yangsiseon <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 17:42:07 by yangsiseon        #+#    #+#             */
-/*   Updated: 2022/08/05 17:42:11 by yangsiseon       ###   ########.fr       */
+/*   Updated: 2022/08/31 18:12:20 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	ft_atoi(const char *str)
 	}
 	while (*str >= '0' && *str <= '9')
 	{
-		result = result * 10 - '0' + *str;
+		result *= 10;
+		result += *str - '0';
 		str++;
 	}
 	if (sign == 1)

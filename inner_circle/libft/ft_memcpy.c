@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 21:35:28 by siyang            #+#    #+#             */
-/*   Updated: 2022/07/16 15:24:08 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/31 00:06:13 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	const unsigned char	*temp_src;
 	size_t				i;
 
+	if (dst == NULL && src == NULL)
+		return (dst);
 	temp_dst = dst;
 	temp_src = src;
 	i = 0;

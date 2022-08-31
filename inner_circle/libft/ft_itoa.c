@@ -6,7 +6,7 @@
 /*   By: yangsiseon <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 18:42:50 by yangsiseon        #+#    #+#             */
-/*   Updated: 2022/08/16 17:17:16 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/31 09:13:49 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,11 @@ char	*ft_itoa(int n)
 	if (n < 0)
 		sign = 1;
 	i = len_num(n) + sign;
-	ptr = calloc(i + 1, 1);
+	ptr = malloc(i + 1);
 	if (ptr == NULL)
 		return (NULL);
-	if (n == 0)
-		ptr[i - 1] = '0';
-	if (sign == 1)
-		ptr[0] = '-';
-	while (n != 0)
+	ptr[i] = '\0';
+	while (i > 0)
 	{
 		if (sign == 0)
 			ptr[i - 1] = n % 10 + '0';
@@ -40,6 +37,8 @@ char	*ft_itoa(int n)
 		n = n / 10;
 		i--;
 	}
+	if (sign == 1)
+		ptr[0] = '-';
 	return (ptr);
 }
 
