@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 22:59:36 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/31 17:22:09 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/31 18:36:05 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	t_list	*start;
 	t_list	*new;
 
-	if (lst == NULL || f == NULL || del == NULL)
-		return (NULL);
 	start = NULL;
 	while (lst)
 	{

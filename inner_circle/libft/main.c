@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/31 15:38:14 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/31 19:13:51 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,8 +172,9 @@ int main()
 	printf("max value : %zu\n", max * 100000);
 	printf("max value : %zu\n", max * (max-1));
 	printf("max value : %zu\n", max * max);
-	p1 = calloc(max, max);
-	p2 = ft_calloc(max, max);
+	printf("max value : %zu\n", max - 8192);
+	p1 = calloc(max - 8193, 1);
+	p2 = ft_calloc(max - 8193, 1);
 	printf("calloc : %d\n", p1 == NULL);
 	printf("ft_calloc : %d\n", p2 == NULL);
 	printf("============<ft_strdup>==============\n");

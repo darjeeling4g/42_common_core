@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 17:20:14 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/31 16:17:08 by siyang           ###   ########.fr       */
+/*   Updated: 2022/08/31 19:19:21 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,17 @@
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*ptr;
-//	size_t	i;
 
-//	if (count == 0 || size == 0)
-//	{
-//		size = 1;
-//		count = 1;
-//	}
+	if (count == 0 || size == 0)
+	{
+		size = 1;
+		count = 1;
+	}
+	if (count == SIZE_MAX || size == SIZE_MAX)
+		return (NULL);
 	ptr = malloc(size * count);
 	if (ptr == NULL)
 		return (NULL);
 	ft_memset(ptr, 0, size * count);
-//	i = 0;
-//	while (i < size * count)
-//	{
-//		ptr[i] = 0;
-//		i++;
-//	}
 	return (ptr);
 }
