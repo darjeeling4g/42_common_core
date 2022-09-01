@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/08/31 19:13:51 by siyang           ###   ########.fr       */
+/*   Updated: 2022/09/01 11:20:45 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,20 @@ int main()
 	bzero(b, 5);
 	printf("bzro : %d, %c\n", b[4], b[5]);
 	printf("============<ft_memcpy>==============\n");
-	char c[] = "ft_memcpy";
+	char c[] = "memcpy";
 	char d[] = "memcpy";
+	memcpy(d+1, d, 6);
+	ft_memcpy(c+1, c, 6);
+	printf("ft_memcpy : %s\n", c);
+	printf("memcpy : %s\n", d);
+
 	ft_memcpy(a, c, 9);
 	memcpy(b, d, 6);
 	printf("ft_memcpy : %s\n", a);
 	printf("memcpy : %s\n", b);
 	printf("ft_memcpy : %s\n", ft_memcpy(NULL ,NULL, 9));
 	printf("memcpy : %s\n", memcpy(NULL ,NULL, 6));
-	printf("============<ft_memmove>==============\n");
+		printf("============<ft_memmove>==============\n");
 	char e[] = "ft_memmove";
 	char f[] = "memmove";
 	ft_memmove(e+1, e, 9);
