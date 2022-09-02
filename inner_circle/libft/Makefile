@@ -48,12 +48,6 @@ SRCS_BONUS	= ft_lstadd_back.c \
 
 OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
 
-ifdef	WITH_BONUS
-		OBJS_SUM = $(OBJS) $(OBJS_BONUS)
-else	
-		OBJS_SUM = $(OBJS)
-endif
-
 CC		= cc
 
 RM		= rm -f
@@ -62,13 +56,20 @@ CFLAGS	= -Wall -Wextra -Werror
 
 NAME	= libft.a
 
-.c.o:
-			$(CC) $(CFLAG) -c $< -o $(<:.c=.o)
+ifeq ($(filter bonus, $(MAKECMDGOALS)), bonus)
+$(NAME): $(OBJS) $(OBJS_BONUS)
+		ar rc $(NAME) $(OBJS) $(OBJS_BONUS)
+else	
+$(NAME): $(OBJS)
+		ar rc $(NAME) $(OBJS)
+endif
+
+%.o:		%.c
+			$(CC) $(CFLAG) -c $^ -o $@
 
 all:		$(NAME)
 
-$(NAME):	$(OBJS_SUM)
-			ar rc $(NAME) $(OBJS_SUM)
+bonus:		$(NAME)
 
 clean:
 			$(RM) $(OBJS) $(OBJS_BONUS)
@@ -77,9 +78,6 @@ fclean:		clean
 			$(RM) $(NAME)
 
 re:			fclean all
-
-bonus:		
-			make WITH_BONUS=1 all
 
 .PHONY:		all clean fclean re bonus
 

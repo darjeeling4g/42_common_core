@@ -6,7 +6,7 @@
 /*   By: siyang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:29:33 by siyang            #+#    #+#             */
-/*   Updated: 2022/09/01 11:20:45 by siyang           ###   ########.fr       */
+/*   Updated: 2022/09/02 13:14:34 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,23 @@ int main()
 	printf("atoi : %d\n", atoi("   +-2147483647string"));
 	printf("ft_atoi : %d\n", ft_atoi("   +   2147483647string"));
 	printf("atoi : %d\n", atoi("   +   2147483647string"));
+	printf("==========================\n");
+	printf("ft_atoi Max-1 : %d\n", ft_atoi("9223372036854775806"));
+	printf("atoi Max-1: %d\n", atoi("9223372036854775806"));
+	printf("ft_atoi Max: %d\n", ft_atoi("9223372036854775807"));
+	printf("atoi Max: %d\n", atoi("9223372036854775807"));
+	printf("ft_atoi Max+1: %d\n", ft_atoi("9223372036854775908"));
+	printf("atoi Max+1: %d\n", atoi("9223372036854775908"));
+	printf("ft_atoi Max+2: %d\n", ft_atoi("9223372036854775909"));
+	printf("atoi Max+2: %d\n", atoi("9223372036854775909"));
+	printf("ft_atoi Min+2: %d\n", ft_atoi("-9223372036854775806"));
+	printf("atoi Min+2: %d\n", atoi("-9223372036854775806"));
+	printf("ft_atoi Min+1: %d\n", ft_atoi("-9223372036854775807"));
+	printf("atoi Min+1: %d\n", atoi("-9223372036854775807"));
+	printf("ft_atoi Min: %d\n", ft_atoi("-9223372036854775908"));
+	printf("atoi Min: %d\n", atoi("-9223372036854775908"));
+	printf("ft_atoi Min-1: %d\n", ft_atoi("-9223372036854775909"));
+	printf("atoi Min-1: %d\n", atoi("-9223372036854775909"));
 	printf("============<ft_calloc>==============\n");
 	char *p1 = ft_calloc(5, 1);
 	char *p2 = calloc(5, 1);
