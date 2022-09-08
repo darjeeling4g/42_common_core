@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:08:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/09/07 17:01:57 by siyang           ###   ########.fr       */
+/*   Updated: 2022/09/08 10:46:20 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,44 @@
 #include <stdio.h> 
 #include <fcntl.h> 
 
-static int	check_nl(char *ptr);
-
 char	*get_next_line(int fd)
 {
-	char	*ptr;
-	size_t	i;
-	ssize_t	n;
+	t_list	**lst;
 
-	i = 1;
-	while ()
-	{
-		ptr = malloc(sizeof(char) * BUFFER_SIZE * i);
-		if (ptr == NULL)
-			return (NULL);
-		n = read(fd, ptr, BUFFER_SIZE);
-		if (n < 0)
-		{
-			free(ptr);
-			return (NULL);
-		}
-		if (check_nl)
-			break ;
-	}
-	return (ptr);
+	lst = malloc(sizeof(t_list *);
+//	char	*ptr;
+//	size_t	i;
+//	ssize_t	n;
+//
+//	i = 1;
+//	while ()
+//	{
+//		ptr = malloc(sizeof(char) * BUFFER_SIZE * i);
+//		if (ptr == NULL)
+//			return (NULL);
+//		n = read(fd, ptr, BUFFER_SIZE);
+//		if (n < 0)
+//		{
+//			free(ptr);
+//			return (NULL);
+//		}
+//		if (check_nl)
+//			break ;
+//	}
+//	return (ptr);
 }
 
-static int	check_nl(char *ptr)
+static t_list	*ft_lstnew(void *content)
 {
-	while (*ptr)
-	{
-		if (*ptr == '\n')
-			return (1);
-		ptr++;
-	}
-	return (0);
-}
+	t_list	*new;
 
+	new = malloc(sizeof(t_list));
+	if (new == NULL)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
+}
 
 int	main()
 {
