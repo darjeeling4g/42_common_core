@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:08:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/09/08 10:46:20 by siyang           ###   ########.fr       */
+/*   Updated: 2022/09/17 18:48:15 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*get_next_line(int fd)
 {
 	t_list	**lst;
 
-	lst = malloc(sizeof(t_list *);
 //	char	*ptr;
 //	size_t	i;
 //	ssize_t	n;
@@ -58,4 +57,31 @@ int	main()
 	int	fd;
 	fd = open("test", O_RDWR);
 	printf("%s", get_next_line(fd));
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*ptr;
+	char	*temp;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	ptr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (ptr == NULL)
+		return (NULL);
+	temp = ptr;
+	while (*s1)
+	{	
+		*temp = *s1;
+		temp++;
+		s1++;
+	}
+	while (*s2)
+	{
+		*temp = *s2;
+		temp++;
+		s2++;
+	}
+	*temp = '\0';
+	return (ptr);
 }
