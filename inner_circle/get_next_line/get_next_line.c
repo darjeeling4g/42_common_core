@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:08:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/10/04 18:55:04 by siyang           ###   ########.fr       */
+/*   Updated: 2022/10/05 21:23:42 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,50 @@
 char	*get_next_line(int fd)
 {
 	static ssize_t	fo;
-	char			*ptr;
-	int				level;	
+	ssize_t			nbyte;
+	char			*buffer;
+	char			*result;
+	char			*temp;
+	int				i;
+	int				eol;
 
-	level = 0;
-	ptr = malloc(sizeof(char) * BUFFER_SIZE);
-	fo += read(fd, ptr, BUFFER_SIZE);
-	while (ptr)
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (buffer == NULL)
+		return (NULL);
+	buffer[BUFFER_SIZE] = '\0';
+	result = NULL;
+	eol = 0;
+	while (eol == 0)
 	{
-		 if (ptr == '\n')
-		 {
-			ft_strjoin(
-		 }
+		nbyte = read(fd, buffer, BUFFER_SIZE);
+		if (nbyte < 0)
+			return (NULL);
+		else if (nbyte == 0)
+			return (result);
+		else
+		{
+			i = 0;
+			while (i < nbyte)
+			{
+				if (result[i] == '\n')
+					break ;
+				i++;
+			}
+			if (i < nbyte)
+			{
+				result[i + 1] = '\0';
+				eol = 1;
+			}
+				temp = result;
+				result = ft_strjoin(result, buffer);
+				free(temp);
+		}
 	}
+	free(buffer);
+	return (result);
 }
 
-int	main()
-{
-	int	fd;
-	fd = open("test", O_RDWR);
-	printf("%s", get_next_line(fd));
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
+static char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*ptr;
 	char	*temp;
@@ -64,4 +85,24 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	*temp = '\0';
 	return (ptr);
+}
+
+static size_t	ft_strlen(const char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (*s)
+	{
+		s++;
+		len++;
+	}
+	return (len);
+}
+
+int	main()
+{
+	int	fd;
+	fd = open("test", O_RDWR);
+	printf("%s", get_next_line(fd));
 }

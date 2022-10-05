@@ -10,7 +10,8 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-char	*get_next_line(int fd);
-char	*ft_strjoin(char const *s1, char const *s2);
+char			*get_next_line(int fd);
+static char		*ft_strjoin(char const *s1, char const *s2);
+static size_t	ft_strlen(const char *s);
 
 #endif
