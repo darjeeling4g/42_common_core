@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:08:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/10/05 21:23:42 by siyang           ###   ########.fr       */
+/*   Updated: 2022/10/13 19:55:14 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 char	*get_next_line(int fd)
 {
-	static ssize_t	fo;
+//	static ssize_t	fo;
 	ssize_t			nbyte;
 	char			*buffer;
 	char			*result;
@@ -42,18 +42,18 @@ char	*get_next_line(int fd)
 			i = 0;
 			while (i < nbyte)
 			{
-				if (result[i] == '\n')
+				if (buffer[i] == '\n')
 					break ;
 				i++;
 			}
 			if (i < nbyte)
 			{
-				result[i + 1] = '\0';
+				buffer[i + 1] = '\0';
 				eol = 1;
 			}
-				temp = result;
-				result = ft_strjoin(result, buffer);
-				free(temp);
+			temp = result;
+			result = ft_strjoin(result, buffer);
+			free(temp);
 		}
 	}
 	free(buffer);
