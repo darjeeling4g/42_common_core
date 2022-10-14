@@ -6,30 +6,37 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:08:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/10/13 19:55:14 by siyang           ###   ########.fr       */
+/*   Updated: 2022/10/14 21:39:49 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h> 
-#include <fcntl.h> 
+//#include <stdio.h> 
+//#include <fcntl.h> 
+
+static int	get_until_eol(char *buffer, char **backup, char **result);
 
 char	*get_next_line(int fd)
 {
-//	static ssize_t	fo;
-	ssize_t			nbyte;
-	char			*buffer;
-	char			*result;
-	char			*temp;
-	int				i;
-	int				eol;
+	static char	*backup;
+	ssize_t		nbyte;
+	char		*buffer;
+	char		*result;
+	int			eol;
 
+	result = malloc(sizeof(char) * 1);
+	result[0] = 0;
+	eol = 0;
+	if (backup)
+	{
+		buffer = backup;
+		eol = get_until_eol(buffer, &backup, &result);
+		free(buffer);
+	}
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (buffer == NULL)
 		return (NULL);
 	buffer[BUFFER_SIZE] = '\0';
-	result = NULL;
-	eol = 0;
 	while (eol == 0)
 	{
 		nbyte = read(fd, buffer, BUFFER_SIZE);
@@ -38,71 +45,37 @@ char	*get_next_line(int fd)
 		else if (nbyte == 0)
 			return (result);
 		else
-		{
-			i = 0;
-			while (i < nbyte)
-			{
-				if (buffer[i] == '\n')
-					break ;
-				i++;
-			}
-			if (i < nbyte)
-			{
-				buffer[i + 1] = '\0';
-				eol = 1;
-			}
-			temp = result;
-			result = ft_strjoin(result, buffer);
-			free(temp);
-		}
+			eol = get_until_eol(buffer, &backup, &result);
 	}
 	free(buffer);
 	return (result);
 }
 
-static char	*ft_strjoin(char const *s1, char const *s2)
+static int	get_until_eol(char *buffer, char **backup, char **result)
 {
-	char	*ptr;
 	char	*temp;
+	int		eol;
 
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	ptr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (ptr == NULL)
-		return (NULL);
-	temp = ptr;
-	while (*s1)
-	{	
-		*temp = *s1;
-		temp++;
-		s1++;
-	}
-	while (*s2)
+	eol = 0;
+	temp = ft_strchr(buffer, '\n');
+	if (temp != NULL)
 	{
-		*temp = *s2;
-		temp++;
-		s2++;
+		*backup = ft_strdup(temp + 1);
+		temp[1] = '\0';
+		eol = 1;
 	}
-	*temp = '\0';
-	return (ptr);
+	temp = *result;
+	*result = ft_strjoin(*result, buffer);
+	free(temp);
+	return (eol);
 }
 
-static size_t	ft_strlen(const char *s)
-{
-	size_t	len;
-
-	len = 0;
-	while (*s)
-	{
-		s++;
-		len++;
-	}
-	return (len);
-}
-
-int	main()
-{
-	int	fd;
-	fd = open("test", O_RDWR);
-	printf("%s", get_next_line(fd));
-}
+//int	main()
+//{
+//	int	fd;
+//	fd = open("test", O_RDWR);
+//	printf("%s", get_next_line(fd));
+//	printf("%s", get_next_line(fd));
+//	printf("%s", get_next_line(fd));
+//	printf("%s", get_next_line(fd));
+//}
