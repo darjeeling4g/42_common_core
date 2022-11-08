@@ -6,29 +6,27 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:08:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/11/08 17:27:07 by siyang           ###   ########.fr       */
+/*   Updated: 2022/11/08 21:36:26 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-//#include <stdio.h> 
-//#include <fcntl.h> 
 
+static char	*read_next_line(int fd, char *buffer, char **backup, char **result);
 static void	get_until_eol(char *buffer, char **backup, char **result);
+static char	*free_n_return(char **ptr1, char **ptr2);
 
 char	*get_next_line(int fd)
 {
 	static char	*backup[257];
-	ssize_t		nbyte;
 	char		*buffer;
 	char		*result;
 
+	if (fd < 0 || fd > 256 || BUFFER_SIZE <= 0)
+		return (NULL);
 	result = ft_strdup("");
 	if (result == NULL)
-	{
-		free(result);
-		return(NULL);
-	}
+		return (free_n_return(NULL, &result));
 	if (backup[fd])
 	{
 		buffer = backup[fd];
@@ -37,28 +35,30 @@ char	*get_next_line(int fd)
 	}
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (buffer == NULL)
-	{
-		free(buffer);
-		free(result);
-		return (NULL);
-	}
+		return (free_n_return(&buffer, &result));
 	buffer[BUFFER_SIZE] = '\0';
-	while (!backup[fd])
+	return (read_next_line(fd, buffer, &backup[fd], &result));
+}
+
+static char	*read_next_line(int fd, char *buffer, char **backup, char **result)
+{
+	ssize_t	nbyte;
+
+	while (!*backup)
 	{
 		nbyte = read(fd, buffer, BUFFER_SIZE);
-		if (nbyte < 0 || (nbyte == 0 && *result == '\0'))
-		{
-			free(result);
-			free(buffer);
-			return (NULL);
-		}
+		if (nbyte < 0 || (nbyte == 0 && **result == '\0'))
+			return (free_n_return(&buffer, result));
 		else if (nbyte == 0)
 			break ;
 		else
-			get_until_eol(buffer, &backup[fd], &result);
+		{
+			buffer[nbyte] = '\0';
+			get_until_eol(buffer, backup, result);
+		}
 	}
 	free(buffer);
-	return (result);
+	return (*result);
 }
 
 static void	get_until_eol(char *buffer, char **backup, char **result)
@@ -78,11 +78,17 @@ static void	get_until_eol(char *buffer, char **backup, char **result)
 	free(temp);
 }
 
-//int	main()
-//{
-//	int	fd;
-//	fd = open("test", O_RDWR);
-//	printf("%s", get_next_line(fd));
-//	printf("%s", get_next_line(fd));
-//	system("leaks a.out");
-//}
+static char	*free_n_return(char **ptr1, char **ptr2)
+{
+	if (ptr1)
+	{
+		free(*ptr1);
+		*ptr1 = NULL;
+	}
+	if (ptr2)
+	{
+		free(*ptr2);
+		*ptr2 = NULL;
+	}
+	return (NULL);
+}

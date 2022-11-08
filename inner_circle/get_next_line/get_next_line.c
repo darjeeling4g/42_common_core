@@ -6,13 +6,13 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:08:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/11/08 21:17:26 by siyang           ###   ########.fr       */
+/*   Updated: 2022/11/08 21:35:57 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char *read_next_line(int fd, char *buffer, char **backup, char **result);
+static char	*read_next_line(int fd, char *buffer, char **backup, char **result);
 static void	get_until_eol(char *buffer, char **backup, char **result);
 static char	*free_n_return(char **ptr1, char **ptr2);
 
@@ -38,9 +38,9 @@ char	*get_next_line(int fd)
 	return (read_next_line(fd, buffer, &backup, &result));
 }
 
-static char *read_next_line(int fd, char *buffer, char **backup, char **result)
+static char	*read_next_line(int fd, char *buffer, char **backup, char **result)
 {
-	ssize_t		nbyte;
+	ssize_t	nbyte;
 
 	while (!*backup)
 	{
