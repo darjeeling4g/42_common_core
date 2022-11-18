@@ -6,11 +6,11 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:28:40 by siyang            #+#    #+#             */
-/*   Updated: 2022/11/09 17:55:57 by siyang           ###   ########.fr       */
+/*   Updated: 2022/11/18 19:35:59 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_printf(const char *, ...)
+int	ft_printf(const char *format, ...)
 {
 
 }
