@@ -92,7 +92,7 @@ avg2: 1285.169840
 - `0` : When the 'width' option is specified, prepends zeros for numeric types.
 	> dafault : prepends spaces
 	>> example : `printf("%4x", 3)` ==> `   3` / `printf(%04x", 3)` ==> `0003`
-- `.` : The integer or exponent of a decimal has the thousands grouping separator applied
+- `'` : The integer or exponent of a decimal has the thousands grouping separator applied
 - `#` : Alternate form`
 	> for g and G type : trailing zeros are not removed  
 	> for f, F, e, E, g, G type : the output always contains a decimal point  
@@ -114,6 +114,7 @@ avg2: 1285.169840
 	> example : `printf("%.*s", 3, "abcdef")` ==> `abc`
 
 #### Type field
+
 - c : prints single charater
 - s : prints a string(as defined by the common C convention)
 - p : The void * pointer argument has to be printed hexadecimal format
@@ -124,9 +125,29 @@ avg2: 1285.169840
 - X : prints a number in hexadecimal (base 16) uppercase format
 - % : prints a percent sign
 
+### Rules
+
+#### 
+
+
 ## Mandatory part
 
+|Program name|libftprintf.a|
+|---|---|
+|Turn in files|Makefile, \*.h, \*/\*.h, \*.c, \*/\*.c|
+|Makefile|NAME, all, clean, fclean, re|
+|External functs|malloc, free, write, va\_start, va\_arg, va\_copy, va\_end|
+|libft authorized|yes|
+|description|write a library that contains ft\_printf(), a function that will mimic the original printf()|
+
+- prototype : `int	ft_printf(const char *, ...)`
+- Don't implement the buffer management
+- handle the following conversions: cspdiuxX%
+
 ## Bonus part
+
+- Manage any combination of the following flags : '-0.' and the feild minimum width under all conversions
+- Manage all the follwing flags : '# +'
 
 ## Reference
 [Variadic function in C programming](https://medium.com/swlh/variadic-function-in-c-programming-d3632315a48e)
