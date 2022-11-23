@@ -114,4 +114,8 @@ int main()
 	test_i = INT;
 	printf("%d\n", test_c);
 	printf("%d\n", test_i);
+	
+	printf("%++++5d\n", 10);
+	printf("%.000010s\n", "abcdefghijklmnopqrstu");
+	
 }

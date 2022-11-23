@@ -9,42 +9,48 @@ int ft_printf(const char *format, ...)
 
 int parser()
 {
-
-	// (while) null문자 만날때까지 format 문자열 순환
-		// field info 생성 및 초기화
-		// (if) 현재 문자 %가 아니면
-			// 시작 지점 저장
-			// % 또는 null 만날 때까지 이동
-			// 종료 지점까지의 길이 저장
-			// feild info를 담은 feild list 생성
-		// (else if) 현재 문자가 %이면
-			// type field만날 때까지 각 문자 해석
-				// (while) flags field가 아닐 때까지
-					// (if) 현재문자가 '-'이면
-						// field info에 등록
-					// (if) 현재문자가 '+'이면
-						// field info에 등록
-					// (if) 현재문자가 ' '이면
-						// field info에 등록
-					// (if) 현재문자가 '0'이면
-						// field info에 등록
-					// (if) 현재문자가 '#'이면
-						// field info에 등록
-				// (while) width field가 아닐 때까지
-					// (if) 현재문자가 number이면  atoi로 획득
-				// (while) .precision field가 아닐 때까지
-					// (if) 현재문자가 .이면 0획득
-						// (if) 다음문자가 number이면 atoi로 획득
-				// (if) 현재문자가 type field가 아니라면
-					// return error
+// (while) null문자 만날때까지 format 문자열 순환
+	// field info 생성 및 초기화
+	// (if) 현재 문자 %가 아니면
+		// 시작 지점 저장
+		// % 또는 null 만날 때까지 이동
+		// 종료 지점까지의 길이 저장
+		// feild info를 담은 feild list 생성
+	// (else if) 현재 문자가 %이면
+		// type field만날 때까지 각 문자 해석
+			// (while) flags field가 아닐 때까지
+				// (if) 현재문자가 '-'이면
+					// field info에 등록
+				// (if) 현재문자가 '+'이면
+					// field info에 등록
+				// (if) 현재문자가 ' '이면
+					// field info에 등록
+				// (if) 현재문자가 '0'이면
+					// field info에 등록
+				// (if) 현재문자가 '#'이면
+					// field info에 등록
+			// (while) width field가 아닐 때까지
+				// (if) 현재문자가 number(except 0)이면  atoi로 획득
+			// (while) .precision field가 아닐 때까지
+				// (if) 현재문자가 .이면 0획득
+					// (if) 다음문자가 number이면 atoi로 획득
+			// (if) 현재문자가 type field가 아니라면
+				// return error
+			// (else if) type filed라면
+				// type 획득
 }
 
 int printer()
 {
-
+// (if)
 }
 
 void del_info()
 {
 	//field_info를 형변환 후 초기화
+}
+
+void	feild_init(t_info *filed_info)
+{
+	//feild_info 초기화
 }
