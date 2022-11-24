@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:28:40 by siyang            #+#    #+#             */
-/*   Updated: 2022/11/24 17:22:17 by siyang           ###   ########.fr       */
+/*   Updated: 2022/11/24 21:31:17 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,34 @@ void	print_text(va_list *pargs, t_info *feild_info, int *result)
 
 void	print_char(va_list *pargs, t_info *feild_info, int *result)
 {
-	
+//	(if) + ' ' 0 # || percision(with n)
+//		에러 처리
+//	(else if) 출력 과정 중 오류가 반환되지 않았을 때
+//		width : len보다 클때 좌측에 공백
+//		percision(default) : 변화 없음
+//		- : width가 len보다 클때 우측으로 공백
+//		va_arg로 pargs값 출력
+//		pargs 길이만큼 결과값 증가
+
+	char	c;
+
+	c = (char)va_arg(pargs, int);
+	if (*result != -1)
+	{
+		if (feild_info->flags == MINUS_ON || feild->percision == 0)
+		{
+			if (feild_info->width > 1)
+			{
+			}
+			else
+			{
+				write(1, &c, 1);
+				*result += 1;
+			}
+		}
+		else
+			*result = -1;
+	}
 }
 
 void	print_str(va_list *pargs, t_info *feild_info, int *result)

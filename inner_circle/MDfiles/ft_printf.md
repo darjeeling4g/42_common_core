@@ -23,6 +23,9 @@
 	- arguments
 		- First argument : same as the first argument in `va_start()` macro
 		- Second argument : specified the expected data type poined by **pargs**
+		> 이때,`char`, `short`등의 자료형은 `int`로 / `float`은 `double`로 적어주어야 한다
+		>> 가변인자를 받을 때 스택의 구조를 이용하는데, 이에 효율적으로 각 데이터에 접근하기 위해서 `바이트 패딩(byte padding)`이 적용되어 매개변수가 포인터 크기로 승격된다(각 데이터가 포인터 크기의 스택으로 구성되면 한번의 접근에 하나씩 데이터에 접근할 수 있게 됨)
+		>>> 이때 승격되는 데이터 크기는 시스템환경(32bit, 64bit)에 따라 다르므로 특정 데이터 크기로 가변인자를 꺼내오면 다른 값을 얻을 수도 있음. `va_arg`는 이를 방지하기 위한 표준
 	- This function returns the value of the argument pointed by **pargs**, and also update the **pargs** to point to the next argument in the list
 1. `va_end(va_list pargs)`
 	- Prototype : `void va_end(va_list pargs);`
@@ -162,3 +165,5 @@ avg2: 1285.169840
 [Variadic function in C programming](https://medium.com/swlh/variadic-function-in-c-programming-d3632315a48e)
 
 [printf format string](https://en.wikipedia.org/wiki/Printf_format_string)
+
+[가변인자 규칙과 매개변수 스택](https://blog.naver.com/wkdghcjf1234/221738196805)
