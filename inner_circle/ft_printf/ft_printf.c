@@ -6,103 +6,83 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:28:40 by siyang            #+#    #+#             */
-/*   Updated: 2022/11/23 22:21:57 by siyang           ###   ########.fr       */
+/*   Updated: 2022/11/24 17:22:17 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
 
-#include "libft.h"
-#include <stdarg.h>
+#include "ft_print.h"
 
-#define ALL_OFF 0
-#define MINUS_ON 1
-#define PLUS_ON 2
-#define BLANK_ON 4
-#define ZERO_ON 8
-#define HASH_ON 16
+void	print_text(va_list *pargs, t_info *feild_info, int *result);
+void	print_char(va_list *pargs, t_info *feild_info, int *result);
+void	print_str(va_list *pargs, t_info *feild_info, int *result);
+void	print_ptr(va_list *pargs, t_info *feild_info, int *result);
+void	print_sint(va_list *pargs, t_info *feild_info, int *result);
+void	print_uint(va_list *pargs, t_info *feild_info, int *result);
+void	print_lhex(va_list *pargs, t_info *feild_info, int *result);
+void	print_uhex(va_list *pargs, t_info *feild_info, int *result);
+void	print_uint(va_list *pargs, t_info *feild_info, int *result);
+void	print_percent(va_list *pargs, t_info *feild_info, int *result);
 
-typedef enum e_type
-{
-	NONE, TEXT, CHAR, STR, PTR, SINT, UINT, HEXL, HEXU, PERCENT
-} t_type;
-
-typedef struct s_info
-{
-	char	*start;
-	char	*end;
-	char	flags;
-	int		width;
-	int		precision;
-	t_type	type;
-} t_info;
-
-int		ft_printf(const char *format, ...);
-int		parser(t_list *record, char *format);
-void	parse_text(t_info *field_info, t_list *record, char **format);
-void	parse_flags(t_info *field_info, char **format);
-void	parse_width(t_info *field_info, char **format);
-void	parse_percision(t_info *field_info, char **format);
-int		parse_type(t_info *field_info, t_list *record, char **format);
-//int		printer(va_list pargs,t_list *record);
-void	del_info(void *field_info);
-void	field_init(t_info *field_info);
-
-int main()
-{
-	int res;
-
-	res = ft_printf("just text");
-	printf("res: %d\n", res);
-}
+//int main()
+//{
+//	int res;
+//
+//	res = ft_printf("just text %- +5.10djust text");
+//	printf("res: %d\n", res);
+//}
 
 int	ft_printf(const char *format, ...)
 {
 	int		result;
-//	va_list	pargs;
+	va_list	pargs;
 	t_list	*record;
 
 	record = NULL;
-	result = parser(record, (char *)format);
+	result = parser(&record, (char *)format);
 
-	while (record)
-	{
-		t_info *test = (t_info *)record->content;
-		printf("start : %p\n", test->start);
-		printf("end : %p\n", test->end);
-		printf("flags : %c\n", test->flags);
-		printf("width : %d\n", test->width);
-		printf("precision : %d\n", test->precision);
-		printf("type : %d\n", test->type);
-		record = record->next;
-	}
-
-//	if (result > -1)
+//	while (record)
 //	{
-//		va_start(pargs, format);
-//		result = printer(pargs, record);
-//		va_end(pargs);
+//		t_info *test = (t_info *)record->content;
+//		printf("start : %p\n", test->start);
+//		printf("end : %p\n", test->end);
+//		printf("flags : %d\n", test->flags);
+//		printf("width : %d\n", test->width);
+//		printf("precision : %d\n", test->precision);
+//		printf("type : %d\n\n", test->type);
+//		record = record->next;
 //	}
+
+	if (result > -1)
+	{
+		va_start(pargs, format);
+		printer(pargs, record, &result);
+		va_end(pargs);
+	}
 	ft_lstclear(&record, del_info);
 	return (result);
 }
 
-int	parser(t_list *record, char *format)
+int	parser(t_list **record, char *format)
 {
 	int		error;
-	t_info	field_info;
+	t_info	*field_info;
 
-	error = 1;
+	error = 0;
 	while(*format)
 	{
-		field_init(&field_info);
+		field_info = malloc(sizeof(t_info));
+		if (field_info == NULL)
+			return (-1);
+		field_init(field_info);
 		if (*format != '%')
-			parse_text(&field_info, record, &format);
+			parse_text(field_info, record, &format);
 		else if (*format == '%')
 		{
-			parse_flags(&field_info, &format);
-			parse_width(&field_info, &format);
-			parse_percision(&field_info, &format);
-			error = parse_type(&field_info, record, &format);
+			format = format + 1;
+			parse_flags(field_info, &format);
+			parse_width(field_info, &format);
+			parse_percision(field_info, &format);
+			error = parse_type(field_info, record, &format);
 		}
 		if (error == -1)
 			break ;
@@ -110,120 +90,105 @@ int	parser(t_list *record, char *format)
 	return (error);
 }
 
-void	parse_text(t_info *field_info, t_list *record, char **format)
+void	printer(va_list pargs, t_list *record, int *result)
 {
-	field_info->type = TEXT;
-	field_info->start = *format;
-	while (**format != '%' || **format != '\0')
-		format = *format + 1;
-	field_info->end = *format;
-	ft_lstadd_back(&record, ft_lstnew(field_info));
-}
+	
+//	(while) record list 순환
+//		(if) type이 text
+//			print_text
+//		(else if) type이 char
+//			print_char
+//		(else if) type이 string
+//			print_str
+//		(else if) type이 ptr
+//			print_ptr
+//		(else if) type이 signed int
+//			print_sint
+//		(else if) type이 unsigned int
+//			print_uint
+//		(else if) type이 lower hex number
+//			print_lhex
+//		(else if) type이 upper hex number
+//			print_uhew
+//		(else if) type이 percent
+//			print_percent
+//	(return) result
 
-void	parse_flags(t_info *field_info, char **format)
-{
-	while (**format)
+	t_info	*feild_info;
+
+	while (record)
 	{
-		if (**format == '-' && (field_info->flags & MINUS_ON) == ALL_OFF)
-			field_info->flags = field_info->flags | MINUS_ON;
-		else if (**format == '+' && (field_info->flags & PLUS_ON) == ALL_OFF)
-			field_info->flags = field_info->flags | PLUS_ON;
-		else if (**format == ' ' && (field_info->flags & BLANK_ON) == ALL_OFF)
-			field_info->flags = field_info->flags | BLANK_ON;
-		else if (**format == '0' && (field_info->flags & ZERO_ON) == ALL_OFF)
-			field_info->flags = field_info->flags | ZERO_ON;
-		else if (**format == '#' && (field_info->flags & HASH_ON) == ALL_OFF)
-			field_info->flags = field_info->flags | HASH_ON;
-		else
-			break ;
-		format = *format + 1;
+		feild_info = (t_info)record->content;
+		if (feild_info->type == TEXT)
+			print_text(&pargs, feild_info, result);
+		else if (feild_info->type == CHAR)
+			print_char(&pargs, feild_info, result);
+		else if (feild_info->type == STR)
+			print_str(&pargs, feild_info, result);
+		else if (feild_info->type == PTR)
+			print_ptr(&pargs, feild_info, result);
+		else if (feild_info->type == SINT)
+			print_sint(&pargs, feild_info, result);
+		else if (feild_info->type == UINT)
+			print_uint(&pargs, feild_info, result);
+		else if (feild_info->type == LHEX)
+			print_lhex(&pargs, feild_info, result);
+		else if (feild_info->type == UHEX)
+			print_uhex(&pargs, feild_info, result);
+		else if (feild_info->type == PERCENT)
+			print_percent(&pargs, feild_info, result);
+		record = record->next;
 	}
 }
 
-void	parse_width(t_info *field_info, char **format)
+void	print_text(va_list *pargs, t_info *feild_info, int *result)
 {
-	char	*ptr;
-	int		num;
+//	(if) result != -1 일때 : 출력 중 오류가 발생하지 않았을 때만 실행
+	//	(while) start부터 end까지
+	//		write
+	//		result++
 
-	if (**format >= '1' && **format <= '9')
+	char	*start;
+	char	*end;
+
+	if (*result != -1)
 	{
-		num = 0;
-		ptr = *format;
-		while (**format >= '1' && **format <= '9')
+		start = feild_info->start;
+		end = feild_info->end;
+		while (start != end)
 		{
-			format = *format + 1;
-			num++;
+			write(1, start, 1);
+			start++;
+			*result++;
 		}
-		ptr = ft_substr(ptr, 0, num);
-		num = ft_atoi(ptr);
-		field_info->width = num;
 	}
 }
 
-void	parse_percision(t_info *field_info, char **format)
+void	print_char(va_list *pargs, t_info *feild_info, int *result)
 {
-	char	*ptr;
-	int		num;
-
-	if (**format == '.')
-	{
-		format = *format + 1;
-		if (**format >= '0' && **format <= '9')
-		{
-			num = 0;
-			ptr = *format;
-			while (**format >= '0' && **format <= '9')
-			{
-				format = *format + 1;
-				num++;
-			}
-			ptr = ft_substr(ptr, 0, num);
-			num = ft_atoi(ptr);
-			field_info->precision = num;
-		}
-		else
-			field_info->precision = 0;
-	}
+	
 }
 
-int	parse_type(t_info *field_info, t_list *record, char **format)
+void	print_str(va_list *pargs, t_info *feild_info, int *result)
 {
-	if (**format == 'c')
-		field_info->type = CHAR;
-	else if (**format == 's')
-		field_info->type = STR;
-	else if (**format == 'p')
-		field_info->type = PTR;
-	else if (**format == 'd' || **format == 'i')
-		field_info->type = SINT;
-	else if (**format == 'u')
-		field_info->type = UINT;
-	else if (**format == 'x')
-		field_info->type = HEXL;
-	else if (**format == 'X')
-		field_info->type = HEXU;
-	else if (**format == '%')
-		field_info->type = PERCENT;
-	else
-		return (-1);
-	ft_lstadd_back(&record, ft_lstnew(field_info));
-	return (1);
+
 }
 
-//int	printer(va_list pargs,t_list *record)
-//{
-//
-//}
+void	print_ptr(va_list *pargs, t_info *feild_info, int *result)
 
-void	del_info(void *field_info)
-{
-	t_info	*info;
+void	print_sint(va_list *pargs, t_info *feild_info, int *result)
 
-	info = (t_info *)field_info;
-	field_init(info);
-}
+void	print_uint(va_list *pargs, t_info *feild_info, int *result)
 
-void	field_init(t_info *field_info)
+void	print_lhex(va_list *pargs, t_info *feild_info, int *result)
+
+void	print_uhex(va_list *pargs, t_info *feild_info, int *result)
+
+void	print_uint(va_list *pargs, t_info *feild_info, int *result)
+
+void	print_percent(va_list *pargs, t_info *feild_info, int *result)
+
+int	field_init(t_info *field_info)
 {
 	field_info->start = NULL;
 	field_info->end = NULL;
@@ -231,4 +196,10 @@ void	field_init(t_info *field_info)
 	field_info->width = 0;
 	field_info->precision = -1;
 	field_info->type = NONE;
+}
+
+void	del_info(void *field_info)
+{
+	free(field_info);
+	field_info = NULL;
 }

@@ -102,7 +102,7 @@ avg2: 1285.169840
 - Width field specifies a minimum number of charaters to output
 	> it does not cause truncation of oversized fields
 - The width field may be **omitted**, or a **numeric integer value**, or a **dynamic value** when passed as another argument when indicated by an asterisk `*`.
-	> example : `printf("%*d", 5, 10)` ==> `   10`
+	> example : `printf("%*d", 5, 10)` ==> `   10
 	>> 1. a leading zero is interpreted as the zero-padding flag mentioned above
 	>> 1. negative value is treated as the positive value in conjunction with the left-alignment - flag also mentioned above.
 
@@ -127,8 +127,17 @@ avg2: 1285.169840
 
 ### Rules
 
-#### 
-
+|-|width|percision(default=0)|percision(with n)|-|+|' '|0|#|
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|c|o|o|x|o|x|x|x|x|
+|s|o|o|o|o|x|x|x|x|
+|p|o|o|x|o|x|x|x|x|
+|d|o|o|o|o|o|o|o|x|
+|i|o|o|o|o|o|o|o|x|
+|u|o|o|o|o|x|x|o|x|
+|x|o|o|o|o|x|x|o|o|
+|X|o|o|o|o|x|x|o|o|
+|%|o|o|o|o|o|o|o|o|
 
 ## Mandatory part
 
