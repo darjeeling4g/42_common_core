@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:07:38 by siyang            #+#    #+#             */
-/*   Updated: 2022/11/24 15:33:15 by siyang           ###   ########.fr       */
+/*   Updated: 2022/11/27 22:01:00 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	parse_text(t_info *field_info, t_list **record, char **format)
 	field_info->type = TEXT;
 	field_info->start = *format;
 	while (**format != '%' && **format != 0)
-		*format = *format + 1;
+		*format += 1;
 	field_info->end = *format;
 	ft_lstadd_back(record, ft_lstnew(field_info));
 }
@@ -38,7 +38,7 @@ void	parse_flags(t_info *field_info, char **format)
 			field_info->flags = field_info->flags | HASH_ON;
 		else
 			break ;
-		*format = *format + 1;
+		*format += 1;
 	}
 }
 
@@ -51,9 +51,9 @@ void	parse_width(t_info *field_info, char **format)
 	{
 		num = 0;
 		ptr = *format;
-		while (**format >= '1' && **format <= '9')
+		while (**format >= '0' && **format <= '9')
 		{
-			*format = *format + 1;
+			*format += 1;
 			num++;
 		}
 		ptr = ft_substr(ptr, 0, num);
@@ -69,14 +69,14 @@ void	parse_percision(t_info *field_info, char **format)
 
 	if (**format == '.')
 	{
-		*format = *format + 1;
+		*format += 1;
 		if (**format >= '0' && **format <= '9')
 		{
 			num = 0;
 			ptr = *format;
 			while (**format >= '0' && **format <= '9')
 			{
-				*format = *format + 1;
+				*format += 1;
 				num++;
 			}
 			ptr = ft_substr(ptr, 0, num);
@@ -109,6 +109,6 @@ int	parse_type(t_info *field_info, t_list **record, char **format)
 	else
 		return (-1);
 	ft_lstadd_back(record, ft_lstnew(field_info));
-	*format = *format + 1;
+	*format += 1;
 	return (0);
 }

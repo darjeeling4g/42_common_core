@@ -98,4 +98,7 @@ int main()
 	printf("x : %5x\n", 42);
 	printf("X : %5X\n", 42);
 	printf("%% : %5%\n");
+
+	printf("s : %5.3s\n", "string");
+	printf("s : %5.s\n", "string");
 }
