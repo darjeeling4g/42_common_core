@@ -39,7 +39,7 @@
 	- This macro copy src to dst
 
 #### Declaration of a Variadic Function
-- Prototype : `return_type func_name(type arg1, ...)
+- Prototype : `return_type func_name(type arg1, ...)`
 	> ... : ellipsis
 
 #### Example
@@ -96,7 +96,7 @@ avg2: 1285.169840
 	> dafault : prepends spaces
 	>> example : `printf("%4x", 3)` ==> `   3` / `printf(%04x", 3)` ==> `0003`
 - `'` : The integer or exponent of a decimal has the thousands grouping separator applied
-- `#` : Alternate form`
+- `#` : Alternate form
 	> for g and G type : trailing zeros are not removed  
 	> for f, F, e, E, g, G type : the output always contains a decimal point  
 	> for o, x, X type : the text 0, 0x, 0X, respectively, is prepended to non-zero numbers
@@ -105,7 +105,7 @@ avg2: 1285.169840
 - Width field specifies a minimum number of charaters to output
 	> it does not cause truncation of oversized fields
 - The width field may be **omitted**, or a **numeric integer value**, or a **dynamic value** when passed as another argument when indicated by an asterisk `*`.
-	> example : `printf("%*d", 5, 10)` ==> `   10
+	> example : `printf("%*d", 5, 10)` ==>    10
 	>> 1. a leading zero is interpreted as the zero-padding flag mentioned above
 	>> 1. negative value is treated as the positive value in conjunction with the left-alignment - flag also mentioned above.
 
@@ -141,6 +141,53 @@ avg2: 1285.169840
 |x|o|o|o|o|x|x|o|o|
 |X|o|o|o|o|x|x|o|o|
 |%|o|o|o|o|o|o|o|o|
+
+#### c
+- width : len보다 클 때 좌측 공백
+- precision(default) : 변화 없음
+- '-' : width가 len보다 클 때 우측 공백
+
+#### s
+- width : len보다 클 때 좌측 공백
+- precision(default) : 문자열이 출력되지 않음
+- precision(with n) : 출력할 문자열의 최대길이 제한
+	- 설정한 길이가 문자열보다 크다면 원래 문자열 출력
+	> 즉, `len > precision >= 0` 구간일 때 `len = precision` 이라고 볼 수 있음
+- '-' : width가 len보다 클 때 우측 공백
+
+#### p
+- width : len보다 클 때 좌측 공백
+- precision(default) : 변화 없음
+- '-' : width가 len 보다 클 때 우측 공백
+
+#### d
+- width : len보다 클 때 좌측 공백
+- precision(default) : 0 flags가 있을 경우 무시
+	- precision이 0이면서 숫자가 0일경우 숫자를 출력하지 않음
+- precision(with n) : len보다 작으면 무시, len보다 크면 남는자리를 0으로 채움 / width는 해당 precision동작이 적용된 길이를 제외하고 적용
+- '-' : width가 len보다 클 때 우측 공백
+	- '-' 와 '0' 이 동시에 존재하면 '0' 은 무시
+- '+' : 출력할 숫자 앞에 부호표시
+	- '+' 와 ' ' 가 동시에 존재하면 ' ' 은 무시
+- ' ' : 출력할 숫자 앞에 공백표시(음수이 때는 - 표시)
+	> '+' 와 ' '처럼 부호표시의 경우 width 범위에 포함되지만 공백보다 선행해서 출력된다
+- '0' : width가 공백을 출력하는 대신 0을 출력
+
+
+
+#### i
+
+#### u
+
+#### x
+
+#### X
+
+#### %
+
+#### 추가 고려사항
+- result 가 int를 초과했을 때 에러
+	- long long을 초과했을 경우에는 정상임 ==> width, precision에 값이 담길때 atoi를 거치기 때문으로 추측됨(atoi가 ll까지 받지만 int초과하는 수에 대해서 에러)
 
 ## Mandatory part
 

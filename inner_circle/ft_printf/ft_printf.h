@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:16:28 by siyang            #+#    #+#             */
-/*   Updated: 2022/11/27 21:13:33 by siyang           ###   ########.fr       */
+/*   Updated: 2022/11/29 17:46:25 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 #define BLANK_ON 4
 #define ZERO_ON 8
 #define HASH_ON 16
+
+#define MINUS_ZERO_ON 9
+#define PLUS_BLANK_ON 6
 
 typedef enum e_type
 {
@@ -54,14 +57,16 @@ void	printer(va_list pargs, t_list *record, int *result);
 void	print_text(t_info *feild_info, int *result);
 void	print_char(va_list pargs, t_info *feild_info, int *result);
 void	print_str(va_list pargs, t_info *feild_info, int *result);
-//void	print_ptr(va_list pargs, t_info *feild_info, int *result);
-//void	print_sint(va_list pargs, t_info *feild_info, int *result);
+void	print_ptr(va_list pargs, t_info *feild_info, int *result);
+void	print_sint(va_list pargs, t_info *feild_info, int *result);
 //void	print_uint(va_list pargs, t_info *feild_info, int *result);
 //void	print_lhex(va_list pargs, t_info *feild_info, int *result);
 //void	print_uhex(va_list pargs, t_info *feild_info, int *result);
-//void	print_uint(va_list pargs, t_info *feild_info, int *result);
 //void	print_percent(va_list pargs, t_info *feild_info, int *result);
 
 void	ft_putchar_iter(char c, int len, int *result);
+void	ft_putsign(t_info *feild_info, int num, int *result);
+int		num_to_hex(size_t num, unsigned char *array);
+int		num_to_str(int num, unsigned char *array);
 
 #endif

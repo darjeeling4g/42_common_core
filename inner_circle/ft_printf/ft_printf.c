@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:28:40 by siyang            #+#    #+#             */
-/*   Updated: 2022/11/27 20:28:35 by siyang           ###   ########.fr       */
+/*   Updated: 2022/11/29 17:44:10 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ void	printer(va_list pargs, t_list *record, int *result)
 			print_char(pargs, feild_info, result);
 		else if (feild_info->type == STR)
 			print_str(pargs, feild_info, result);
-//		else if (feild_info->type == PTR)
-//			print_ptr(pargs, feild_info, result);
-//		else if (feild_info->type == SINT)
-//			print_sint(pargs, feild_info, result);
+		else if (feild_info->type == PTR)
+			print_ptr(pargs, feild_info, result);
+		else if (feild_info->type == SINT)
+			print_sint(pargs, feild_info, result);
 //		else if (feild_info->type == UINT)
 //			print_uint(pargs, feild_info, result);
 //		else if (feild_info->type == LHEX)
@@ -109,8 +109,6 @@ void	printer(va_list pargs, t_list *record, int *result)
 		record = record->next;
 	}
 }
-
-
 
 void	field_init(t_info *field_info)
 {
