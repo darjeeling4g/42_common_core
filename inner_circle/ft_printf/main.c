@@ -19,10 +19,29 @@ int main()
 //	printf("ft_result : %d\n", res);
 //	res = printf("this is PTR : %-16.p\n", "yes i'm ptr");
 //	printf("result : %d\n", res);
-//	printf("test : %d\n", 5);
 
-	res = ft_printf("this is SNUM : %d\n", 3);
+	res = ft_printf("this is SNUM : %020.d\n", 42);
 	printf("ft_result : %d\n", res);
-	res = printf("this is SNUM : %d\n", 3);
+	res = printf("this is SNUM : %020.d\n", 42);
+	printf("result : %d\n", res);
+
+	res = ft_printf("this is UNUM : %020.u\n", -1);
+	printf("ft_result : %d\n", res);
+	res = printf("this is UNUM : %020.u\n", -1);
+	printf("result : %d\n", res);
+
+	res = ft_printf("this is LHEX : %.5x\n", 42);
+	printf("ft_result : %d\n", res);
+	res = printf("this is LHEX : %.5x\n", 42);
+	printf("result : %d\n", res);
+
+	res = ft_printf("this is UHEX : %-20.5X\n", 42);
+	printf("ft_result : %d\n", res);
+	res = printf("this is UHEX : %-20.5X\n", 42);
+	printf("result : %d\n", res);
+
+	res = ft_printf("this is PERCENT : %+ -020.6%\n");
+	printf("ft_result : %d\n", res);
+	res = printf("this is PERCENT : %+ -020.6%\n");
 	printf("result : %d\n", res);
 }

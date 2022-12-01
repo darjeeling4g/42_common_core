@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_printer.c                                :+:      :+:    :+:   */
+/*   ft_printf_printer_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:47:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/01 16:24:46 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/01 17:08:54 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+# include "ft_printf_bonus.h"
 
 void	ft_print_text(t_info *feild_info, int *result)
 {
@@ -49,6 +49,11 @@ void	ft_print_char(va_list pargs, t_info *feild_info, int *result)
 	char	c;
 
 	c = (char)va_arg(pargs, int);
+	if (c == 0)
+	{
+		*result = -1;
+		return ;
+	}
 	if ((feild_info->flags | MINUS_ON) != MINUS_ON || feild_info->precision > 0)
 		*result = -1;
 	if (*result != -1)
@@ -80,6 +85,11 @@ void	ft_print_str(va_list pargs, t_info *feild_info, int *result)
 	int		len;
 
 	s = (char *)va_arg(pargs, char *);
+	if (s == NULL)
+	{
+		*result = -1;
+		return ;
+	}
 	len = ft_strlen(s);
 	if ((feild_info->flags | MINUS_ON) != MINUS_ON)
 		*result = -1;
@@ -115,6 +125,11 @@ void	ft_print_ptr(va_list pargs, t_info *feild_info, int *result)
 	int		len;
 
 	addr = (size_t)va_arg(pargs, void *);
+	if (addr == 0)
+	{
+		*result = -1;
+		return ;
+	}
 	i = ft_num_to_hex(addr, array, 1, 0);
 	len = ft_strlen(&array[i]);
 	if ((feild_info->flags | MINUS_ON) != MINUS_ON)
@@ -153,6 +168,11 @@ void	ft_print_sint(va_list pargs, t_info *feild_info, int *result)
 	int		len;
 
 	num = va_arg(pargs, int);
+	if (num == 0)
+	{
+		*result = -1;
+		return ;
+	}
 	i = ft_num_to_str(num, array);
 	len = ft_strlen(&array[i]);
 	if (feild_info->flags & HASH_ON)
@@ -205,6 +225,11 @@ void	ft_print_uint(va_list pargs, t_info *feild_info, int *result)
 	int				len;
 
 	num = va_arg(pargs, unsigned int);
+	if (num == 0)
+	{
+		*result = -1;
+		return ;
+	}
 	i = ft_unum_to_str(num, array);
 	len = ft_strlen(&array[i]);
 	if ((feild_info->flags | MINUS_ZERO_ON) != MINUS_ZERO_ON)
@@ -253,6 +278,11 @@ void	ft_print_lhex(va_list pargs, t_info *feild_info, int *result)
 	int				len;
 
 	num = va_arg(pargs, unsigned int);
+	if (num == 0)
+	{
+		*result = -1;
+		return ;
+	}
 	i = ft_num_to_hex(num, array, 0, 0);
 	len = ft_strlen(&array[i]);
 	if (feild_info->flags & PLUS_BLANK_ON)
@@ -295,6 +325,11 @@ void	ft_print_uhex(va_list pargs, t_info *feild_info, int *result)
 	int				len;
 
 	num = va_arg(pargs, unsigned int);
+	if (num == 0)
+	{
+		*result = -1;
+		return ;
+	}
 	i = ft_num_to_hex(num, array, 0, 32);
 	len = ft_strlen(&array[i]);
 	if (feild_info->flags & PLUS_BLANK_ON)
