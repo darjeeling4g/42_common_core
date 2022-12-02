@@ -6,13 +6,13 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:47:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/01 16:24:46 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/02 18:16:23 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "ft_printf.h"
 
-void	ft_print_text(t_info *feild_info, int *result)
+void	ft_print_text(t_info *field_info, int *result)
 {
 //	(if) result != -1 일때 : 출력 중 오류가 발생하지 않았을 때만 실행
 	//	(while) start부터 end까지
@@ -24,8 +24,8 @@ void	ft_print_text(t_info *feild_info, int *result)
 
 	if (*result != -1)
 	{
-		start = feild_info->start;
-		end = feild_info->end;
+		start = field_info->start;
+		end = field_info->end;
 		while (start != end)
 		{
 			write(1, start, 1);
@@ -35,7 +35,7 @@ void	ft_print_text(t_info *feild_info, int *result)
 	}
 }
 
-void	ft_print_char(va_list pargs, t_info *feild_info, int *result)
+void	ft_print_char(va_list pargs, t_info *field_info, int *result)
 {
 //	(if) + ' ' 0 # || percision(with n)
 //		에러 처리
@@ -49,20 +49,20 @@ void	ft_print_char(va_list pargs, t_info *feild_info, int *result)
 	char	c;
 
 	c = (char)va_arg(pargs, int);
-	if ((feild_info->flags | MINUS_ON) != MINUS_ON || feild_info->precision > 0)
+	if ((field_info->flags | MINUS_ON) != MINUS_ON || field_info->precision > 0)
 		*result = -1;
 	if (*result != -1)
 	{
-		if (feild_info->flags == ALL_OFF)
-			ft_putchar_iter(' ', feild_info->width - 1, result);
+		if (field_info->flags == ALL_OFF)
+			ft_putchar_iter(' ', field_info->width - 1, result);
 		write(1, &c, 1);
 		*result += 1;
-		if (feild_info->flags == MINUS_ON)
-			ft_putchar_iter(' ', feild_info->width - 1, result);
+		if (field_info->flags == MINUS_ON)
+			ft_putchar_iter(' ', field_info->width - 1, result);
 	}
 }
 
-void	ft_print_str(va_list pargs, t_info *feild_info, int *result)
+void	ft_print_str(va_list pargs, t_info *field_info, int *result)
 {
 //	(if) flags에 '-'외에도 존재하면
 //		error
@@ -80,23 +80,25 @@ void	ft_print_str(va_list pargs, t_info *feild_info, int *result)
 	int		len;
 
 	s = (char *)va_arg(pargs, char *);
+	if (s == NULL)
+		s = "(null)";
 	len = ft_strlen(s);
-	if ((feild_info->flags | MINUS_ON) != MINUS_ON)
+	if ((field_info->flags & PLUS_ON) || (field_info->flags & HASH_ON))
 		*result = -1;
 	if (*result != -1)
 	{
-		if (len >= feild_info->precision && feild_info->precision > -1)
-			len = feild_info->precision;
-		if (feild_info->flags == ALL_OFF)
-			ft_putchar_iter(' ', feild_info->width - len, result);
+		if (len >= field_info->precision && field_info->precision > -1)
+			len = field_info->precision;
+		if (field_info->flags == ALL_OFF)
+			ft_putchar_iter(' ', field_info->width - len, result);
 		write(1, s, len);
 		*result += len;
-		if (feild_info->flags == MINUS_ON)
-			ft_putchar_iter(' ', feild_info->width - len, result);
+		if (field_info->flags == MINUS_ON)
+			ft_putchar_iter(' ', field_info->width - len, result);
 	}
 }
 
-void	ft_print_ptr(va_list pargs, t_info *feild_info, int *result)
+void	ft_print_ptr(va_list pargs, t_info *field_info, int *result)
 {
 //	(if) flags가 '-'외에 또 존재하면
 //		error
@@ -117,20 +119,20 @@ void	ft_print_ptr(va_list pargs, t_info *feild_info, int *result)
 	addr = (size_t)va_arg(pargs, void *);
 	i = ft_num_to_hex(addr, array, 1, 0);
 	len = ft_strlen(&array[i]);
-	if ((feild_info->flags | MINUS_ON) != MINUS_ON)
+	if ((field_info->flags | MINUS_ON) != MINUS_ON)
 		*result = -1;
 	if (*result != -1)
 	{
-		if (feild_info->flags == ALL_OFF)
-			ft_putchar_iter(' ', feild_info->width - len, result);
+		if (field_info->flags == ALL_OFF)
+			ft_putchar_iter(' ', field_info->width - len, result);
 		write(1, &array[i], len);
 		*result += len;
-		if (feild_info->flags == MINUS_ON)
-			ft_putchar_iter(' ', feild_info->width - len, result);
+		if (field_info->flags == MINUS_ON)
+			ft_putchar_iter(' ', field_info->width - len, result);
 	}
 }
 
-void	ft_print_sint(va_list pargs, t_info *feild_info, int *result)
+void	ft_print_sint(va_list pargs, t_info *field_info, int *result)
 {
 //	(if) flags가 hash on일 경우
 //		error
@@ -155,37 +157,36 @@ void	ft_print_sint(va_list pargs, t_info *feild_info, int *result)
 	num = va_arg(pargs, int);
 	i = ft_num_to_str(num, array);
 	len = ft_strlen(&array[i]);
-	if (feild_info->flags & HASH_ON)
+	if (field_info->flags & HASH_ON)
 		*result = -1;
-	if ((feild_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
-		feild_info->flags -= ZERO_ON;
-	if ((feild_info->flags & PLUS_BLANK_ON) == PLUS_BLANK_ON)
-		feild_info->flags -= BLANK_ON;
-	if (feild_info->flags & PLUS_BLANK_ON)
-		feild_info->width -= 1;
-	if ((feild_info->flags & ZERO_ON) && (feild_info->precision >= 0))
-		feild_info->flags -= ZERO_ON;
-	if (feild_info->precision > len)
-		feild_info->width -= feild_info->precision - len;
+	if ((field_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
+		field_info->flags -= ZERO_ON;
+	if ((field_info->flags & PLUS_BLANK_ON) == PLUS_BLANK_ON)
+		field_info->flags -= BLANK_ON;
+	if ((field_info->flags & PLUS_BLANK_ON) || num < 0)
+		field_info->width -= 1;
+	if ((field_info->flags & ZERO_ON) && (field_info->precision >= 0))
+		field_info->flags -= ZERO_ON;
+	if (field_info->precision > len)
+		field_info->width -= field_info->precision - len;
+	if (num == 0 && field_info->precision == 0)
+		len = 0;
 	if (*result != -1)
 	{
-		if (!(feild_info->flags & MINUS_ON) && !(feild_info->flags & ZERO_ON))
-			ft_putchar_iter(' ', feild_info->width - len, result);
-		ft_putsign(feild_info, num, result);
-		if (feild_info->flags & ZERO_ON)
-			ft_putchar_iter('0', feild_info->width - len, result);
-		ft_putchar_iter('0', feild_info->precision - len, result);
-		if (!(num == 0 && feild_info->precision == 0))
-		{
-			write(1, &array[i], len);
-			*result += len;
-		}
-		if (feild_info->flags & MINUS_ON)
-			ft_putchar_iter(' ', feild_info->width - len, result);
+		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
+			ft_putchar_iter(' ', field_info->width - len, result);
+		ft_putsign(field_info, num, result);
+		if (field_info->flags & ZERO_ON)
+			ft_putchar_iter('0', field_info->width - len, result);
+		ft_putchar_iter('0', field_info->precision - len, result);
+		write(1, &array[i], len);
+		*result += len;
+		if (field_info->flags & MINUS_ON)
+			ft_putchar_iter(' ', field_info->width - len, result);
 	}
 }
 
-void	ft_print_uint(va_list pargs, t_info *feild_info, int *result)
+void	ft_print_uint(va_list pargs, t_info *field_info, int *result)
 {
 //	(if) flags가 minus, zero외에 또 존재하는 경우
 //		error
@@ -207,32 +208,31 @@ void	ft_print_uint(va_list pargs, t_info *feild_info, int *result)
 	num = va_arg(pargs, unsigned int);
 	i = ft_unum_to_str(num, array);
 	len = ft_strlen(&array[i]);
-	if ((feild_info->flags | MINUS_ZERO_ON) != MINUS_ZERO_ON)
+	if ((field_info->flags | MINUS_ZERO_ON) != MINUS_ZERO_ON)
 		*result = -1;
-	if ((feild_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
-		feild_info->flags -= ZERO_ON;
-	if ((feild_info->flags & ZERO_ON) && (feild_info->precision >= 0))
-		feild_info->flags -= ZERO_ON;
-	if (feild_info->precision > len)
-		feild_info->width -= feild_info->precision - len;
+	if ((field_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
+		field_info->flags -= ZERO_ON;
+	if ((field_info->flags & ZERO_ON) && (field_info->precision >= 0))
+		field_info->flags -= ZERO_ON;
+	if (field_info->precision > len)
+		field_info->width -= field_info->precision - len;
+	if (num == 0 && field_info->precision == 0)
+		len = 0;
 	if (*result != -1)
 	{
-		if (!(feild_info->flags & MINUS_ON) && !(feild_info->flags & ZERO_ON))
-			ft_putchar_iter(' ', feild_info->width - len, result);
-		if (feild_info->flags & ZERO_ON)
-			ft_putchar_iter('0', feild_info->width - len, result);
-		ft_putchar_iter('0', feild_info->precision - len, result);
-		if (!(num == 0 && feild_info->precision == 0))
-		{
-			write(1, &array[i], len);
-			*result += len;
-		}
-		if (feild_info->flags & MINUS_ON)
-			ft_putchar_iter(' ', feild_info->width - len, result);
+		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
+			ft_putchar_iter(' ', field_info->width - len, result);
+		if (field_info->flags & ZERO_ON)
+			ft_putchar_iter('0', field_info->width - len, result);
+		ft_putchar_iter('0', field_info->precision - len, result);
+		write(1, &array[i], len);
+		*result += len;
+		if (field_info->flags & MINUS_ON)
+			ft_putchar_iter(' ', field_info->width - len, result);
 	}
 }
 
-void	ft_print_lhex(va_list pargs, t_info *feild_info, int *result)
+void	ft_print_lhex(va_list pargs, t_info *field_info, int *result)
 {
 //	(if) flags가 plus, blank이면
 //		error
@@ -255,39 +255,38 @@ void	ft_print_lhex(va_list pargs, t_info *feild_info, int *result)
 	num = va_arg(pargs, unsigned int);
 	i = ft_num_to_hex(num, array, 0, 0);
 	len = ft_strlen(&array[i]);
-	if (feild_info->flags & PLUS_BLANK_ON)
+	if (field_info->flags & PLUS_BLANK_ON)
 		*result = -1;
-	if ((feild_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
-		feild_info->flags -= ZERO_ON;
-	if ((feild_info->flags & ZERO_ON) && (feild_info->precision >= 0))
-		feild_info->flags -= ZERO_ON;
-	if (feild_info->precision > len)
-		feild_info->width -= feild_info->precision - len;
-	if (feild_info->flags & HASH_ON)
-		feild_info->width -= 2;
+	if ((field_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
+		field_info->flags -= ZERO_ON;
+	if ((field_info->flags & ZERO_ON) && (field_info->precision >= 0))
+		field_info->flags -= ZERO_ON;
+	if (field_info->precision > len)
+		field_info->width -= field_info->precision - len;
+	if ((field_info->flags & HASH_ON) && num != 0)
+		field_info->width -= 2;
+	if (num == 0 && field_info->precision == 0)
+		len = 0;
 	if (*result != -1)
 	{
-		if (!(feild_info->flags & MINUS_ON) && !(feild_info->flags & ZERO_ON))
-			ft_putchar_iter(' ', feild_info->width - len, result);
-		if (feild_info->flags & HASH_ON)
+		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
+			ft_putchar_iter(' ', field_info->width - len, result);
+		if ((field_info->flags & HASH_ON) && num != 0)
 		{
 			write(1, "0x", 2);
 			*result += 2;
 		}
-		if (feild_info->flags & ZERO_ON)
-			ft_putchar_iter('0', feild_info->width - len, result);
-		ft_putchar_iter('0', feild_info->precision - len, result);
-		if (!(num == 0 && feild_info->precision == 0))
-		{
-			write(1, &array[i], len);
-			*result += len;
-		}
-		if (feild_info->flags & MINUS_ON)
-			ft_putchar_iter(' ', feild_info->width - len, result);
+		if (field_info->flags & ZERO_ON)
+			ft_putchar_iter('0', field_info->width - len, result);
+		ft_putchar_iter('0', field_info->precision - len, result);
+		write(1, &array[i], len);
+		*result += len;
+		if (field_info->flags & MINUS_ON)
+			ft_putchar_iter(' ', field_info->width - len, result);
 	}
 }
 
-void	ft_print_uhex(va_list pargs, t_info *feild_info, int *result)
+void	ft_print_uhex(va_list pargs, t_info *field_info, int *result)
 {
 	unsigned int	num;
 	char			array[19];
@@ -297,51 +296,50 @@ void	ft_print_uhex(va_list pargs, t_info *feild_info, int *result)
 	num = va_arg(pargs, unsigned int);
 	i = ft_num_to_hex(num, array, 0, 32);
 	len = ft_strlen(&array[i]);
-	if (feild_info->flags & PLUS_BLANK_ON)
+	if (field_info->flags & PLUS_BLANK_ON)
 		*result = -1;
-	if ((feild_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
-		feild_info->flags -= ZERO_ON;
-	if ((feild_info->flags & ZERO_ON) && (feild_info->precision >= 0))
-		feild_info->flags -= ZERO_ON;
-	if (feild_info->precision > len)
-		feild_info->width -= feild_info->precision - len;
-	if (feild_info->flags & HASH_ON)
-		feild_info->width -= 2;
+	if ((field_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
+		field_info->flags -= ZERO_ON;
+	if ((field_info->flags & ZERO_ON) && (field_info->precision >= 0))
+		field_info->flags -= ZERO_ON;
+	if (field_info->precision > len)
+		field_info->width -= field_info->precision - len;
+	if ((field_info->flags & HASH_ON) && num != 0)
+		field_info->width -= 2;
+	if (num == 0 && field_info->precision == 0)
+		len = 0;
 	if (*result != -1)
 	{
-		if (!(feild_info->flags & MINUS_ON) && !(feild_info->flags & ZERO_ON))
-			ft_putchar_iter(' ', feild_info->width - len, result);
-		if (feild_info->flags & HASH_ON)
+		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
+			ft_putchar_iter(' ', field_info->width - len, result);
+		if ((field_info->flags & HASH_ON) && num != 0)
 		{
 			write(1, "0X", 2);
 			*result += 2;
 		}
-		if (feild_info->flags & ZERO_ON)
-			ft_putchar_iter('0', feild_info->width - len, result);
-		ft_putchar_iter('0', feild_info->precision - len, result);
-		if (!(num == 0 && feild_info->precision == 0))
-		{
-			write(1, &array[i], len);
-			*result += len;
-		}
-		if (feild_info->flags & MINUS_ON)
-			ft_putchar_iter(' ', feild_info->width - len, result);
+		if (field_info->flags & ZERO_ON)
+			ft_putchar_iter('0', field_info->width - len, result);
+		ft_putchar_iter('0', field_info->precision - len, result);
+		write(1, &array[i], len);
+		*result += len;
+		if (field_info->flags & MINUS_ON)
+			ft_putchar_iter(' ', field_info->width - len, result);
 	}
 }
 
-void	ft_print_percent(va_list pargs, t_info *feild_info, int *result)
+void	ft_print_percent(va_list pargs, t_info *field_info, int *result)
 {
-	if ((feild_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
-		feild_info->flags -= ZERO_ON;
+	if ((field_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
+		field_info->flags -= ZERO_ON;
 	if (*result != -1)
 	{
-		if (!(feild_info->flags & MINUS_ON) && !(feild_info->flags & ZERO_ON))
-			ft_putchar_iter(' ', feild_info->width - 1, result);
-		if (feild_info->flags & ZERO_ON)
-			ft_putchar_iter('0', feild_info->width - 1, result);
+		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
+			ft_putchar_iter(' ', field_info->width - 1, result);
+		if (field_info->flags & ZERO_ON)
+			ft_putchar_iter('0', field_info->width - 1, result);
 		write(1, "%", 1);
 		*result += 1;
-		if (feild_info->flags & MINUS_ON)
-			ft_putchar_iter(' ', feild_info->width - 1, result);
+		if (field_info->flags & MINUS_ON)
+			ft_putchar_iter(' ', field_info->width - 1, result);
 	}
 }

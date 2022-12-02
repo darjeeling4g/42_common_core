@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_printf_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:16:28 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/01 16:25:22 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/02 16:46:12 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef FT_PRINTF_BONUS_H
+# define FT_PRINTF_BONUS_H
 
 #include <stdarg.h>
 #include "libft/libft.h"
@@ -54,18 +54,18 @@ void	ft_parse_percision(t_info *field_info, char **format);
 int		ft_parse_type(t_info *field_info, t_list **record, char **format);
 
 void	ft_printer(va_list pargs, t_list *record, int *result);
-void	ft_print_text(t_info *feild_info, int *result);
-void	ft_print_char(va_list pargs, t_info *feild_info, int *result);
-void	ft_print_str(va_list pargs, t_info *feild_info, int *result);
-void	ft_print_ptr(va_list pargs, t_info *feild_info, int *result);
-void	ft_print_sint(va_list pargs, t_info *feild_info, int *result);
-void	ft_print_uint(va_list pargs, t_info *feild_info, int *result);
-void	ft_print_lhex(va_list pargs, t_info *feild_info, int *result);
-void	ft_print_uhex(va_list pargs, t_info *feild_info, int *result);
-void	ft_print_percent(va_list pargs, t_info *feild_info, int *result);
+void	ft_print_text(t_info *field_info, int *result);
+void	ft_print_char(va_list pargs, t_info *field_info, int *result);
+void	ft_print_str(va_list pargs, t_info *field_info, int *result);
+void	ft_print_ptr(va_list pargs, t_info *field_info, int *result);
+void	ft_print_sint(va_list pargs, t_info *field_info, int *result);
+void	ft_print_uint(va_list pargs, t_info *field_info, int *result);
+void	ft_print_lhex(va_list pargs, t_info *field_info, int *result);
+void	ft_print_uhex(va_list pargs, t_info *field_info, int *result);
+void	ft_print_percent(va_list pargs, t_info *field_info, int *result);
 
 void	ft_putchar_iter(char c, int len, int *result);
-void	ft_putsign(t_info *feild_info, int num, int *result);
+void	ft_putsign(t_info *field_info, int num, int *result);
 int		ft_num_to_hex(size_t num, char *array, int is_addr, int is_upper);
 int		ft_num_to_str(int num, char *array);
 int		ft_unum_to_str(unsigned int num, char *array);

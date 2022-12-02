@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 15:51:17 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/01 16:54:20 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/02 16:45:47 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ int	ft_num_to_hex(size_t num, char *array, int is_addr, int is_upper)
 
 	ft_bzero(array, 19);
 	i = 17;
+	if (num == 0)
+	{
+		array[i] = '0';
+		i--;
+	}
 	while (num > 0)
 	{
 		if (num % 16 > 9)
@@ -115,7 +120,7 @@ int	ft_num_to_str(int num, char *array)
 	return (i);
 }
 
-void	ft_putsign(t_info *feild_info, int num, int *result)
+void	ft_putsign(t_info *field_info, int num, int *result)
 {
 //	(if) flags에 '+' or ' '이 있을 때
 //		(if) 양수일때
@@ -125,11 +130,11 @@ void	ft_putsign(t_info *feild_info, int num, int *result)
 //				' '출력
 //		(else if) 음수일때
 //			-출력
-//		feild_info->width -= 1
+//		field_info->width -= 1
 //		result++
 	char	flag;
 
-	flag = feild_info->flags;
+	flag = field_info->flags;
 	if (num >= 0)
 	{
 		if (flag & PLUS_ON)

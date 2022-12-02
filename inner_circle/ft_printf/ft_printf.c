@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:28:40 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/01 16:25:16 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/02 16:44:17 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,29 +83,29 @@ void	ft_printer(va_list pargs, t_list *record, int *result)
 //			print_percent
 //	(return) result
 
-	t_info	*feild_info;
+	t_info	*field_info;
 
 	while (record)
 	{
-		feild_info = record->content;
-		if (feild_info->type == TEXT)
-			ft_print_text(feild_info, result);
-		else if (feild_info->type == CHAR)
-			ft_print_char(pargs, feild_info, result);
-		else if (feild_info->type == STR)
-			ft_print_str(pargs, feild_info, result);
-		else if (feild_info->type == PTR)
-			ft_print_ptr(pargs, feild_info, result);
-		else if (feild_info->type == SINT)
-			ft_print_sint(pargs, feild_info, result);
-		else if (feild_info->type == UINT)
-			ft_print_uint(pargs, feild_info, result);
-		else if (feild_info->type == LHEX)
-			ft_print_lhex(pargs, feild_info, result);
-		else if (feild_info->type == UHEX)
-			ft_print_uhex(pargs, feild_info, result);
-		else if (feild_info->type == PERCENT)
-			ft_print_percent(pargs, feild_info, result);
+		field_info = record->content;
+		if (field_info->type == TEXT)
+			ft_print_text(field_info, result);
+		else if (field_info->type == CHAR)
+			ft_print_char(pargs, field_info, result);
+		else if (field_info->type == STR)
+			ft_print_str(pargs, field_info, result);
+		else if (field_info->type == PTR)
+			ft_print_ptr(pargs, field_info, result);
+		else if (field_info->type == SINT)
+			ft_print_sint(pargs, field_info, result);
+		else if (field_info->type == UINT)
+			ft_print_uint(pargs, field_info, result);
+		else if (field_info->type == LHEX)
+			ft_print_lhex(pargs, field_info, result);
+		else if (field_info->type == UHEX)
+			ft_print_uhex(pargs, field_info, result);
+		else if (field_info->type == PERCENT)
+			ft_print_percent(pargs, field_info, result);
 		record = record->next;
 	}
 }

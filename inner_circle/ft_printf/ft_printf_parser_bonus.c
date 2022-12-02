@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:07:38 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/01 16:54:40 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/02 15:59:23 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	ft_parse_width(t_info *field_info, char **format)
 		}
 		ptr = ft_substr(ptr, 0, num);
 		num = ft_atoi(ptr);
+		free(ptr);
 		field_info->width = num;
 	}
 }
@@ -81,6 +82,7 @@ void	ft_parse_percision(t_info *field_info, char **format)
 			}
 			ptr = ft_substr(ptr, 0, num);
 			num = ft_atoi(ptr);
+			free(ptr);
 			field_info->precision = num;
 		}
 		else

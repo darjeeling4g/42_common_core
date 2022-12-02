@@ -6,8 +6,7 @@ SRCS	= ft_printf.c \
 
 OBJS	= $(SRCS:.c=.o)
 
-SRCS_BONUS = $(SRCS) \
-			 ft_printf_bonus.c \
+SRCS_BONUS = ft_printf_bonus.c \
 			 ft_printf_parser_bonus.c \
 			 ft_printf_printer_bonus.c \
 			 ft_printer_utils_bonus.c \
@@ -22,24 +21,26 @@ CFLAGS	= -Wall -Wextra -Werror
 
 NAME	= libftprintf.a
 
+LIBFT	= libft.a
+
 all:		$(NAME)
 
 %.o:		%.c
 			$(CC) $(CFLAG) -c $^ -o $@
 
-$(NAME): $(OBJS)
-		make bonus -C libft
-		cp libft/libft.a $(NAME)
+$(NAME):	$(OBJS) $(LIBFT)
 		ar rc $(NAME) $(OBJS)
 
-bonus:		$(OBJS_BONUS)
+bonus:	$(OBJS_BONUS) $(LIBFT)
+		ar rc $(NAME) $(OBJS_BONUS)
+		touch bonus
+
+$(LIBFT) :
 		make bonus -C libft
-		cp libft/libft.a $(NAME)
-		ar rc $(NAME) $(OBJS) $(OBJS_BONUS)
-		make -t bonus
+		cp libft/$(LIBFT) $(NAME)
 
 clean:
-			$(RM) $(OBJS_BONUS)
+			$(RM) $(OBJS) $(OBJS_BONUS)
 
 fclean:		clean
 			$(RM) $(NAME)
