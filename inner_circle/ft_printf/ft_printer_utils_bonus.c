@@ -6,11 +6,11 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 15:51:17 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/02 16:45:47 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/03 18:12:23 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_bonus.h"
+#include "ft_printf.h"
 
 void	ft_putchar_iter(char c, int len, int *result)
 {
@@ -22,9 +22,10 @@ void	ft_putchar_iter(char c, int len, int *result)
 		return ;
 	while (len)
 	{
-		ft_putchar_fd(c, 1);
+		safe_write(1, &c, 1, result);
+		if (*result == -1)
+			return ;
 		len--;
-		*result += 1;
 	}
 }
 
@@ -139,18 +140,21 @@ void	ft_putsign(t_info *field_info, int num, int *result)
 	{
 		if (flag & PLUS_ON)
 		{
-			write(1, "+", 1);
-			*result += 1;
+			safe_write(1, "+", 1, result);
+			if (*result == -1)
+				return ;
 		}
 		else if (flag & BLANK_ON)
 		{
-			write(1, " ", 1);
-			*result += 1;
+			safe_write(1, " ", 1, result);
+			if (*result == -1)
+				return ;
 		}
 	}
 	else
 	{
-		write (1, "-", 1);
-		*result += 1;
+		safe_write (1, "-", 1, result);
+		if (*result == -1)
+			return ;
 	}
 }

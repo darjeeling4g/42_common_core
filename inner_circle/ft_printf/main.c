@@ -67,9 +67,6 @@ int res;
 //res = printf(" % s ", "");
 //printf("\nprintf : %d\n", res);
 
-res = ft_printf("%073.83x%00056.187d%-%%-78.56X%-104.170X" ,898043181u,1522753180,2837283853u,207713687u);
-printf("\nft_printf : %d\n", res);
-
 //	ft_printf("%c, %c, %c", '5', 'x', '\n');
 //	printf("%c, %c, %c", '5', 'x', '\n');
 //	ft_printf("%1c, %1c, %1c", '5', 'x', '\n');

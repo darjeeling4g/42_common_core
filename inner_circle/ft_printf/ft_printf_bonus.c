@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:28:40 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/02 16:46:37 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/03 18:43:21 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_bonus.h"
+#include "ft_printf.h"
 
 int	ft_printf(const char *format, ...)
 {
@@ -44,14 +44,14 @@ int	ft_parser(t_list **record, char *format)
 			return (-1);
 		ft_field_init(field_info);
 		if (*format != '%')
-			ft_parse_text(field_info, record, &format);
+			error = ft_parse_text(field_info, record, &format);
 		else if (*format == '%')
 		{
 			format = format + 1;
 			ft_parse_flags(field_info, &format);
-			ft_parse_width(field_info, &format);
-			ft_parse_percision(field_info, &format);
-			error = ft_parse_type(field_info, record, &format);
+			error = ft_parse_width(field_info, &format, error);
+			error = ft_parse_percision(field_info, &format, error);
+			error = ft_parse_type(field_info, record, &format, error);
 		}
 		if (error == -1)
 			break ;

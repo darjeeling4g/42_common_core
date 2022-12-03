@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_bonus.h                                  :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:16:28 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/02 16:46:12 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/03 18:44:06 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_BONUS_H
-# define FT_PRINTF_BONUS_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 #include <stdarg.h>
 #include "libft/libft.h"
@@ -45,13 +45,14 @@ int		ft_printf(const char *format, ...);
 
 void	ft_del_info(void *field_info);
 void	ft_field_init(t_info *field_info);
+void	safe_write(int fd, char *ptr, int len, int *result);
 
 int		ft_parser(t_list **record, char *format);
-void	ft_parse_text(t_info *field_info, t_list **record, char **format);
+int		ft_parse_text(t_info *field_info, t_list **record, char **format);
 void	ft_parse_flags(t_info *field_info, char **format);
-void	ft_parse_width(t_info *field_info, char **format);
-void	ft_parse_percision(t_info *field_info, char **format);
-int		ft_parse_type(t_info *field_info, t_list **record, char **format);
+int		ft_parse_width(t_info *field_info, char **format, int error);
+int		ft_parse_percision(t_info *field_info, char **format, int error);
+int		ft_parse_type(t_info *field_info, t_list **record, char **format, int error);
 
 void	ft_printer(va_list pargs, t_list *record, int *result);
 void	ft_print_text(t_info *field_info, int *result);

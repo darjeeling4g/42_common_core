@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_printer_bonus.c                          :+:      :+:    :+:   */
+/*   ft_printf_printer.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:47:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/02 18:16:17 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/03 20:44:08 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf_bonus.h"
+# include "ft_printf.h"
 
 void	ft_print_text(t_info *field_info, int *result)
 {
@@ -28,9 +28,10 @@ void	ft_print_text(t_info *field_info, int *result)
 		end = field_info->end;
 		while (start != end)
 		{
-			write(1, start, 1);
+			safe_write(1, start, 1, result);
+			if (*result == -1)
+				return ;
 			start++;
-			*result += 1;
 		}
 	}
 }
@@ -55,10 +56,15 @@ void	ft_print_char(va_list pargs, t_info *field_info, int *result)
 	{
 		if (field_info->flags == ALL_OFF)
 			ft_putchar_iter(' ', field_info->width - 1, result);
-		write(1, &c, 1);
-		*result += 1;
+		if (*result == -1)
+			return ;
+		safe_write(1, &c, 1, result);
+		if (*result == -1)
+			return ;
 		if (field_info->flags == MINUS_ON)
 			ft_putchar_iter(' ', field_info->width - 1, result);
+		if (*result == -1)
+			return ;
 	}
 }
 
@@ -89,12 +95,17 @@ void	ft_print_str(va_list pargs, t_info *field_info, int *result)
 	{
 		if (len >= field_info->precision && field_info->precision > -1)
 			len = field_info->precision;
-		if (field_info->flags == ALL_OFF)
+		if (!(field_info->flags & MINUS_ON))
 			ft_putchar_iter(' ', field_info->width - len, result);
-		write(1, s, len);
-		*result += len;
+		if (*result == -1)
+			return ;
+		safe_write(1, s, len, result);
+		if (*result == -1)
+			return ;
 		if (field_info->flags == MINUS_ON)
 			ft_putchar_iter(' ', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 	}
 }
 
@@ -125,10 +136,15 @@ void	ft_print_ptr(va_list pargs, t_info *field_info, int *result)
 	{
 		if (field_info->flags == ALL_OFF)
 			ft_putchar_iter(' ', field_info->width - len, result);
-		write(1, &array[i], len);
-		*result += len;
+		if (*result == -1)
+			return ;
+		safe_write(1, &array[i], len, result);
+		if (*result == -1)
+			return ;
 		if (field_info->flags == MINUS_ON)
 			ft_putchar_iter(' ', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 	}
 }
 
@@ -175,14 +191,25 @@ void	ft_print_sint(va_list pargs, t_info *field_info, int *result)
 	{
 		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
 			ft_putchar_iter(' ', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 		ft_putsign(field_info, num, result);
+		if (*result == -1)
+			return ;
 		if (field_info->flags & ZERO_ON)
 			ft_putchar_iter('0', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 		ft_putchar_iter('0', field_info->precision - len, result);
-		write(1, &array[i], len);
-		*result += len;
+		if (*result == -1)
+			return ;
+		safe_write(1, &array[i], len, result);
+		if (*result == -1)
+			return ;
 		if (field_info->flags & MINUS_ON)
 			ft_putchar_iter(' ', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 	}
 }
 
@@ -222,13 +249,22 @@ void	ft_print_uint(va_list pargs, t_info *field_info, int *result)
 	{
 		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
 			ft_putchar_iter(' ', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 		if (field_info->flags & ZERO_ON)
 			ft_putchar_iter('0', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 		ft_putchar_iter('0', field_info->precision - len, result);
-		write(1, &array[i], len);
-		*result += len;
+		if (*result == -1)
+			return ;
+		safe_write(1, &array[i], len, result);
+		if (*result == -1)
+			return ;
 		if (field_info->flags & MINUS_ON)
 			ft_putchar_iter(' ', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 	}
 }
 
@@ -271,18 +307,28 @@ void	ft_print_lhex(va_list pargs, t_info *field_info, int *result)
 	{
 		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
 			ft_putchar_iter(' ', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 		if ((field_info->flags & HASH_ON) && num != 0)
 		{
-			write(1, "0x", 2);
-			*result += 2;
+			safe_write(1, "0x", 2, result);
+			if (*result == -1)
+				return ;
 		}
 		if (field_info->flags & ZERO_ON)
 			ft_putchar_iter('0', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 		ft_putchar_iter('0', field_info->precision - len, result);
-		write(1, &array[i], len);
-		*result += len;
+		if (*result == -1)
+			return ;
+		safe_write(1, &array[i], len, result);
+		if (*result == -1)
+			return ;
 		if (field_info->flags & MINUS_ON)
 			ft_putchar_iter(' ', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 	}
 }
 
@@ -312,18 +358,28 @@ void	ft_print_uhex(va_list pargs, t_info *field_info, int *result)
 	{
 		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
 			ft_putchar_iter(' ', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 		if ((field_info->flags & HASH_ON) && num != 0)
 		{
-			write(1, "0X", 2);
-			*result += 2;
+			safe_write(1, "0X", 2, result);
+			if (*result == -1)
+				return ;
 		}
 		if (field_info->flags & ZERO_ON)
 			ft_putchar_iter('0', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 		ft_putchar_iter('0', field_info->precision - len, result);
-		write(1, &array[i], len);
-		*result += len;
+		if (*result == -1)
+			return ;
+		safe_write(1, &array[i], len, result);
+		if (*result == -1)
+			return ;
 		if (field_info->flags & MINUS_ON)
 			ft_putchar_iter(' ', field_info->width - len, result);
+		if (*result == -1)
+			return ;
 	}
 }
 
@@ -335,11 +391,37 @@ void	ft_print_percent(va_list pargs, t_info *field_info, int *result)
 	{
 		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
 			ft_putchar_iter(' ', field_info->width - 1, result);
+		if (*result == -1)
+			return ;
 		if (field_info->flags & ZERO_ON)
 			ft_putchar_iter('0', field_info->width - 1, result);
-		write(1, "%", 1);
-		*result += 1;
+		if (*result == -1)
+			return ;
+		safe_write(1, "%", 1, result);
+		if (*result == -1)
+			return ;
 		if (field_info->flags & MINUS_ON)
 			ft_putchar_iter(' ', field_info->width - 1, result);
+		if (*result == -1)
+			return ;
 	}
+}
+
+void	safe_write(int fd, char *ptr, int len, int *result)
+{
+	ssize_t	byte;
+	size_t	offjet;
+
+	offjet = 0;
+	while (offjet < len)
+	{
+		byte = write(fd, ptr + offjet, len - offjet);
+		if (byte < 0)
+		{
+			*result = -1;
+			return ;
+		}
+		offjet += byte;
+	}
+	*result += len;
 }

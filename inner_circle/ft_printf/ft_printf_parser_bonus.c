@@ -1,40 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_parser_bonus.c                           :+:      :+:    :+:   */
+/*   ft_printf_parser.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:07:38 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/02 15:59:23 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/03 18:46:05 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_bonus.h"
+#include "ft_printf.h"
 
-void	ft_parse_text(t_info *field_info, t_list **record, char **format)
+int	ft_parse_text(t_info *field_info, t_list **record, char **format)
 {
+	t_list	*new;
+
 	field_info->type = TEXT;
 	field_info->start = *format;
 	while (**format != '%' && **format != 0)
 		*format += 1;
 	field_info->end = *format;
-	ft_lstadd_back(record, ft_lstnew(field_info));
+	new = ft_lstnew(field_info);
+	if (new == NULL)
+	{
+		free(field_info);
+		return (-1);
+	}
+	ft_lstadd_back(record, new);
+	return (0);
 }
 
 void	ft_parse_flags(t_info *field_info, char **format)
 {
 	while (**format)
 	{
-		if (**format == '-' && (field_info->flags & MINUS_ON) == ALL_OFF)
+		if (**format == '-')
 			field_info->flags = field_info->flags | MINUS_ON;
-		else if (**format == '+' && (field_info->flags & PLUS_ON) == ALL_OFF)
+		else if (**format == '+')
 			field_info->flags = field_info->flags | PLUS_ON;
-		else if (**format == ' ' && (field_info->flags & BLANK_ON) == ALL_OFF)
+		else if (**format == ' ')
 			field_info->flags = field_info->flags | BLANK_ON;
-		else if (**format == '0' && (field_info->flags & ZERO_ON) == ALL_OFF)
+		else if (**format == '0')
 			field_info->flags = field_info->flags | ZERO_ON;
-		else if (**format == '#' && (field_info->flags & HASH_ON) == ALL_OFF)
+		else if (**format == '#')
 			field_info->flags = field_info->flags | HASH_ON;
 		else
 			break ;
@@ -42,11 +51,13 @@ void	ft_parse_flags(t_info *field_info, char **format)
 	}
 }
 
-void	ft_parse_width(t_info *field_info, char **format)
+int	ft_parse_width(t_info *field_info, char **format, int error)
 {
 	char	*ptr;
 	int		num;
 
+	if (error == -1)
+		return (-1);
 	if (**format >= '1' && **format <= '9')
 	{
 		num = 0;
@@ -57,17 +68,25 @@ void	ft_parse_width(t_info *field_info, char **format)
 			num++;
 		}
 		ptr = ft_substr(ptr, 0, num);
+		if (ptr == NULL)
+		{
+			free(field_info);
+			return (-1);
+		}
 		num = ft_atoi(ptr);
 		free(ptr);
 		field_info->width = num;
 	}
+	return (0);
 }
 
-void	ft_parse_percision(t_info *field_info, char **format)
+int	ft_parse_percision(t_info *field_info, char **format, int error)
 {
 	char	*ptr;
 	int		num;
 
+	if (error == -1)
+		return (-1);
 	if (**format == '.')
 	{
 		*format += 1;
@@ -81,6 +100,11 @@ void	ft_parse_percision(t_info *field_info, char **format)
 				num++;
 			}
 			ptr = ft_substr(ptr, 0, num);
+			if (ptr == NULL)
+			{
+				free(field_info);
+				return (-1);
+			}
 			num = ft_atoi(ptr);
 			free(ptr);
 			field_info->precision = num;
@@ -88,10 +112,15 @@ void	ft_parse_percision(t_info *field_info, char **format)
 		else
 			field_info->precision = 0;
 	}
+	return (0);
 }
 
-int	ft_parse_type(t_info *field_info, t_list **record, char **format)
+int	ft_parse_type(t_info *field_info, t_list **record, char **format, int error)
 {
+	t_list	*new;
+
+	if (error == -1)
+		return (-1);
 	if (**format == 'c')
 		field_info->type = CHAR;
 	else if (**format == 's')
@@ -110,7 +139,13 @@ int	ft_parse_type(t_info *field_info, t_list **record, char **format)
 		field_info->type = PERCENT;
 	else
 		return (-1);
-	ft_lstadd_back(record, ft_lstnew(field_info));
+	new = ft_lstnew(field_info);
+	if (new == NULL)
+	{
+		free(field_info);
+		return (-1);
+	}
+	ft_lstadd_back(record, new);
 	*format += 1;
 	return (0);
 }
