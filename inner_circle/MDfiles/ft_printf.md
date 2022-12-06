@@ -218,8 +218,7 @@ avg2: 1285.169840
 
 
 #### 추가 고려사항
-- result 가 int를 초과했을 때 에러
-	- long long을 초과했을 경우에는 정상임 ==> width, precision에 값이 담길때 atoi를 거치기 때문으로 추측됨(atoi가 ll까지 받지만 int초과하는 수에 대해서 에러)
+- width가 int범위를 초과했을 경우 -> 오류반환
 
 ## Mandatory part
 
