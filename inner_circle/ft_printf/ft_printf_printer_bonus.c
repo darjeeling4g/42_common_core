@@ -6,82 +6,41 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:47:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/12/03 20:44:08 by siyang           ###   ########.fr       */
+/*   Updated: 2022/12/06 15:02:58 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
-void	ft_print_text(t_info *field_info, int *result)
+void	ft_print_text(t_info *field, int *result)
 {
-//	(if) result != -1 일때 : 출력 중 오류가 발생하지 않았을 때만 실행
-	//	(while) start부터 end까지
-	//		write
-	//		result++
-
 	char	*start;
 	char	*end;
 
 	if (*result != -1)
 	{
-		start = field_info->start;
-		end = field_info->end;
-		while (start != end)
-		{
-			safe_write(1, start, 1, result);
-			if (*result == -1)
-				return ;
-			start++;
-		}
+		start = field->start;
+		end = field->end;
+		safe_write(1, start, end - start, result);
 	}
 }
 
-void	ft_print_char(va_list pargs, t_info *field_info, int *result)
+void	ft_print_char(va_list pargs, t_info *field, int *result)
 {
-//	(if) + ' ' 0 # || percision(with n)
-//		에러 처리
-//	(if) 출력 과정 중 오류가 반환되지 않았을 때
-//		width : 1보다 클때 좌측에 공백
-//		percision(default) : 변화 없음
-//		- : width가 1보다 클때 우측으로 공백
-//		va_arg로 pargs값 출력
-//		pargs 길이만큼 결과값 증가
-
 	char	c;
 
 	c = (char)va_arg(pargs, int);
-	if ((field_info->flags | MINUS_ON) != MINUS_ON || field_info->precision > 0)
+	if ((field->flags | MINUS_ON) != MINUS_ON || field->precision > 0)
 		*result = -1;
-	if (*result != -1)
-	{
-		if (field_info->flags == ALL_OFF)
-			ft_putchar_iter(' ', field_info->width - 1, result);
-		if (*result == -1)
-			return ;
-		safe_write(1, &c, 1, result);
-		if (*result == -1)
-			return ;
-		if (field_info->flags == MINUS_ON)
-			ft_putchar_iter(' ', field_info->width - 1, result);
-		if (*result == -1)
-			return ;
-	}
+	if (field->flags == ALL_OFF)
+		ft_putchar_iter(' ', field->width - 1, result);
+	safe_write(1, &c, 1, result);
+	if (field->flags == MINUS_ON)
+		ft_putchar_iter(' ', field->width - 1, result);
 }
 
-void	ft_print_str(va_list pargs, t_info *field_info, int *result)
+void	ft_print_str(va_list pargs, t_info *field, int *result)
 {
-//	(if) flags에 '-'외에도 존재하면
-//		error
-//	(if) 출력 중 오류가 반환되지 않았을 때
-//		width : len보다 클때 좌측에 공백
-//		precision(default) : 문자열이 출력되지 않음
-//		precision(with n) : 출력할 문자열의 최대 길이 제한 / 설정한 길이가 문자열보다 크다면 원래 문자열 출력
-//		(if) flags가 없을 때
-//			좌측 공백 출력
-//		precision 크기만큼 문자열 출력
-//		(if) minus가 있을 때
-//			우측 공백 출력
-
 	char	*s;
 	int		len;
 
@@ -89,39 +48,19 @@ void	ft_print_str(va_list pargs, t_info *field_info, int *result)
 	if (s == NULL)
 		s = "(null)";
 	len = ft_strlen(s);
-	if ((field_info->flags & PLUS_ON) || (field_info->flags & HASH_ON))
+	if ((field->flags & PLUS_ON) || (field->flags & HASH_ON))
 		*result = -1;
-	if (*result != -1)
-	{
-		if (len >= field_info->precision && field_info->precision > -1)
-			len = field_info->precision;
-		if (!(field_info->flags & MINUS_ON))
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-		safe_write(1, s, len, result);
-		if (*result == -1)
-			return ;
-		if (field_info->flags == MINUS_ON)
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-	}
+	if (len >= field->precision && field->precision > -1)
+		len = field->precision;
+	if (!(field->flags & MINUS_ON))
+		ft_putchar_iter(' ', field->width - len, result);
+	safe_write(1, s, len, result);
+	if (field->flags == MINUS_ON)
+		ft_putchar_iter(' ', field->width - len, result);
 }
 
-void	ft_print_ptr(va_list pargs, t_info *field_info, int *result)
+void	ft_print_ptr(va_list pargs, t_info *field, int *result)
 {
-//	(if) flags가 '-'외에 또 존재하면
-//		error
-//	(if) 출력 중 오류가 반환되지 않았을때,
-//		width : len보다 클때 좌측에 공백
-//		precision(default) : 정확도 무시
-//	(if) flags 가 없을 때
-//		좌측 공백출력
-//	포인터 변수 값(메모리 주소) 16진수 변환 후 출력
-//	(if) minus일때
-//		우측 공백출력
-
 	size_t	addr;
 	char	array[19];
 	int		i;
@@ -130,298 +69,24 @@ void	ft_print_ptr(va_list pargs, t_info *field_info, int *result)
 	addr = (size_t)va_arg(pargs, void *);
 	i = ft_num_to_hex(addr, array, 1, 0);
 	len = ft_strlen(&array[i]);
-	if ((field_info->flags | MINUS_ON) != MINUS_ON)
+	if ((field->flags | MINUS_ON) != MINUS_ON)
 		*result = -1;
-	if (*result != -1)
-	{
-		if (field_info->flags == ALL_OFF)
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-		safe_write(1, &array[i], len, result);
-		if (*result == -1)
-			return ;
-		if (field_info->flags == MINUS_ON)
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-	}
+	if (field->flags == ALL_OFF)
+		ft_putchar_iter(' ', field->width - len, result);
+	safe_write(1, &array[i], len, result);
+	if (field->flags == MINUS_ON)
+		ft_putchar_iter(' ', field->width - len, result);
 }
 
-void	ft_print_sint(va_list pargs, t_info *field_info, int *result)
+void	ft_print_percent(va_list pargs, t_info *field, int *result)
 {
-//	(if) flags가 hash on일 경우
-//		error
-//	(if) flags가 plus on이면서 blank on일 경우
-//		plus on만 적용
-//	(if) flags가 minus on이면서 zero on일 경우
-//		minus on만 적용
-//	(if) 출력 중 오류가 반환되지 않았을 때
-//		width : len보다 클때 좌측 공백
-//		precision(default) : 0 flags를 무시한다
-//		precision(with n) : len보다 작으면 무시, len보다 크면 남는자리 0으로 대체 / width는 precision 적용한 길이를 제외하고 적용됨
-//		(if) flags가 없으면 좌측 공백 (zero on일 경우 0으로 대체)
-//		precision 적용된 10진수 출력(+, ' ' 옵션 적용시 부호출력)
-//		precision이 0이면서 nbr이 0인경우 0을 출력하지 않음
-//		(if) minus면 우측공백
-
-	int		num;
-	char	array[11];
-	int		i;
-	int		len;
-
-	num = va_arg(pargs, int);
-	i = ft_num_to_str(num, array);
-	len = ft_strlen(&array[i]);
-	if (field_info->flags & HASH_ON)
-		*result = -1;
-	if ((field_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
-		field_info->flags -= ZERO_ON;
-	if ((field_info->flags & PLUS_BLANK_ON) == PLUS_BLANK_ON)
-		field_info->flags -= BLANK_ON;
-	if ((field_info->flags & PLUS_BLANK_ON) || num < 0)
-		field_info->width -= 1;
-	if ((field_info->flags & ZERO_ON) && (field_info->precision >= 0))
-		field_info->flags -= ZERO_ON;
-	if (field_info->precision > len)
-		field_info->width -= field_info->precision - len;
-	if (num == 0 && field_info->precision == 0)
-		len = 0;
-	if (*result != -1)
-	{
-		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-		ft_putsign(field_info, num, result);
-		if (*result == -1)
-			return ;
-		if (field_info->flags & ZERO_ON)
-			ft_putchar_iter('0', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-		ft_putchar_iter('0', field_info->precision - len, result);
-		if (*result == -1)
-			return ;
-		safe_write(1, &array[i], len, result);
-		if (*result == -1)
-			return ;
-		if (field_info->flags & MINUS_ON)
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-	}
-}
-
-void	ft_print_uint(va_list pargs, t_info *field_info, int *result)
-{
-//	(if) flags가 minus, zero외에 또 존재하는 경우
-//		error
-//	(if) flags가 minus on이면서 zero on일 경우
-//		minus on만 적용
-//	(if) 출력 중 오류가 반환되지 않았을 때
-//		width : len보다 길면 좌측 공백
-//		precision(default) : 0 flags를 무시한다
-//		precision(with n) : len보다 작으면 무시, len보다 크면 남는자리 0으로 대체 / width는 precision 적용한 길이를 제외하고 적용됨
-//		(if) flags가 없으면 좌측 공백 (zero on일 경우 0으로 대체)
-//		precision 적용된 10진수 출력
-//		precision이 0이면서 nbr이 0인경우 0을 출력하지 않음
-//		(if) minus면 우측공백
-	unsigned int	num;
-	char			array[11];
-	int				i;
-	int				len;
-
-	num = va_arg(pargs, unsigned int);
-	i = ft_unum_to_str(num, array);
-	len = ft_strlen(&array[i]);
-	if ((field_info->flags | MINUS_ZERO_ON) != MINUS_ZERO_ON)
-		*result = -1;
-	if ((field_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
-		field_info->flags -= ZERO_ON;
-	if ((field_info->flags & ZERO_ON) && (field_info->precision >= 0))
-		field_info->flags -= ZERO_ON;
-	if (field_info->precision > len)
-		field_info->width -= field_info->precision - len;
-	if (num == 0 && field_info->precision == 0)
-		len = 0;
-	if (*result != -1)
-	{
-		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-		if (field_info->flags & ZERO_ON)
-			ft_putchar_iter('0', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-		ft_putchar_iter('0', field_info->precision - len, result);
-		if (*result == -1)
-			return ;
-		safe_write(1, &array[i], len, result);
-		if (*result == -1)
-			return ;
-		if (field_info->flags & MINUS_ON)
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-	}
-}
-
-void	ft_print_lhex(va_list pargs, t_info *field_info, int *result)
-{
-//	(if) flags가 plus, blank이면
-//		error
-//	(if) flags가 minus on이면서 zero on일 경우
-//		minus on만 적용
-//	(if) 출력 중 오류가 반환되지 않았을 때
-//		width : len보다 길면 좌측 공백
-//		precision(default) : 0 flags를 무시한다
-//		precision(with n) : len보다 작으면 무시, len보다 크면 남는자리 0으로 대체 / width는 precision 적용한 길이를 제외하고 적용됨
-//		hash : hex이므로 출력값 앞에 0x를 추가한다
-//		(if) flags가 없으면 좌측 공백 (zero on일 경우 0으로 대체)
-//		precision 적용된 10진수 출력
-//		precision이 0이면서 nbr이 0인경우 0을 출력하지 않음
-//		(if) minus면 우측공백
-	unsigned int	num;
-	char			array[19];
-	int				i;
-	int				len;
-
-	num = va_arg(pargs, unsigned int);
-	i = ft_num_to_hex(num, array, 0, 0);
-	len = ft_strlen(&array[i]);
-	if (field_info->flags & PLUS_BLANK_ON)
-		*result = -1;
-	if ((field_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
-		field_info->flags -= ZERO_ON;
-	if ((field_info->flags & ZERO_ON) && (field_info->precision >= 0))
-		field_info->flags -= ZERO_ON;
-	if (field_info->precision > len)
-		field_info->width -= field_info->precision - len;
-	if ((field_info->flags & HASH_ON) && num != 0)
-		field_info->width -= 2;
-	if (num == 0 && field_info->precision == 0)
-		len = 0;
-	if (*result != -1)
-	{
-		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-		if ((field_info->flags & HASH_ON) && num != 0)
-		{
-			safe_write(1, "0x", 2, result);
-			if (*result == -1)
-				return ;
-		}
-		if (field_info->flags & ZERO_ON)
-			ft_putchar_iter('0', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-		ft_putchar_iter('0', field_info->precision - len, result);
-		if (*result == -1)
-			return ;
-		safe_write(1, &array[i], len, result);
-		if (*result == -1)
-			return ;
-		if (field_info->flags & MINUS_ON)
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-	}
-}
-
-void	ft_print_uhex(va_list pargs, t_info *field_info, int *result)
-{
-	unsigned int	num;
-	char			array[19];
-	int				i;
-	int				len;
-
-	num = va_arg(pargs, unsigned int);
-	i = ft_num_to_hex(num, array, 0, 32);
-	len = ft_strlen(&array[i]);
-	if (field_info->flags & PLUS_BLANK_ON)
-		*result = -1;
-	if ((field_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
-		field_info->flags -= ZERO_ON;
-	if ((field_info->flags & ZERO_ON) && (field_info->precision >= 0))
-		field_info->flags -= ZERO_ON;
-	if (field_info->precision > len)
-		field_info->width -= field_info->precision - len;
-	if ((field_info->flags & HASH_ON) && num != 0)
-		field_info->width -= 2;
-	if (num == 0 && field_info->precision == 0)
-		len = 0;
-	if (*result != -1)
-	{
-		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-		if ((field_info->flags & HASH_ON) && num != 0)
-		{
-			safe_write(1, "0X", 2, result);
-			if (*result == -1)
-				return ;
-		}
-		if (field_info->flags & ZERO_ON)
-			ft_putchar_iter('0', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-		ft_putchar_iter('0', field_info->precision - len, result);
-		if (*result == -1)
-			return ;
-		safe_write(1, &array[i], len, result);
-		if (*result == -1)
-			return ;
-		if (field_info->flags & MINUS_ON)
-			ft_putchar_iter(' ', field_info->width - len, result);
-		if (*result == -1)
-			return ;
-	}
-}
-
-void	ft_print_percent(va_list pargs, t_info *field_info, int *result)
-{
-	if ((field_info->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
-		field_info->flags -= ZERO_ON;
-	if (*result != -1)
-	{
-		if (!(field_info->flags & MINUS_ON) && !(field_info->flags & ZERO_ON))
-			ft_putchar_iter(' ', field_info->width - 1, result);
-		if (*result == -1)
-			return ;
-		if (field_info->flags & ZERO_ON)
-			ft_putchar_iter('0', field_info->width - 1, result);
-		if (*result == -1)
-			return ;
-		safe_write(1, "%", 1, result);
-		if (*result == -1)
-			return ;
-		if (field_info->flags & MINUS_ON)
-			ft_putchar_iter(' ', field_info->width - 1, result);
-		if (*result == -1)
-			return ;
-	}
-}
-
-void	safe_write(int fd, char *ptr, int len, int *result)
-{
-	ssize_t	byte;
-	size_t	offjet;
-
-	offjet = 0;
-	while (offjet < len)
-	{
-		byte = write(fd, ptr + offjet, len - offjet);
-		if (byte < 0)
-		{
-			*result = -1;
-			return ;
-		}
-		offjet += byte;
-	}
-	*result += len;
+	if ((field->flags & MINUS_ZERO_ON) == MINUS_ZERO_ON)
+		field->flags -= ZERO_ON;
+	if (!(field->flags & MINUS_ON) && !(field->flags & ZERO_ON))
+		ft_putchar_iter(' ', field->width - 1, result);
+	if (field->flags & ZERO_ON)
+		ft_putchar_iter('0', field->width - 1, result);
+	safe_write(1, "%", 1, result);
+	if (field->flags & MINUS_ON)
+		ft_putchar_iter(' ', field->width - 1, result);
 }
