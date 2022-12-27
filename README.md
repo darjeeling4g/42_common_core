@@ -21,7 +21,7 @@
 
 [![siyang's 42 ft_printf Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/2871221)](https://github.com/JaeSeoKim/badge42)
 
-#### [Born2beRoot](./inner_circle/MDfiles/Born2beRoot.md)
+#### [Born2beRoot](./inner_circle/MDfiles/born2beroot.md)
 > "You can do anything you want to do. This is your world."
 
 [![siyang's 42 Born2beroot Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/2872381)](https://github.com/JaeSeoKim/badge42)
