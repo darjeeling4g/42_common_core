@@ -25,3 +25,14 @@
 > "You can do anything you want to do. This is your world."
 
 [![siyang's 42 Born2beroot Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/2872381)](https://github.com/JaeSeoKim/badge42)
+
+### Circle '2'
+
+#### [fdf](./inner_circle/MDfiles/fdf.md)
+> "Wireframe model"
+
+#### [pipex](./inner_circle/MDfiles/pipex.md)
+> "Handling pipes"
+
+#### [push\_swap](./inner_circle/MDfiles/push_swap.md)
+> "Because Swap\_push isn’t as natural"
