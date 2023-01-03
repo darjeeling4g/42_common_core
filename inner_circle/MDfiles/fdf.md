@@ -88,24 +88,172 @@
 	- `bits_per_pixel` : depth of the image = the number of bits needed to represent a pixel color
 	- `size_line` : the number of bytes used to store one line of the image in memory
 		> this information is needed to move from one line to another in the image
-	- `endian` : 
+	- `endian` : little endian(endian == 0), big endian(endian == 1)
+		> endian : 메모리상에 byte가 표현되는 방법
+		>> Big endian : 큰 단위가 먼저 표현되는 것  
+		>> Little endian : 작은 단위가 먼저 표현되는 것
 - Return : Information about the created image, allowing a user to modify it later
+	- `bits_per_pixel` : the color of the first pixel in the first line of the image
+	- `size_line` : the address to get begining of the second line
 
 ##### `unsigned int mlx_get_color_value(void *mlx_ptr, int color);`
+- Parameters
+	- `mlx_ptr` : Screen Connection Identifier
+	- `color` : a standard RGB color
+- Return : color parameter to unsigned int value
 
 ##### `void *mlx_xpm_to_image(void *mlx_ptr, char **xpm_data, int *width, int *height);`
+- Parameters
+	- `mlx_ptr` : Screen Connection Identifier
+	- `xpm_data` : xpm data
+	- `width` : width of image
+	- `height` : height of image
+- Return : non-null pointer as an image identifier
+	> if an error occurs, return NULL
 
 ##### `void *mlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width, int *height);`
+- Parameters
+	- `mlx_ptr` : Screen Connection Identifier
+	- `filename` : xpm filename
+	- `width` : width of image
+	- `height` : height of image
+- Return : non-null pointer as an image identifier
+	> if an error occurs, return NULL
 
 ##### `void *mlx_png_file_to_image(void *mlx_ptr, char *filename, int *width, int *height);`
+- Parameters
+	- `mlx_ptr` : Screen Connection Identifier
+	- `filename` : png filename
+	- `width` : width of image
+	- `height` : height of image
+- Return : non-null pointer as an image identifier
+	> if an error occurs, it will return NULL
 
 ##### `int mlx_destroy_image(void *mlx_ptr, void *img_ptr);`
+- Destroys the given image
+- Parameters
+	- `mlx_ptr` : Connection to the display
+	- `img_ptr` : Specifies the image to use
+- Return : simply 0
+
+#### Managing windows
+##### `void *mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title);`
+- Parameters
+	- `mlx_ptr` : Screen Connection Identifier
+	- `size_x` & `size_y` : determine its size
+	- `title` : the text that should be displayed in the window's title bar
+- Return : non-null pointer is returned as a window identifier
+	> if fails to craete a new window, it will return NULL
+
+##### `void *mlx_clear_window(void *mlx_ptr, void *win_ptr);`
+- Clear the given window in black
+- Parameters :
+	- `mlx_ptr` : Screen Connection Identifier
+	- `win_ptr` : Window Identifier
+- Return : none
+
+##### `void *mlx_destroy_window(void *mlx_ptr, void *win_ptr);`
+- Destroy the given window in black
+- Parameters :
+	- `mlx_ptr` : Screen Connection Identifier
+	- `win_ptr` : Window Identifier
+- Return : none
+
+#### Drawing inside windows
+##### `int mlx_pixel_put(void *mlx_ptr, void *win_ptr, int x, int y, int color);`
+- Draws a defined pixel in the window
+> discard any display outside the window
+>> This make `mlx_pixel_put` slow
+- Parameters
+	- `mlx_ptr` : Screen Connection Identifier
+	- `win_ptr` : Window Identifier
+	- `x` & `y` : pixel coordinates
+		> The origin (0,0) is the upper left corner of the window
+		>> x and y axis pointing right and down
+	- `color` : Specifies the color
+- Return : none
+
+##### `int mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color, char *string);`
+- Draws a defined string in the window
+- Parameters
+	- `mlx_ptr` : Screen Connection Identifier
+	- `win_ptr` : Window Identifier
+	- `x` & `y` : string coordinates
+	- `color` : Specifies the color
+	- `string` : string will be displayed
+- Return : simply 0
 
 ### 2. perror, strerror, exit
+- 라이브러리 함수의 경우 오류가 발생하면 `NULL`을 반환
+- 시스템 콜의 경우 오류가 발생하면 `-1`을 반환
+	- 오류 원인을 나타내는 상수 값은 `errno`변수에 저장
+		> `errno`을 사용하기 위해서는 `errno.h`필요
+	- 상수로 저장되는 코드 값을 알아보기 힘들기 때문에 오류코드를 메시지로 변환해주는 함수(perror, strerror) 사용
+- `void perror(const char *s);`
+	> `perror`을 사용하기 위해서는 `stdio.h`필요
+	- `s` : 출력하길 원하는 문자열
+- `char *strerror(int errnum);`
+	> `strerror`을 사용하기 위해서는 `string.h`필요
+	- `errnum` : errno에 저장된 값
+- `void exit(int status);` : 프로세스를 종료하는 함수
+	> 사용하기 위해서는 `stdlib.h`필요
+	>> `return`의 경우, 해당 스택의 함수만 종료하는 것
+	- `exit(0)` : 정상 종료
+	- `exit(1)` : 비정상 종료
+
 
 ### 3. math library
+- Header file : `math.h`
+
+|함수|설명|
+|---|---|
+|삼각함수||
+|`double sin (double x);`|사인 x를 구한다|
+|`double cos (double x);`|코사인 x를 구한다|
+|`double tan (double x);`|탄젠트 x를 구한다|
+|역 삼각함수||
+|`double asin (double x);`|아크 사인 x를 구한다|
+|`double acos (double x);`|아크 코사인 x를 구한다|
+|`double atan (double x);`|아크 탄젠트 x를 구한다|
+|`double atan2 (double x);`|아크 탄젠트 y/x를 구한다|
+|쌍곡선 함수||
+|`double sinh (double x);`|하이퍼볼릭 사인 x를 구한다|
+|`double cosh (double x);`|하이퍼볼릭 코사인 x를 구한다|
+|`double tanh (double x);`|하이퍼볼릭 탄제트 x를 구한다|
+|지수 대수 함수||
+|`double exp (double x);`|e^x를 구한다|
+|`double frexp (double x, int *exp);`|지수를 exp가 가리키는 변수에 저장하고 가수를 반환한다|
+|`double ldexp (double x, int exp);`|x * 2^exp를 반환한다|
+|`double log (double x);`|loge x를 구한다|
+|`double log10 (double x);`|log10 x를 구한다|
+|`double modf (double x, double * intpart);`|정수부를 intpart가 가리키는 변수에 저장하고 소수부를 반환한다|
+|거듭제곱, 거듭제곱근, 올림, 내림, 절댓값, 나머지 함수||
+|`double pow (double x, double y);`|x^y를 구한다|
+|`double sqrt (double x);`|루트x를 구한다|
+|`double ceil (double x);`|x보다 작지 않는 가장 작은 정수를 구한다|
+|`double floor (double x);`|x보다 크지 않은 가장 크 정수를 구한다|
+|`double fabs (double x);`|x의 절댓값을 구한다|
+|`double fmod (double x, double y);`|x를 y로 나눈 나머지를 구한다|
 
 ### 4. isometric projection
+
+### 5. rotation matrix
+- in 2 dimention
+$$
+x' = xcos\theta - ysin\theta \\
+y' = xsin\theta + ycos\theta
+$$
+
+- in 3 dimention
+$$
+x' = xcos\theta - ysin\theta \\
+y' = xsin\theta + ycos\theta
+$$
+
+### 6. line drawing algorithm
+#### DDA line drawing algorithm
+
+#### Bresenham's line algorithm
 
 ## Mandatory part
 |Program name|fdf|
