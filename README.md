@@ -31,8 +31,14 @@
 #### [fdf](./inner_circle/MDfiles/fdf.md)
 > "Wireframe model"
 
+[![siyang's 42 FdF Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/2923447)](https://github.com/JaeSeoKim/badge42)
+
 #### [pipex](./inner_circle/MDfiles/pipex.md)
 > "Handling pipes"
 
+[![siyang's 42 pipex Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/2923449)](https://github.com/JaeSeoKim/badge42)
+
 #### [push\_swap](./inner_circle/MDfiles/push_swap.md)
 > "Because Swap\_push isn’t as natural"
+
+[![siyang's 42 push_swap Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/2923448)](https://github.com/JaeSeoKim/badge42)
