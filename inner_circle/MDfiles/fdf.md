@@ -93,6 +93,7 @@
 		>> Big endian : 큰 단위가 먼저 표현되는 것  
 		>> Little endian : 작은 단위가 먼저 표현되는 것
 - Return : Information about the created image, allowing a user to modify it later
+	- `char *` : the begining of th memory area where the image is stored
 	- `bits_per_pixel` : the color of the first pixel in the first line of the image
 	- `size_line` : the address to get begining of the second line
 
@@ -163,7 +164,7 @@
 ##### `int mlx_pixel_put(void *mlx_ptr, void *win_ptr, int x, int y, int color);`
 - Draws a defined pixel in the window
 > discard any display outside the window
->> This make `mlx_pixel_put` slow
+>> This make `mlx_pixel_put` slow, consider using images instead
 - Parameters
 	- `mlx_ptr` : Screen Connection Identifier
 	- `win_ptr` : Window Identifier
@@ -201,7 +202,6 @@
 	- `exit(0)` : 정상 종료
 	- `exit(1)` : 비정상 종료
 
-
 ### 3. math library
 - Header file : `math.h`
 
@@ -236,24 +236,202 @@
 |`double fmod (double x, double y);`|x를 y로 나눈 나머지를 구한다|
 
 ### 4. isometric projection
+- 3차원 물체를 평면 상에 표현하기 위한 방법의 일종으로 x,y,z 세 좌표축이 서로 이루는 각도가 모두 같거나 120도를 이루는 특성을 가진다
+- 물체의 면을 정사도법으로 봤을 때, 물체에 대해서 수직 축으로 +/-45를 회전시킨 다음, 이어서 수평 축으로 약 +/-36.264도(=arcsin(tan30)) 회전시킨 것과 같다
 
 ### 5. rotation matrix
-- in 2 dimention
+#### In 2 dimentions
+$$
+\begin{pmatrix}
+x' \\
+y'
+\end{pmatrix} =
+\begin{pmatrix}
+cos\theta & -sin\theta \\
+sin\theta & cos\theta
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+$$
+
 $$
 x' = xcos\theta - ysin\theta \\
 y' = xsin\theta + ycos\theta
 $$
 
-- in 3 dimention
+#### In 3 dimentions
+- x축 기준
+$$
+\begin{pmatrix}
+x' \\
+y' \\
+z'
+\end{pmatrix} =
+\begin{pmatrix}
+1 & 0 & 0 \\
+0 & cos\theta & -sin\theta \\
+0 & sin\theta & cos\theta
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y \\
+z
+\end{pmatrix}
+$$
+
+$$
+x' = x \\
+y' = ycos\theta - zsin\theta \\
+z' = ysin\theta + zcos\theta
+$$
+
+- y축 기준
+$$
+\begin{pmatrix}
+x' \\
+y' \\
+z'
+\end{pmatrix} =
+\begin{pmatrix}
+cos\theta & 0 & sin\theta \\
+0 & 1 & 0 \\
+-sin\theta & 0 & cos\theta
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y \\
+z
+\end{pmatrix}
+$$
+
+$$
+x' = xcos\theta + zsin\theta \\
+y' = y \\
+z' = -xsin\theta + zcos\theta
+$$
+
+- z축 기준
+$$
+\begin{pmatrix}
+x' \\
+y' \\
+z'
+\end{pmatrix} =
+\begin{pmatrix}
+cos\theta & -sin\theta & 0 \\
+sin\theta & cos\theta & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y \\
+z
+\end{pmatrix}
+$$
+
 $$
 x' = xcos\theta - ysin\theta \\
-y' = xsin\theta + ycos\theta
+y' = xsin\theta + ycos\theta \\
+z' = z
 $$
 
 ### 6. line drawing algorithm
 #### DDA line drawing algorithm
+- Digital Differential Analyzer
+	- 중간값을 취하지 않는양
+- 원리
+	1. 기울기의 절댓값 확인
+	1. 기울기가 1보다 작으면 x축을 기준, 기울가가 1보다 크면 y축을 기준
+	1. (기울기가 1보다 작을 때) x축을 1씩 이동시키고 y값은 y값에 기울기를 더함
+	1. (기울기가 1보다 클 때) y축을 1씩 이동시키고 x값은 x값에 기울기의 역수를 더함
+	1. 나온 값이 실수라면 반올림을 한 좌표에 점을 찍는다
+- 단점
+	- 긴 선분일수록 오차가 누적되 잘 못 그려질 수 있음
+	- 소수점계산 및 반올림을 해서 연산속도가 오래걸림
+
 
 #### Bresenham's line algorithm
+- 실수 연산이 필요없고 정수 연산만으로 처리되는 속도가 매우 빠른 래스터 방식 컴퓨터 그래픽에서 선을 긋는 알고리즘
+- 직선의 방적식 : $y = mx + b$
+	> $m = 기울기 = y증가량 / x증가량$  
+	> $b = y절편$
+	- $y = mx + b$ : 특정 좌표가 직선상에 위치함
+	- $y > mx + b$ : 특정 좌표가 직선보다 위에 위치함
+	- $y < mx + b$ : 특정 좌표가 직선보다 아래 위치함
+- 원리
+	1. 기울기가 0과 1사이인 직선을 가정 (x좌표 = Xk, y좌표 = Yk)
+	1. x는 항상 1만큼 증가(Xk + 1), y는 Yk, Yk + 1 둘 중 하나를 선택
+		1. 중단점(Mk + 1) 이 직선 위에 위치하면 &rarr; y값은 그대로 Yk선택
+			> 중단점(Mk + 1) : Yk와 Yk + 1의 중간값
+		1. 중단점(Mk + 1) 이 직선 아래에 위치하면 &rarr; y값은 1증가하여 Yk + 1선택
+- 정수형 판별식 구하기
+	> 기울기가 0 < m < 1인 경우에 대해서 진행
+	>> 기울기가 m > 1인 경우는 y축 기준으로 진행하므로 y=x대칭 하여 유도할 수 있음
+	- 좌표 2개(Xl, Yl), (Xr, Yr) 에 대해서 두 좌표를 연결하는 직선 (Xl, Yl) - (Xr, Yr)
+		- W(width) = Xr - Xl
+		- H(height) = Yr - Yl
+1. 직선의 방정식에 W, H 대입
+$$
+y = {H \over W}x + b
+$$
+2. x에 xl, y에 yl을 넣어 b계산
+$$
+b = yl - {H \over W}xl
+$$
+3. b를 1번식에 대입
+$$
+y = {H \over W}x + yl - {H \over W}xl
+$$
+4. 위의 식을 직선보다 위의 있는 경우와 아래있는 경우에 대해서 정리하면,
+	- 한쪽으로 넘긴 후 W를 곱해 분모가 없도록 만듬
+	- 이후 양변에 2를 곱해 정리하면 아래의 식을 얻음
+		- 직선보다 위에 있을 때 : $-2W(y - yl) + 2H(x - xl) < 0$
+		- 직선보다 아래에 있을 때 : $-2W(y - yl) + 2H(x - xl) > 0$
+5. 위에 얻은 판별식을 중단점에 대해서 판단
+	- Mk+1 이 직선 위에 있음 &rarr; $F(Mk + 1) =  -2W(y - yl) + 2H(x - xl) < 0 \rightarrow (Xk + 1, Yk)$
+	- Mk+1 이 직선 아래에 있음 &rarr; $F(Mk + 1) =  -2W(y - yl) + 2H(x - xl) > 0 \rightarrow (Xk + 1, Yk + 1)$
+6. (Xk + 1, Yk + 1)을 결정하기 위한 판별식을 구함
+	- 중단값은 $Mk + 1 = (Xk + 1, Yk + 0.5)$ 이므로
+	- $F(Mk + 1) = -2W(Yk + 0.5 - yl) + 2H(Xk + 1 - xl)$ 을 최종적으로 얻음
+7. 다음 중단점인 (Xk + 2, Yk + 2)을 결정하기 위한 판별식을 구함
+	- F(Mk + 1) < 0인 경우,
+		- y좌표는 그대로 x좌표는 +1 되었으므로, 중단값이  $Mk + 2 = (Xk + 2, Yk + 0.5)$
+		- $F(Mk + 2) = -2W(Yk + 0.5 - yl) + 2H(Xk + 2 - xl)$ 을 얻음
+		- 정리하면, $F(Mk + 2) = F(Mk + 1) + 2H$
+	- F(Mk + 1) > 0인 경우,
+		- y좌표, x좌표 모두 +1 되었으므로, 중단값이  $Mk + 2 = (Xk + 2, Yk + 1.5)$
+		- $F(Mk + 2) = -2W(Yk + 1.5 - yl) + 2H(Xk + 2 - xl)$ 을 얻음
+		- 정리하면, $F(Mk + 2) = F(Mk + 1) + 2(H - W)$
+8. 판별식의 초깃값 F(M1)을 구함
+	- $M1 = (x1 + 1, y1 + 0.5)$
+$$
+\begin{align*}
+F(M1) &= -2W(y1 + 0.5 - y1) + 2H(x1 + 1 - x1) \\
+&= -2Wy1 + 2Wy1 - W + 2Hx1 +2H - 2Hx1 \\
+&= 2H - W
+\end{align*}
+$$
+10. 픽셀위치 결정, 판별식 갱신
+- F < 0 인 경우,
+	- (Xk + 1, Yk) 에 점을 그림
+	- 판별식 갱신 : F = F + 2H
+- F > 0 인 경우
+	- (Xk + 1, Yk + 1) 에 점을 그림
+	- 판별식 갱신 : F = F + 2(H - W)
+
+> cf) 위의 판별식 유도는 기울기가 0 < m < 1인 경우를 표현한 것이며 1 < m 일 경우 y축의 변위가 더 크기 때문에 식이 달라지게 된다
+>> 위와 동일한 방식으로 유도한 기울기가 < 1인 경우의 픽셀위치와 판별식은 아래와 같다(y = x축 대칭)
+>>> 초기값 : 2W - H
+
+>>> F < 0 인 경우,
+>>> - (Xk, Yk + 1)에 점을 그림
+>>> - 판결식 갱신 : F = F + 2W 로 갱신
+
+>>> F > 0 인 경우,
+>>> - (Xk + 1, Yk + 1)에 점을 그림
+>>> - 판별식 갱신 : F = F + 2(W - H)
 
 ## Mandatory part
 |Program name|fdf|

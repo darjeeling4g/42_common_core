@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:08:43 by siyang            #+#    #+#             */
-/*   Updated: 2022/11/08 21:36:26 by siyang           ###   ########.fr       */
+/*   Updated: 2023/01/04 15:34:43 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 static char	*read_next_line(int fd, char *buffer, char **backup, char **result);
 static void	get_until_eol(char *buffer, char **backup, char **result);

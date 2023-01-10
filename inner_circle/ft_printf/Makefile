@@ -47,7 +47,7 @@ $(LIBFT) :
 		cp libft/$(LIBFT) $(LIBFT)
 
 clean:
-			$(RM) $(OBJS) $(OBJS_BONUS)
+			$(RM) $(OBJS) $(OBJS_BONUS) bonus
 
 fclean:		clean
 			$(RM) $(NAME) $(LIBFT)

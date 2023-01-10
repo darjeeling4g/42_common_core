@@ -1,52 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/05 10:08:57 by siyang            #+#    #+#             */
-/*   Updated: 2022/11/08 21:23:57 by siyang           ###   ########.fr       */
+/*   Created: 2022/07/17 14:47:55 by siyang            #+#    #+#             */
+/*   Updated: 2022/08/31 08:08:45 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
-
-char	*ft_strchr(const char *s, int c)
-{
-	unsigned char	value;
-
-	value = (unsigned char)c;
-	while (*s != value)
-	{
-		if (*s == '\0')
-			return (NULL);
-		s++;
-	}
-	return ((char *)s);
-}
-
-char	*ft_strdup(const char *s1)
-{
-	char	*ptr;
-	size_t	len;
-	size_t	i;
-
-	len = 0;
-	while (s1[len] != '\0')
-		len++;
-	ptr = malloc(len + 1);
-	if (ptr == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
-	ptr[len] = '\0';
-	return (ptr);
-}
+#include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
@@ -60,7 +24,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	temp = ptr;
 	while (*s1)
-	{
+	{	
 		*temp = *s1;
 		temp++;
 		s1++;
@@ -73,17 +37,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	*temp = '\0';
 	return (ptr);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	len;
-
-	len = 0;
-	while (*s)
-	{
-		s++;
-		len++;
-	}
-	return (len);
 }
