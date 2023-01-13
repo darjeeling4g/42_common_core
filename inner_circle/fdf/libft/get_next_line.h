@@ -6,14 +6,14 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:03:07 by siyang            #+#    #+#             */
-/*   Updated: 2023/01/04 15:39:25 by siyang           ###   ########.fr       */
+/*   Updated: 2023/01/13 20:11:31 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 1000
 
 # include <stdlib.h>
 # include <unistd.h>
