@@ -6,20 +6,23 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:54:36 by siyang            #+#    #+#             */
-/*   Updated: 2023/01/12 16:40:54 by siyang           ###   ########.fr       */
+/*   Updated: 2023/01/17 04:03:28 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	image_generator(t_list *model, t_image *img)
+void	draw_line(t_list *model, t_image *img)
 {
 	t_pixel *pixel;
 
 	while (model)
 	{
 		pixel = model->content;
-		draw_line(model, img, pixel);
+		if (pixel->next_x != NULL)
+			bresenham(img, pixel, (t_pixel *)pixel->next_x);
+		if (pixel->next_y != NULL)
+			bresenham(img, pixel, (t_pixel *)pixel->next_y);
 		model = model->next;
 	}
 }
@@ -31,31 +34,31 @@ void	draw_pixel(t_image *img, t_palette *p, int x, int y)
 	*(img->addr + (img->bpp * x / 8) + (img->size_line * y)) = p->b;
 	*(img->addr + 1 + (img->bpp * x / 8) + (img->size_line * y)) = p->g;
 	*(img->addr + 2 + (img->bpp * x / 8) + (img->size_line * y)) = p->r;
-	*(img->addr + 3 + (img->bpp * x / 8) + (img->size_line * y)) = p->a;
+	*(img->addr + 3 + (img->bpp * x / 8) + (img->size_line * y)) = 0;
 }
 
-void	draw_line(t_list *model, t_image *img, t_pixel *pixel)
+void	bresenham(t_image *img, t_pixel *pixel, t_pixel *next)
 {
-	t_pixel	*next_x;
-	t_pixel	*next_y;
+	t_palette	p;
 
-	if (model->next == NULL)
-		return ;
-	model = model->next;
-	next_x = model->content;
-	if (pixel->init_y != next_x->init_y)
-		next_x = NULL;
-	while (model)
+	make_palette(&p, pixel, next);
+	while (p.x1 <= p.x2)
 	{
-		next_y = model->content;
-		if (pixel->init_x == next_y->init_x)
-			break ;
-		model = model->next;
+		if (p.F < 0)
+			p.F += 2 * p.H;
+		else if (p.F > 0)
+		{
+			p.y1++;
+			p.F += 2 * (p.H - p.W);
+		}
+		if (p.m >= 0 && p.m <= 1)
+			draw_pixel(img, &p, p.x1, p.y1);
+		else if (p.m > 1)
+			draw_pixel(img, &p, p.y1, p.x1);
+		else if (p.m >= -1 && p.m < 0)
+			draw_pixel(img, &p, p.x1, -1 * p.y1);
+		else if (p.m < -1)
+			draw_pixel(img, &p, p.y1, -1 * p.x1);
+		p.x1++;
 	}
-	if (model == NULL)
-		next_y = NULL;
-	if (next_x != NULL)
-		bresenham(img, pixel, next_x);
-	if (next_y != NULL)
-		bresenham(img, pixel, next_y);
 }

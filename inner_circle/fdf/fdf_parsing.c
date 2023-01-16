@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:54:41 by siyang            #+#    #+#             */
-/*   Updated: 2023/01/13 20:04:39 by siyang           ###   ########.fr       */
+/*   Updated: 2023/01/17 06:47:42 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,10 @@ void	model_parser(int fd, t_list **model)
 			pixel->init_x = x;
 			pixel->init_y = y;
 			pixel->init_z = ft_atoi(pixel_group[x]);
+			parse_color(pixel_group[x], pixel);
 			i = 0;
 			while (pixel_group[x][i] && pixel_group[x][i] != '\n')
 				i++;
-			pixel->a = 0x00;
-			pixel->r = 0xFF;
-			pixel->g = 0xFF;
-			pixel->b = 0xFF;
 			ft_lstadd_back(model, ft_lstnew(pixel));
 			if (pixel_group[x][i] == '\n')
 			{
@@ -57,28 +54,49 @@ void	model_parser(int fd, t_list **model)
 	}
 }
 
-void	decide_img_size(t_list *model, t_image *img)
+void	parse_color(char *pixel_group, t_pixel *pixel)
 {
-	t_pixel *pixel;
+	int	len;
 
-	img->width = 0;
-	img->height = 0;
-	while (model)
+	while (*pixel_group && *pixel_group != ',')
+		pixel_group++;
+	if (*pixel_group == ',')
 	{
-		pixel = model->content;
-		if (img->width < pixel->init_x)
-			img->width = pixel->init_x;
-		if (img->height < pixel->init_y)
-			img->height = pixel->init_y;
-		model = model->next;
+		pixel_group += 3;
+		len = ft_strlen(pixel_group);
+		if (len % 2 == 1)
+			len--;
+		if (len == 6)
+			pixel->r = hex_to_int(pixel_group + len - 6);
+		else if (len == 4 || len == 2)
+			pixel->r = 0;
+		if (len == 6 || len == 4)
+			pixel->g = hex_to_int(pixel_group + len - 4);
+		else if (len == 2)
+			pixel->g = 0;
+		pixel->b = hex_to_int(pixel_group + len - 2);
+		return ;
 	}
-	img->scale = 0;
-	while (1)
+	pixel->r = 0xFF;
+	pixel->g = 0xFF;
+	pixel->b = 0xFF;
+}
+
+int	hex_to_int(char *str)
+{
+	int num;
+	int i;
+
+	i = 0;
+	while (i < 2)
 	{
-		img->scale++;
-		if (pixel->init_x * img->scale > 1280 || pixel->init_y * img->scale > 720)
-			break ;
+		if (str[i] >= '0' && str[i] <= '9')
+			num = num * 16 + (str[i] - 48);
+		else if (str[i] >= 'A' && str[i] <= 'F')
+			num = num * 16 + (str[i] - 55);
+		else if (str[i] >= 'a' && str[i] <= 'f')
+			num = num * 16 + (str[i] - 87);
+		i++;
 	}
-	img->width *= img->scale;
-	img->height *= img->scale;
+	return (num);
 }

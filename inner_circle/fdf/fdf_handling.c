@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:57:15 by siyang            #+#    #+#             */
-/*   Updated: 2023/01/13 20:21:09 by siyang           ###   ########.fr       */
+/*   Updated: 2023/01/17 07:20:30 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,83 +14,109 @@
 
 int	key_hook(int keycode, t_vars *vars)
 {
-	t_list	*model;
-	t_pixel	*pixel;
-
+	if (keycode == EXIT)
+		kill_process(EXIT_SUCCESS);
+	event_resize(keycode, &vars->img);
+	event_move(keycode, &vars->img);
+	event_rotate(keycode, &vars->img);
+	event_projection(keycode, &vars->img);
 	clear_image(vars);
-	model = vars->model;
-	while (model)
-	{
-		pixel = model->content;
-		if (keycode == UP)
-			pixel->y -= MOVE_VALUE;
-		else if (keycode == DOWN)
-			pixel->y += MOVE_VALUE;
-		else if (keycode == RIGHT)
-			pixel->x += MOVE_VALUE;
-		else if (keycode == LEFT)
-			pixel->x -= MOVE_VALUE;
-		else if (keycode == ZOOM_IN)
-		{
-			pixel->x *= 1.1;
-			pixel->y *= 1.1;
-		}
-		else if (keycode == ZOOM_OUT)
-		{
-			pixel->x *= 0.9;
-			pixel->y *= 0.9;
-		}
-		else if(keycode == KEY_W)
-		{
-			pixel->x -= 960;
-			pixel->y -= 540;
-			rotate_x(pixel, 5);
-			pixel->x += 960;
-			pixel->y += 540;
-		}
-		else if(keycode == KEY_S)
-		{
-			pixel->x -= 960;
-			pixel->y -= 540;
-			rotate_x(pixel, -5);
-			pixel->x += 960;
-			pixel->y += 540;
-		}
-		else if(keycode == KEY_A)
-		{
-			pixel->x -= 960;
-			pixel->y -= 540;
-			rotate_y(pixel, 5);
-			pixel->x += 960;
-			pixel->y += 540;
-		}
-		else if(keycode == KEY_D)
-		{
-			pixel->x -= 960;
-			pixel->y -= 540;
-			rotate_y(pixel, -5);
-			pixel->x += 960;
-			pixel->y += 540;
-		}
-		else if(keycode == KEY_Q)
-		{
-			pixel->x -= 960;
-			pixel->y -= 540;
-			rotate_z(pixel, 5);
-			pixel->x += 960;
-			pixel->y += 540;
-		}
-		else if(keycode == KEY_E)
-		{
-			pixel->x -= 960;
-			pixel->y -= 540;
-			rotate_z(pixel, -5);
-			pixel->x += 960;
-			pixel->y += 540;
-		}
-		model = model->next;
-	}
-	image_generator(vars->model, &vars->img);
+	isometric_projection(vars->model, &vars->img);
+	draw_line(vars->model, &vars->img);
 	mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, vars->img.ptr, 0, 0);
-	return (1);
+	return (0);
+}
+
+int	kill_process(int e)
+{
+	if (e == EXIT_SUCCESS)
+		exit(EXIT_SUCCESS);
+	else if (e == EXIT_FAILURE)
+		exit(EXIT_FAILURE);
+	return (0);
+}
+
+void	clear_image(t_vars *vars)
+{
+	t_image	img;
+	int		i;
+	int		end;
+
+	img = vars->img;
+	i = 0;
+	end = 1920 * 1080 * 4;
+	while (i < end)
+	{
+		img.addr[i] = 0;
+		i++;
+	}
+}
+
+void	event_resize(int keycode, t_image *img)
+{
+	if (keycode == ZOOM_IN)
+	{
+		img->scale *= 1.2;
+		img->depth *= 1.2;
+	}
+	else if (keycode == ZOOM_OUT)
+	{
+		img->scale *= 0.8;
+		img->depth *= 0.8;
+	}
+	else if (keycode == DEPTH_PLUS)
+		img->depth *= 1.2;
+	else if (keycode == DEPTH_MINUS)
+		img->depth *= 0.8;
+	else if (keycode == BENDING_PLUS)
+		img->bending++;
+	else if (keycode == BENDING_MINUS)
+		img->bending--;
+}
+
+void	event_move(int keycode, t_image *img)
+{
+	if (keycode == UP)
+		img->center_y -= MOVE_VALUE;
+	else if (keycode == DOWN)
+		img->center_y += MOVE_VALUE;
+	else if (keycode == RIGHT)
+		img->center_x += MOVE_VALUE;
+	else if (keycode == LEFT)
+		img->center_x -= MOVE_VALUE;
+}
+
+void	event_rotate(int keycode, t_image *img)
+{
+	if(keycode == KEY_W)
+		img->angle_x += 5;
+	else if(keycode == KEY_S)
+		img->angle_x -= 5;
+	else if(keycode == KEY_D)
+		img->angle_y += 5;
+	else if(keycode == KEY_A)
+		img->angle_y -= 5;
+	else if(keycode == KEY_E)
+		img->angle_z += 5;
+	else if(keycode == KEY_Q)
+		img->angle_z -= 5;
+}
+
+void	event_projection(int keycode, t_image *img)
+{
+	if (keycode == KEY_X || keycode == KEY_Y || keycode == KEY_Z)
+	{
+		if (keycode == KEY_Y)
+			img->angle_x = 90;
+		else
+			img->angle_x = 0;
+		if (keycode == KEY_X)
+			img->angle_y = 90;
+		else
+			img->angle_y = 0;
+		img->center_x = WIDTH / 2;
+		img->center_y = HEIGHT / 2;
+		img->angle_z = 0;
+		img->bending = 0;
+	}
 }
