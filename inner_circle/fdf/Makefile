@@ -40,9 +40,11 @@ all:		$(NAME)
 			$(CC) $(CFLAG) -c $^ -o $@
 
 $(NAME):	$(OBJS) $(LIBFT) $(MLX)
+		cp $(LIBFT_DIR)/$(LIBFT) $(LIBFT)
 		$(CC) $(CFLAGS) -lmlx -L . -lft -L $(LIBFT_DIR) $(OBJS) -o $@
 
 bonus:	$(OBJS_BONUS) $(LIBFT) $(MLX)
+		cp $(LIBFT_DIR)/$(LIBFT) $(LIBFT)
 		$(CC) $(CFLAGS) -lmlx -L . -lft -L $(LIBFT_DIR) $(OBJS_BONUS) -o $@
 		touch bonus
 
@@ -59,7 +61,7 @@ clean:
 			$(RM) $(OBJS) $(OBJS_BONUS) bonus
 
 fclean:		clean
-			$(RM) $(NAME) $(MLX) $(LIBFT_DIR)/$(LIBFT)
+			$(RM) $(NAME) $(LIBFT) $(MLX) $(LIBFT_DIR)/$(LIBFT)
 
 re:			
 		make fclean
