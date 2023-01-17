@@ -45,7 +45,7 @@ $(NAME):	$(OBJS) $(LIBFT) $(MLX)
 
 bonus:	$(OBJS_BONUS) $(LIBFT) $(MLX)
 		cp $(LIBFT_DIR)/$(LIBFT) $(LIBFT)
-		$(CC) $(CFLAGS) -lmlx -L . -lft -L $(LIBFT_DIR) $(OBJS_BONUS) -o $@
+		$(CC) $(CFLAGS) -lmlx -L . -lft -L $(LIBFT_DIR) $(OBJS_BONUS) -o $(NAME)
 		touch bonus
 
 $(LIBFT) :
