@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:54:41 by siyang            #+#    #+#             */
-/*   Updated: 2023/01/17 06:47:42 by siyang           ###   ########.fr       */
+/*   Updated: 2023/01/17 09:04:58 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ void	model_parser(int fd, t_list **model)
 {
 	int		x;
 	int		y;
-	int		i;
+	int		res;
 	char	*new_line;
 	char	**pixel_group;
-	t_pixel	*pixel;
 
 	y = 0;
 	while (1)
@@ -32,26 +31,42 @@ void	model_parser(int fd, t_list **model)
 		x = 0;
 		while (pixel_group[x] && pixel_group[x][0] != '\n')
 		{
-			pixel = malloc(sizeof(t_pixel));
-			pixel->init_x = x;
-			pixel->init_y = y;
-			pixel->init_z = ft_atoi(pixel_group[x]);
-			parse_color(pixel_group[x], pixel);
-			i = 0;
-			while (pixel_group[x][i] && pixel_group[x][i] != '\n')
-				i++;
-			ft_lstadd_back(model, ft_lstnew(pixel));
-			if (pixel_group[x][i] == '\n')
-			{
-				free(pixel_group[x]);
+			res = generate_new_pixel(model, pixel_group[x], x, y);
+			if (res == 1)
 				break ;
-			}
-			free(pixel_group[x]);
 			x++;
 		}
 		free(pixel_group);
 		y++;
 	}
+}
+
+int	generate_new_pixel(t_list **model, char *pixel_group, int x, int y)
+{
+	t_pixel	*pixel;
+	t_list	*new;
+	int		res;
+	int		i;
+
+	res = 0;
+	pixel = malloc(sizeof(t_pixel));
+	if (pixel == NULL)
+		kill_process("Error : Memory allocation failed");
+	pixel->init_x = x;
+	pixel->init_y = y;
+	pixel->init_z = ft_atoi(pixel_group);
+	parse_color(pixel_group, pixel);
+	new = ft_lstnew(pixel);
+	if (new == NULL)
+		kill_process("Error : Memory allocation failed");
+	ft_lstadd_back(model, new);
+	i = 0;
+	while (pixel_group[i] && pixel_group[i] != '\n')
+		i++;
+	if (pixel_group[i] == '\n')
+		res = 1;
+	free(pixel_group);
+	return (res);
 }
 
 void	parse_color(char *pixel_group, t_pixel *pixel)
@@ -84,8 +99,8 @@ void	parse_color(char *pixel_group, t_pixel *pixel)
 
 int	hex_to_int(char *str)
 {
-	int num;
-	int i;
+	int	num;
+	int	i;
 
 	i = 0;
 	while (i < 2)

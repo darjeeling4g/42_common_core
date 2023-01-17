@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:29:10 by siyang            #+#    #+#             */
-/*   Updated: 2023/01/17 06:18:44 by siyang           ###   ########.fr       */
+/*   Updated: 2023/01/17 07:56:01 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	image_setup(t_list *model, t_image *img)
 {
-	t_pixel *pixel;
+	t_pixel	*pixel;
 
 	img->center_x = WIDTH / 2;
 	img->center_y = HEIGHT / 2;
@@ -34,7 +34,7 @@ void	image_setup(t_list *model, t_image *img)
 
 void	isometric_projection(t_list *model, t_image *img)
 {
-	t_pixel *pixel;
+	t_pixel	*pixel;
 
 	while (model)
 	{
@@ -67,7 +67,8 @@ void	decide_scale_depth(t_pixel *pixel, t_image *img)
 	while (1)
 	{
 		img->scale++;
-		if (x * img->scale + img->center_x > 1280 || y * img->scale + img->center_y > 720)
+		if (x * img->scale + img->center_x > 1280
+			|| y * img->scale + img->center_y > 720)
 			break ;
 	}
 	img->depth = img->scale;
@@ -76,7 +77,7 @@ void	decide_scale_depth(t_pixel *pixel, t_image *img)
 void	replace_origin(t_list *model)
 {
 	t_list	*temp;
-	t_pixel *pixel;
+	t_pixel	*pixel;
 	int		x_max;
 	int		y_max;
 

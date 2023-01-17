@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:02:47 by siyang            #+#    #+#             */
-/*   Updated: 2023/01/17 07:21:57 by siyang           ###   ########.fr       */
+/*   Updated: 2023/01/17 07:52:45 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,20 @@ void	make_palette(t_palette *p, t_pixel *pixel, t_pixel *next)
 	p->x2 = next->x;
 	p->y2 = next->y;
 	p->m = coordinate_init(&p->x1, &p->y1, &p->x2, &p->y2);
-	p->W = p->x2 - p->x1;
-	p->H = p->y2 - p->y1;
-	p->F = 2 * p->H - p->W;
+	p->w = p->x2 - p->x1;
+	p->h = p->y2 - p->y1;
+	p->f = 2 * p->h - p->w;
 	p->r = pixel->r;
 	p->g = pixel->g;
 	p->b = pixel->b;
+	p->n_r = next->r;
+	p->n_g = next->g;
+	p->n_b = next->b;
 }
 
 double	coordinate_init(double *x1, double *y1, double *x2, double *y2)
 {
-	double m;
+	double	m;
 
 	if (*x2 < *x1)
 		swap_coordinate(x1, x2, y1, y2);

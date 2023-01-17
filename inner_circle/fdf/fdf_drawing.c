@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:54:36 by siyang            #+#    #+#             */
-/*   Updated: 2023/01/17 04:03:28 by siyang           ###   ########.fr       */
+/*   Updated: 2023/01/17 07:52:36 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	draw_line(t_list *model, t_image *img)
 {
-	t_pixel *pixel;
+	t_pixel	*pixel;
 
 	while (model)
 	{
@@ -44,12 +44,12 @@ void	bresenham(t_image *img, t_pixel *pixel, t_pixel *next)
 	make_palette(&p, pixel, next);
 	while (p.x1 <= p.x2)
 	{
-		if (p.F < 0)
-			p.F += 2 * p.H;
-		else if (p.F > 0)
+		if (p.f < 0)
+			p.f += 2 * p.h;
+		else if (p.f > 0)
 		{
 			p.y1++;
-			p.F += 2 * (p.H - p.W);
+			p.f += 2 * (p.h - p.w);
 		}
 		if (p.m >= 0 && p.m <= 1)
 			draw_pixel(img, &p, p.x1, p.y1);
@@ -59,6 +59,23 @@ void	bresenham(t_image *img, t_pixel *pixel, t_pixel *next)
 			draw_pixel(img, &p, p.x1, -1 * p.y1);
 		else if (p.m < -1)
 			draw_pixel(img, &p, p.y1, -1 * p.x1);
+		color_gradation(&p);
 		p.x1++;
 	}
+}
+
+void	color_gradation(t_palette *p)
+{
+	if (p->r > p->n_r)
+		p->r--;
+	else if (p->r < p->n_r)
+		p->r++;
+	if (p->g > p->n_g)
+		p->g--;
+	else if (p->g < p->n_g)
+		p->g++;
+	if (p->b > p->n_b)
+		p->b--;
+	else if (p->b < p->n_b)
+		p->b++;
 }

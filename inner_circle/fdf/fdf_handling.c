@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:57:15 by siyang            #+#    #+#             */
-/*   Updated: 2023/01/17 07:20:30 by siyang           ###   ########.fr       */
+/*   Updated: 2023/01/17 08:34:19 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	key_hook(int keycode, t_vars *vars)
 {
 	if (keycode == EXIT)
-		kill_process(EXIT_SUCCESS);
+		kill_process(NULL);
 	event_resize(keycode, &vars->img);
 	event_move(keycode, &vars->img);
 	event_rotate(keycode, &vars->img);
@@ -25,31 +25,6 @@ int	key_hook(int keycode, t_vars *vars)
 	draw_line(vars->model, &vars->img);
 	mlx_put_image_to_window(vars->mlx_ptr, vars->win_ptr, vars->img.ptr, 0, 0);
 	return (0);
-}
-
-int	kill_process(int e)
-{
-	if (e == EXIT_SUCCESS)
-		exit(EXIT_SUCCESS);
-	else if (e == EXIT_FAILURE)
-		exit(EXIT_FAILURE);
-	return (0);
-}
-
-void	clear_image(t_vars *vars)
-{
-	t_image	img;
-	int		i;
-	int		end;
-
-	img = vars->img;
-	i = 0;
-	end = 1920 * 1080 * 4;
-	while (i < end)
-	{
-		img.addr[i] = 0;
-		i++;
-	}
 }
 
 void	event_resize(int keycode, t_image *img)
@@ -88,17 +63,17 @@ void	event_move(int keycode, t_image *img)
 
 void	event_rotate(int keycode, t_image *img)
 {
-	if(keycode == KEY_W)
+	if (keycode == KEY_W)
 		img->angle_x += 5;
-	else if(keycode == KEY_S)
+	else if (keycode == KEY_S)
 		img->angle_x -= 5;
-	else if(keycode == KEY_D)
+	else if (keycode == KEY_D)
 		img->angle_y += 5;
-	else if(keycode == KEY_A)
+	else if (keycode == KEY_A)
 		img->angle_y -= 5;
-	else if(keycode == KEY_E)
+	else if (keycode == KEY_E)
 		img->angle_z += 5;
-	else if(keycode == KEY_Q)
+	else if (keycode == KEY_Q)
 		img->angle_z -= 5;
 }
 
