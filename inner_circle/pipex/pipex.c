@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:28 by siyang            #+#    #+#             */
-/*   Updated: 2023/02/01 17:28:48 by siyang           ###   ########.fr       */
+/*   Updated: 2023/02/02 07:20:42 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	pid_t	pid;
 	int		fd[2];
-	int		status;
 
 	if (argc != 5)
 		exit_process("Wrong arguments");
@@ -31,7 +30,8 @@ int	main(int argc, char **argv, char **envp)
 		execute_command(fd, argv, envp, CHILD);
 	else if (pid)
 	{
-		waitpid(pid, &status, 0);
+		if (waitpid(pid, NULL, WNOHANG) == -1)
+			exit_process("child process error");
 		execute_command(fd, argv, envp, PARENT);
 	}
 }
@@ -78,7 +78,6 @@ char	*find_bin(char *arg, char **envp)
 	{
 		temp = ft_strjoin(path_group[i], "/");
 		path = ft_strjoin(temp, arg);
-		printf("%s\n", path);
 		if (access(path, F_OK) == 0)
 			break ;
 		free(temp);
