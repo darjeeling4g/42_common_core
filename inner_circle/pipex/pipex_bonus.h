@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:35 by siyang            #+#    #+#             */
-/*   Updated: 2023/02/02 22:19:35 by siyang           ###   ########.fr       */
+/*   Updated: 2023/02/03 14:59:53 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,16 @@ typedef struct s_pipe
 	int		i;
 }	t_pipe;
 
+// pipex_bonus.c
+int		infile_stdin(int argc, char **argv, int *file);
+void	creat_here_doc(char *filename, char *limiter);
+void	multiple_pipe(int argc, char **argv, char **envp, t_pipe pipe);
+void	stdout_outfile(int argc, char **argv, int *file);
+
+// pipex_utils_bonus.c
 void	exit_process(char *str);
 void	execute_command(char *argv, char **envp);
 char	*find_bin(char *arg, char **envp);
-
-int		infile_stdin(int argc, char **argv, int *file);
-void	creat_here_doc(char *filename, char *limiter);
-void	stdout_outfile(int argc, char **argv, int *file);
-
-void	multiple_pipe(int argc, char **argv, char **envp, t_pipe pipe);
 void	child_process(int *pipeA, int *pipeB, int num);
 void	parent_process(int *pipeA, int *pipeB, int num);
 

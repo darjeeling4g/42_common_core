@@ -3,7 +3,8 @@ SRCS	= pipex.c
 
 OBJS	= $(SRCS:.c=.o)
 
-SRCS_BONUS	= pipex_bonus.c
+SRCS_BONUS	= pipex_bonus.c \
+			  pipex_utils_bonus.c
 
 OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
 
