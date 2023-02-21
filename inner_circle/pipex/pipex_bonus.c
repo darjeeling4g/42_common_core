@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 13:14:28 by siyang            #+#    #+#             */
-/*   Updated: 2023/02/03 14:59:44 by siyang           ###   ########.fr       */
+/*   Updated: 2023/02/07 14:40:24 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	infile_stdin(int argc, char **argv, int *file)
 
 	if (argc == 1)
 		exit_process("Wrong arguments");
-	if (!(ft_strncmp(argv[1], "here_doc", 8)))
+	if (!(ft_strncmp(argv[1], "here_doc", 9)))
 	{
 		if (argc < 6)
 			exit_process("Wrong arguments");
@@ -116,7 +116,7 @@ void	multiple_pipe(int argc, char **argv, char **envp, t_pipe p)
 void	stdout_outfile(int argc, char **argv, int *file)
 {
 	close(*file);
-	if (!(ft_strncmp(argv[1], "here_doc", 8)))
+	if (!(ft_strncmp(argv[1], "here_doc", 9)))
 	{
 		unlink(argv[1]);
 		*file = open(argv[argc - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
