@@ -109,7 +109,7 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c | dir_guard
 		@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 		@$(eval COMPILED_FILES = $(shell expr $(COMPILED_FILES) + 1))
 		@$(eval PROGRESS = $(shell expr $(COMPILED_FILES) "*" $(STEP) / $(TOTAL_FILES)))
-		@printf "$(SAVECUR) $(DELINE) $(YELLOW)[$(NAME)] [%02d/%02d] ( %3d %%) Compiling $<\r$(DEF_COLOR) $(RESTCUR)" $(COMPILED_FILES) $(TOTAL_FILES) $(PROGRESS)
+		@printf "$(SAVECUR) $(DELINE) $(YELLOW)[LIBFT] [%02d/%02d] ( %3d %%) Compiling $<\r$(DEF_COLOR) $(RESTCUR)" $(COMPILED_FILES) $(TOTAL_FILES) $(PROGRESS)
 
 bonus : $(OBJS) $(OBJS_BONUS)
 		@$(AR) $(ARFLAGS) $(NAME) $^
@@ -128,13 +128,13 @@ fclean:
 re:
 		@$(MAKE) fclean
 		@$(MAKE) all
-		@printf "$(GREEN)[$(NAME)] Cleaned and rebuilt everything!\n$(DEF_COLOR)"
+		@printf "$(GREEN)[LIBFT] Cleaned and rebuilt everything!\n$(DEF_COLOR)"
 
 dir_guard:
 		@mkdir -p $(addprefix $(OBJ_DIR)/, $(GNL_DIR) $(PRINTF_DIR))
 
 norm:
-		@(norminette | grep Error) || (printf "$(GREEN)[$(NAME)] Norminette Success\n$(DEF_COLOR)")
+		@(norminette | grep Error) || (printf "$(GREEN)[LIBFT] Norminette Success\n$(DEF_COLOR)")
 
 .PHONY:		all clean fclean re dir_guard norm
 

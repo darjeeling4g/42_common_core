@@ -70,7 +70,7 @@ all:
 		@$(MAKE) -j $(NAME)
 
 $(LIBFT):
-		@$(MAKE) bonus -C $(LIBFT_DIR)
+		@$(MAKE) -C $(LIBFT_DIR) bonus
 
 $(NAME): $(LIBFT) $(OBJS)
 		@$(CC) $(CFLAGS) $(LDLIBS) $(LDFLAGS) $^ -o $@
@@ -107,6 +107,7 @@ dir_guard:
 		@mkdir -p $(addprefix $(BUILD_DIR)/$(OBJ_DIR)/, $(MD_DIR) $(PARSER_DIR) $(DEQUE_DIR) $(BONUS_DIR))
 
 norm:
+		@$(MAKE) -C $(LIBFT_DIR) norm
 		@(norminette | grep Error) || (printf "$(GREEN)[$(NAME)] Norminette Success\n$(DEF_COLOR)")
 
 .PHONY: all clean fclean re dir_guard norm
