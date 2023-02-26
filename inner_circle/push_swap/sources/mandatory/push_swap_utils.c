@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 15:41:41 by siyang            #+#    #+#             */
-/*   Updated: 2023/02/26 00:03:31 by siyang           ###   ########.fr       */
+/*   Updated: 2023/02/26 15:14:46 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,4 @@ void	rrotate(t_deque *a, t_deque *b)
 		ft_printf("rr%c\n", a->name);
 	else if (b)
 		ft_printf("rr%c\n", b->name);
-}
-
-void	exit_process(int i)
-{
-	if (i == 1)
-		write(2, "Error\n", 6);
-	exit(i);
 }

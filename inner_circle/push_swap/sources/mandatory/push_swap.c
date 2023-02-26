@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 15:42:18 by siyang            #+#    #+#             */
-/*   Updated: 2023/02/25 23:46:43 by siyang           ###   ########.fr       */
+/*   Updated: 2023/02/26 15:15:02 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,30 @@ int	main(int argc, char **argv)
 		exit_process(1);
 	deque_generator(&a, arr);
 	free(arr);
+	sorted_check(&a);
 	greedy(&a, &b);
+}
+
+void	sorted_check(t_deque *a)
+{
+	t_node	*curr;
+	t_node	*next;
+
+	curr = a->top;
+	next = curr->next;
+	while (next)
+	{
+		if (curr->value > next->value)
+			return ;
+		curr = next;
+		next = curr->next;
+	}
+	exit_process(0);
+}
+
+void	exit_process(int i)
+{
+	if (i == 1)
+		write(2, "Error\n", 6);
+	exit(i);
 }

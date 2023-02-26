@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 15:42:12 by siyang            #+#    #+#             */
-/*   Updated: 2023/02/25 22:12:01 by siyang           ###   ########.fr       */
+/*   Updated: 2023/02/26 15:16:14 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ typedef enum e_cnt
 }	t_cnt;
 
 // push_swap_utils.c
+void	sorted_check(t_deque *a);
+void	exit_process(int i);
+
+// push_swap_utils.c
 void	swap(t_deque *deque);
 void	push(t_deque *src, t_deque *dst);
 void	rotate(t_deque *a, t_deque *b);
 void	rrotate(t_deque *a, t_deque *b);
-void	exit_process(int i);
 
 // push_swap_greedy.c
 void	greedy(t_deque *a, t_deque *b);
