@@ -1,60 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/20 13:14:28 by siyang            #+#    #+#             */
-/*   Updated: 2023/02/02 07:20:42 by siyang           ###   ########.fr       */
+/*   Created: 2023/02/03 14:56:16 by siyang            #+#    #+#             */
+/*   Updated: 2023/02/03 15:00:10 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-int	main(int argc, char **argv, char **envp)
+void	exit_process(char *str)
 {
-	pid_t	pid;
-	int		fd[2];
-
-	if (argc != 5)
-		exit_process("Wrong arguments");
-	if (access(argv[1], F_OK | R_OK) == -1)
-		exit_process("Invalid infile");
-	if (pipe(fd) == -1)
-		exit_process("pipe failure");
-	pid = fork();
-	if (pid == -1)
-		exit_process("fork failure");
-	else if (!pid)
-		execute_command(fd, argv, envp, CHILD);
-	else if (pid)
+	if (str == NULL)
+		exit(EXIT_SUCCESS);
+	else if (str)
 	{
-		if (waitpid(pid, NULL, WNOHANG) == -1)
-			exit_process("child process error");
-		execute_command(fd, argv, envp, PARENT);
+		perror(str);
+		exit(EXIT_FAILURE);
 	}
 }
 
-void	execute_command(int *fd, char **argv, char **envp, int process)
+void	execute_command(char *argv, char **envp)
 {
-	int		file;
 	char	**args;
 	char	*path;
 
-	if (process == CHILD)
-		file = open(argv[1], O_RDONLY);
-	else if (process == PARENT)
-		file = open(argv[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (file < 0)
-		exit_process("file open failure");
-	close(fd[1 - process]);
-	dup2(file, 1 - process);
-	dup2(fd[0 + process], 0 + process);
-	if (process == CHILD)
-		args = ft_split(argv[2], ' ');
-	else if (process == PARENT)
-		args = ft_split(argv[3], ' ');
+	args = ft_split(argv, ' ');
 	path = find_bin(args[0], envp);
 	if (access(path, F_OK) == -1)
 		exit_process("command cannot found");
@@ -91,13 +65,34 @@ char	*find_bin(char *arg, char **envp)
 	return (path);
 }
 
-void	exit_process(char *str)
+void	child_process(int *pipeA, int *pipeB, int num)
 {
-	if (str == NULL)
-		exit(EXIT_SUCCESS);
-	else if (str)
+	if (num == EVEN)
 	{
-		perror(str);
-		exit(EXIT_FAILURE);
+		dup2(pipeB[1], STDOUT_FILENO);
+		close(pipeB[0]);
+	}
+	else if (num == ODD)
+	{
+		dup2(pipeA[1], STDOUT_FILENO);
+		close(pipeA[0]);
+	}
+}
+
+void	parent_process(int *pipeA, int *pipeB, int num)
+{
+	if (num == EVEN)
+	{
+		dup2(pipeB[0], STDIN_FILENO);
+		close(pipeB[1]);
+		if (pipeA[0] > -1)
+			close(pipeA[0]);
+	}
+	else if (num == ODD)
+	{
+		dup2(pipeA[0], STDIN_FILENO);
+		close(pipeA[1]);
+		if (pipeB[0] > -1)
+			close(pipeB[0]);
 	}
 }
