@@ -1,0 +1,3 @@
+[submodule "inner_circle/minishell"]
+	path = inner_circle/minishell
+	url = git@github.com:darjeeling4g/minishell.git
