@@ -6,41 +6,14 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 19:54:14 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/14 20:31:16 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/14 21:28:32 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*philo_loop(void *info)
-{
-	(void)info;
-	printf("i'm philosopher\n");
-	return (NULL);
-}
-
-void	monitoring_loop()
-{
-	while (1);
-}
-
 int	main(int argc, char **argv)
 {
-	struct timeval	time;
-	pthread_t		*philo;
-	int				i;
-
-	(void)argv;
-	if (argc != 5 && argc != 6)
-		return (1);
-	gettimeofday(&time, NULL);
-	printf("time test : usec: %d sec: %ld\n", time.tv_usec, time.tv_sec);
-	philo = malloc(sizeof(pthread_t) * 5);
-	i = -1;
-	while (++i < 5)
-		pthread_create(&philo[i], NULL, philo_loop, NULL);
-	monitoring_loop();
-
 	// exception -> number of arg
 	// 	return 1
 	// setup()
@@ -49,10 +22,38 @@ int	main(int argc, char **argv)
 	// 	pthread create --> philo_loop()
 	// monitoring_loop()
 	// finish_process()
+
+	t_info	info;
+	t_philo	*philos;
+
+	if (argc != 5 && argc != 6)
+		return (print_error("Error: number of arguments must be 4 or 5"));
+	if (setup(argv, &info, &philos))
+		return (print_error("Error: setup failure");
 }
 
-int	setup()
+//int	setup_info(char **argv, t_info *info)
+//{
+//
+//}
+//
+//int	setup_philo(t_philo *philos)
+//{
+//
+//}
+
+int	setup(char **argv, t_info *info, t_philo **philos)
 {
+//	if (setup_info(argv, info))
+//		return (1);
+//	*philos = malloc(sizeof(t_philo) * info->number_of_philo);
+//	if (*philos = NULL)
+//		return (1);
+//	if (setup_philo(*philos))
+//		return (1);
+//	info->start_time = get_time();
+//	return (0);
+
 	// setup info struct
 	// 	atoi(number of philo)
 	// 	atoi(time to die)
@@ -66,7 +67,7 @@ int	setup()
 	// 	mutex init m_end
 	// 	mutex init m_print
 	// 	mutex init m_forks
-	
+
 	// malloc philo struct array
 	// setup philo struct
 	// 	while (number of philo)
@@ -75,15 +76,10 @@ int	setup()
 	// 		time of last eat = 0
 	// 		mutext init m_eat
 	// 		info = &info
-	
+
 	// start time = get_time()
 }
 
-long long get_time()
-{
-	// gettimeofday
-	// return (tv.sec * 1000 + tv.uset / 1000)
-}
 
 void	*philo_loop(void *philo)
 {
