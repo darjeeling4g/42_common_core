@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/14 17:17:04 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/14 17:35:10 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_info
 	int				number_of_must_eat;
 	long long		start_time;
 
-	// Read(philos) & Write(monitor)
+	// Read(philos) & Write(monitor) => need mutex
 	int				is_end;
 
 	// Read(philos) & Write(philos) => need mutex
@@ -52,6 +52,7 @@ typedef struct s_info
 
 	// philo vs philo vs monitor
 	pthread_mutex_t	m_print;
+	pthread_mutex_t	m_end;
 
 	// philo vs philo
 	pthread_mutex_t	*m_forks;
@@ -63,9 +64,12 @@ typedef struct s_philo
 	int				id;
 	pthread_t		philo;
 
-	// Read(monitor) & Write(philo)
+	// Read(monitor) & Write(philo) => need mutex
 	int				number_of_eat;
 	long long		time_of_last_eat;
+
+	// philo vs monitor
+	pthread_mutex_t	m_eat;
 
 	struct s_info	*info;
 }	t_philo;
