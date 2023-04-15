@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/14 22:00:56 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/15 15:15:50 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,18 @@ typedef struct s_monitor
 	struct s_info	*info;
 	struct s_philo	*philos;
 }	t_monitor;
+
+// philo.c
+
+// philo_utils.c
+long long	get_time(void);
+int			multy_free(void *arg1, void *arg2, void *arg3);
+int			print_error(char *str);
+int			ft_atoi(const char *str);
+
+// philo_setup.c
+int	setup(char **argv, t_info *info, t_philo **philos);
+int	setup_info(char **argv, t_info *info);
+int	setup_philo(t_info *info, t_philo *philos);
 
 #endif

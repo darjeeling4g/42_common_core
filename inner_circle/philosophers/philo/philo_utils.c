@@ -6,13 +6,21 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 21:22:43 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 14:50:57 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/15 15:15:11 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static int	handle_over_ll(unsigned long long result, int sign);
+
+long long	get_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
 
 int	multy_free(void *arg1, void *arg2, void *arg3)
 {
@@ -29,14 +37,6 @@ int	print_error(char *str)
 {
 	printf("%s\n", str);
 	return (1);
-}
-
-long long	get_time(void)
-{
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
 int	ft_atoi(const char *str)
