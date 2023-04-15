@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 21:22:43 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 15:15:11 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/15 19:18:22 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,40 @@
 
 static int	handle_over_ll(unsigned long long result, int sign);
 
+void	custom_usleep(int time)
+{
+	long long	target;
+
+	target = get_time() + time;
+	usleep(time * 700);
+	while (get_time() < target)
+		usleep(200);
+}
+
 long long	get_time(void)
 {
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+int	safe_print(t_philo *philo, char *msg)
+{
+	long long	time;
+
+	pthread_mutex_lock(&(philo->info->m_end));
+	if (philo->info->is_end == ON)
+	{
+		pthread_mutex_unlock(&(philo->info->m_end));
+		return (1);
+	}
+	pthread_mutex_unlock(&(philo->info->m_end));
+	pthread_mutex_lock(&(philo->info->m_print));
+	time = get_time() - philo->info->start_time;
+	printf("%lld %d %s\n", time, philo->id, msg);
+	pthread_mutex_unlock(&(philo->info->m_print));
+	return (0);
 }
 
 int	multy_free(void *arg1, void *arg2, void *arg3)
@@ -33,9 +61,9 @@ int	multy_free(void *arg1, void *arg2, void *arg3)
 	return (1);
 }
 
-int	print_error(char *str)
+int	print_error(char *msg)
 {
-	printf("%s\n", str);
+	printf("%s\n", msg);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 16:20:56 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/15 18:31:47 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@
 
 # define OFF 0
 # define ON 1
+
+# define FORK 0
+# define EAT 1
+# define SLEEP 2
+# define THINK 3
+# define DIE 4
 
 typedef struct s_info
 {
@@ -83,6 +89,8 @@ typedef struct s_monitor
 
 // philo_utils.c
 long long	get_time(void);
+void		custom_usleep(int time);
+int			safe_print(t_philo *philo, char *msg);
 int			multy_free(void *arg1, void *arg2, void *arg3);
 int			print_error(char *str);
 int			ft_atoi(const char *str);
@@ -92,5 +100,11 @@ int	setup(char **argv, t_info *info, t_philo **philos);
 int	setup_info(char **argv, t_info *info);
 int	setup_info_arg(char **argv, t_info *info);
 int	setup_philo(t_info *info, t_philo *philos);
+
+// philo_loop.c
+void	*philo_loop(void *arg);
+int		get_fork(t_philo *philo);
+int		eat(t_philo *philo);
+int		sleep_n_think(t_philo *philo);
 
 #endif
