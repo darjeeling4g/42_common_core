@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/14 17:35:10 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/14 22:00:56 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@
 //  pthread_mutex_lock, pthread_mutex_unlock
 # include <pthread.h>
 
-# define NUM 1
-# define DIE 2
-# define EAT 3
-# define SLEEP 4
-# define LIMIT 5
+# define OFF 0
+# define ON 1
 
 typedef struct s_info
 {

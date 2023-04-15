@@ -6,13 +6,24 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 21:22:43 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/14 21:28:02 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/15 14:50:57 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static int	handle_over_ll(unsigned long long result, int sign);
+
+int	multy_free(void *arg1, void *arg2, void *arg3)
+{
+	if (arg1)
+		free(arg1);
+	if (arg2)
+		free(arg2);
+	if (arg3)
+		free(arg3);
+	return (1);
+}
 
 int	print_error(char *str)
 {
@@ -66,3 +77,4 @@ static int	handle_over_ll(unsigned long long result, int sign)
 	}
 	return (result);
 }
+
