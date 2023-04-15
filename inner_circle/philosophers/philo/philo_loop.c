@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:27:15 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 18:51:36 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/15 20:09:04 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	*philo_loop(void *arg)
 		usleep(philo->info->time_to_eat * 500);
 	while (1)
 	{
-		if (get_fork(philo))
+		if (pick_up_fork(philo, LEFT))
+			break ;
+		if (pick_up_fork(philo, RIGHT))
 			break ;
 		if (eat(philo))
 			break ;
@@ -31,64 +33,66 @@ void	*philo_loop(void *arg)
 	return (NULL);
 }
 
-int	get_fork(t_philo *philo)
+int	pick_up_fork(t_philo *philo, int hand)
 {
+	int	fork;
+
+	if (hand == LEFT)
+		fork = philo->l_fork;
+	else
+		fork = philo->r_fork;
 	while (1)
 	{
-		pthread_mutex_lock(&(philo->info->m_forks[philo->l_fork]));
-		if (philo->info->forks[philo->l_fork] == ON)
+		pthread_mutex_lock(&(philo->info->m_forks[fork]));
+		if (philo->info->forks[fork] == ON)
 		{
-			philo->info->forks[philo->l_fork] = OFF;
+			philo->info->forks[fork] = OFF;
 			if (safe_print(philo, "has taken a fork"))
 			{
-				philo->info->forks[philo->l_fork] = ON;
-				pthread_mutex_unlock(&(philo->info->m_forks[philo->l_fork]));
+				if (hand == RIGHT)
+					put_down_fork(philo->info, philo->l_fork);
+				philo->info->forks[fork] = ON;
+				pthread_mutex_unlock(&(philo->info->m_forks[fork]));
 				return (1);
 			}
-			break ;
+			pthread_mutex_unlock(&(philo->info->m_forks[fork]));
+			return (0);
 		}
-		pthread_mutex_unlock(&(philo->info->m_forks[philo->l_fork]));
+		pthread_mutex_unlock(&(philo->info->m_forks[fork]));
 	}
-	pthread_mutex_unlock(&(philo->info->m_forks[philo->l_fork]));
-	while (1)
-	{
-		pthread_mutex_lock(&(philo->info->m_forks[philo->r_fork]));
-		if (philo->info->forks[philo->r_fork] == ON)
-		{
-			philo->info->forks[philo->r_fork] = OFF;
-			if (safe_print(philo, "has taken a fork"))
-			{
-				philo->info->forks[philo->r_fork] = ON;
-				pthread_mutex_unlock(&(philo->info->m_forks[philo->r_fork]));
-				return (1);
-			}
-			break ;
-		}
-		pthread_mutex_unlock(&(philo->info->m_forks[philo->r_fork]));
-	}
-	pthread_mutex_unlock(&(philo->info->m_forks[philo->r_fork]));
-	return (0);
+}
+
+void	put_down_fork(t_info *info, int fork)
+{
+	pthread_mutex_lock(&(info->m_forks[fork]));
+	info->forks[fork] = ON;
+	pthread_mutex_unlock(&(info->m_forks[fork]));
 }
 
 int	eat(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->m_eat));
-	if (philo->info->number_of_must_eat > 0)
-		philo->number_of_eat++;
 	if (safe_print(philo, "is eating"))
 	{
 		pthread_mutex_unlock(&(philo->m_eat));
+		put_down_fork(philo->info, philo->l_fork);
+		put_down_fork(philo->info, philo->r_fork);
 		return (1);
 	}
 	philo->time_of_last_eat = get_time();
-	pthread_mutex_unlock(&(philo->m_eat));
 	custom_usleep(philo->info->time_to_eat);
-	pthread_mutex_lock(&(philo->info->m_forks[philo->l_fork]));
-	philo->info->forks[philo->l_fork] = ON;
-	pthread_mutex_unlock(&(philo->info->m_forks[philo->l_fork]));
-	pthread_mutex_lock(&(philo->info->m_forks[philo->r_fork]));
-	philo->info->forks[philo->r_fork] = ON;
-	pthread_mutex_unlock(&(philo->info->m_forks[philo->r_fork]));
+	put_down_fork(philo->info, philo->l_fork);
+	put_down_fork(philo->info, philo->r_fork);
+	if (philo->info->number_of_must_eat > 0)
+	{
+		philo->number_of_eat++;
+		if (philo->number_of_eat == philo->info->number_of_must_eat)
+		{
+			pthread_mutex_unlock(&(philo->m_eat));
+			return (1);
+		}
+	}
+	pthread_mutex_unlock(&(philo->m_eat));
 	return (0);
 }
 

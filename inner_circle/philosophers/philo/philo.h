@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 18:31:47 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/15 20:02:59 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,8 @@
 # define OFF 0
 # define ON 1
 
-# define FORK 0
-# define EAT 1
-# define SLEEP 2
-# define THINK 3
-# define DIE 4
+# define LEFT 0
+# define RIGHT 1
 
 typedef struct s_info
 {
@@ -103,7 +100,8 @@ int	setup_philo(t_info *info, t_philo *philos);
 
 // philo_loop.c
 void	*philo_loop(void *arg);
-int		get_fork(t_philo *philo);
+int		pick_up_fork(t_philo *philo, int hand);
+void	put_down_fork(t_info *info, int fork);
 int		eat(t_philo *philo);
 int		sleep_n_think(t_philo *philo);
 
