@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 15:15:50 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/15 16:20:56 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct s_philo
 {
 	// Read only(philo, monitor)
 	int				id;
+	int				l_fork;
+	int				r_fork;
 	pthread_t		philo;
 
 	// Read(monitor) & Write(philo) => need mutex
@@ -88,6 +90,7 @@ int			ft_atoi(const char *str);
 // philo_setup.c
 int	setup(char **argv, t_info *info, t_philo **philos);
 int	setup_info(char **argv, t_info *info);
+int	setup_info_arg(char **argv, t_info *info);
 int	setup_philo(t_info *info, t_philo *philos);
 
 #endif
