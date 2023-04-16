@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 21:22:43 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 19:18:22 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/15 20:26:38 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,6 @@ int	safe_print(t_philo *philo, char *msg)
 	printf("%lld %d %s\n", time, philo->id, msg);
 	pthread_mutex_unlock(&(philo->info->m_print));
 	return (0);
-}
-
-int	multy_free(void *arg1, void *arg2, void *arg3)
-{
-	if (arg1)
-		free(arg1);
-	if (arg2)
-		free(arg2);
-	if (arg3)
-		free(arg3);
-	return (1);
-}
-
-int	print_error(char *msg)
-{
-	printf("%s\n", msg);
-	return (1);
 }
 
 int	ft_atoi(const char *str)

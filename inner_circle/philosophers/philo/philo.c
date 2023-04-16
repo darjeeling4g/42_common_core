@@ -6,15 +6,47 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 19:54:14 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 17:33:39 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/15 20:48:37 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	monitoring_loop(void)
+void	monitoring_loop(t_info *info, t_philo *philos)
 {
-	while(1);
+	int			i;
+	int			count;
+	long long	time;
+
+	while (1)
+	{
+		time = get_time();
+		i = 0;
+		count = 0;
+		while (i < info->number_of_philo)
+		{
+			pthread_mutex_lock(&(philos[i].m_eat));
+			if (info->time_to_die <= time - philos[i].time_of_last_eat)
+			{
+				pthread_mutex_lock(&(info->m_end));
+				info->is_end = ON;
+				pthread_mutex_unlock(&(info->m_end));
+			}
+			if (info->number_of_must_eat == philos[i].number_of_eat)
+				count++;
+			pthread_mutex_unlock(&(philos[i].m_eat));
+			i++;
+		}
+		pthread_mutex_lock(&(info->m_end));
+		if (count == info->number_of_philo)
+			info->is_end = ON;
+		if (info->is_end == ON)
+		{
+			pthread_mutex_unlock(&(info->m_end));
+			return ;
+		}
+		pthread_mutex_unlock(&(info->m_end));
+	}
 }
 
 int	main(int argc, char **argv)
@@ -38,7 +70,7 @@ int	main(int argc, char **argv)
 		philos[i].time_of_last_eat = info.start_time;
 		pthread_create(&(philos[i].philo), NULL, philo_loop, &(philos[i]));
 	}
-	monitoring_loop();
+	monitoring_loop(&info, philos);
 
 	/* setup test
 

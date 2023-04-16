@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 20:02:59 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/15 20:27:06 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 # include <unistd.h>
 // gettimeofday
 # include <sys/time.h>
-//  pthread_create, pthread_detach, pthread_join
-//  pthread_mutex_init, pthread_mutex_destroy
-//  pthread_mutex_lock, pthread_mutex_unlock
+// pthread_create, pthread_detach, pthread_join,
+// pthread_mutex_init, pthread_mutex_destroy,
+// pthread_mutex_lock, pthread_mutex_unlock
 # include <pthread.h>
 
 # define OFF 0
@@ -76,20 +76,16 @@ typedef struct s_philo
 	struct s_info	*info;
 }	t_philo;
 
-typedef struct s_monitor
-{
-	struct s_info	*info;
-	struct s_philo	*philos;
-}	t_monitor;
-
 // philo.c
+
+// philo_error.c
+int			multy_free(void *arg1, void *arg2, void *arg3);
+int			print_error(char *str);
 
 // philo_utils.c
 long long	get_time(void);
 void		custom_usleep(int time);
 int			safe_print(t_philo *philo, char *msg);
-int			multy_free(void *arg1, void *arg2, void *arg3);
-int			print_error(char *str);
 int			ft_atoi(const char *str);
 
 // philo_setup.c
