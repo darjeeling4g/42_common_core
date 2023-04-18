@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:27:15 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 20:12:51 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/17 22:12:37 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	*philo_loop(void *arg)
 	
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep(philo->info->time_to_eat * 500);
+		usleep(200);
+//		usleep(philo->info->time_to_eat * 500);
 	while (1)
 	{
 		if (pick_up_fork(philo, LEFT))

@@ -6,11 +6,34 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 19:54:14 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 20:48:37 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/17 22:21:28 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	clean_process(t_info *info, t_philo *philos)
+{
+	int i;
+
+	i = 0;
+	while (i < info->number_of_philo)
+	{
+		if (pthread_join(philos[i].philo, NULL))
+			return (1);
+		if (pthread_mutex_destroy(&(philos[i].m_eat)))
+			return (1);
+		if (pthread_mutex_destroy(&(info->m_forks[i])))
+			return (1);
+		i++;
+	}
+	if (pthread_mutex_destroy(&(info->m_print)))
+		return (1);
+	if (pthread_mutex_destroy(&(info->m_end)))
+		return (1);
+	multy_free(info->forks, info->m_forks, philos);
+	return (0);
+}
 
 void	monitoring_loop(t_info *info, t_philo *philos)
 {
@@ -20,42 +43,43 @@ void	monitoring_loop(t_info *info, t_philo *philos)
 
 	while (1)
 	{
-		time = get_time();
+		// check_starvation
 		i = 0;
 		count = 0;
+		time = get_time();
 		while (i < info->number_of_philo)
 		{
 			pthread_mutex_lock(&(philos[i].m_eat));
+			if (info->number_of_must_eat == philos[i].number_of_eat)
+				count++;
 			if (info->time_to_die <= time - philos[i].time_of_last_eat)
 			{
 				pthread_mutex_lock(&(info->m_end));
 				info->is_end = ON;
+				pthread_mutex_lock(&(info->m_print));
+				printf("%lld %d %s\n", time - info->start_time, philos[i].id, "died");
+				pthread_mutex_unlock(&(info->m_print));
 				pthread_mutex_unlock(&(info->m_end));
+				pthread_mutex_unlock(&(philos[i].m_eat));
+				return ;
 			}
-			if (info->number_of_must_eat == philos[i].number_of_eat)
-				count++;
 			pthread_mutex_unlock(&(philos[i].m_eat));
 			i++;
 		}
-		pthread_mutex_lock(&(info->m_end));
+
+		// check_count
 		if (count == info->number_of_philo)
-			info->is_end = ON;
-		if (info->is_end == ON)
 		{
+			pthread_mutex_lock(&(info->m_end));
+			info->is_end = ON;
 			pthread_mutex_unlock(&(info->m_end));
 			return ;
 		}
-		pthread_mutex_unlock(&(info->m_end));
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	// while(number_of_philos)
-	// 	pthread create --> philo_loop()
-	// monitoring_loop()
-	// finish_process()
-
 	t_info	info;
 	t_philo	*philos;
 	int		i;
@@ -71,27 +95,8 @@ int	main(int argc, char **argv)
 		pthread_create(&(philos[i].philo), NULL, philo_loop, &(philos[i]));
 	}
 	monitoring_loop(&info, philos);
-
-	/* setup test
-
-	printf("===================info struct==========================\n");
-	printf("number of philo : %d\n", info.number_of_philo);
-	printf("time to die: %d\n", info.time_to_die);
-	printf("time to eat: %d\n", info.time_to_eat);
-	printf("time to sleep: %d\n", info.time_to_sleep);
-	printf("number of must eat: %d\n", info.number_of_must_eat);
-	printf("start time : %lld\n", info.start_time);
-
-	printf("===================philo struct==========================\n");
-	for (int i = 0; i < info.number_of_philo; i++)
-	{
-		printf("id : %d\n", philos[i].id);
-		printf("l_fork : %d\n", philos[i].l_fork);
-		printf("r_fork : %d\n", philos[i].r_fork);
-		printf("number of eat : %d\n", philos[i].number_of_eat);
-		printf("time of last eat : %lld\n", philos[i].time_of_last_eat);
-	}
-
-	*/
+	if (clean_process(&info, philos))
+		return (print_error("Error: clean failure"));
+	return (0);
 }
 
