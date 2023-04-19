@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 15:12:55 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/18 20:32:19 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/19 16:47:19 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	setup(char **argv, t_info *info, t_philo **philos)
 
 int	setup_info(char **argv, t_info *info)
 {
-	int i;
+	int	i;
 
 	if (setup_info_arg(argv, info))
 		return (1);
@@ -89,4 +89,3 @@ int	setup_philo(t_info *info, t_philo *philos)
 	}
 	return (0);
 }
-

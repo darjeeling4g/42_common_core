@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 21:22:43 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/18 20:32:40 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/19 16:47:27 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,3 @@ static int	handle_over_ll(unsigned long long result, int sign)
 	}
 	return (result);
 }
-

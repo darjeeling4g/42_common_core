@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/18 20:31:52 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/19 16:59:20 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ typedef struct s_philo
 }	t_philo;
 
 // philo.c
+void		monitoring_loop(t_info *info, t_philo *philos);
+int			check_starvation(t_info *info, t_philo *philo, int *count, long long time);
+int			clean_process(t_info *info, t_philo *philos);
 
 // philo_error.c
 int			multy_free(void *arg1, void *arg2, void *arg3);
@@ -88,16 +91,16 @@ int			safe_print(t_philo *philo, char *msg);
 int			ft_atoi(const char *str);
 
 // philo_setup.c
-int	setup(char **argv, t_info *info, t_philo **philos);
-int	setup_info(char **argv, t_info *info);
-int	setup_info_arg(char **argv, t_info *info);
-int	setup_philo(t_info *info, t_philo *philos);
+int			setup(char **argv, t_info *info, t_philo **philos);
+int			setup_info(char **argv, t_info *info);
+int			setup_info_arg(char **argv, t_info *info);
+int			setup_philo(t_info *info, t_philo *philos);
 
 // philo_loop.c
-void	*philo_loop(void *arg);
-int		pick_up_fork(t_philo *philo, int hand);
-void	put_down_fork(t_info *info, int fork);
-int		eat(t_philo *philo);
-int		sleep_n_think(t_philo *philo);
+void		*philo_loop(void *arg);
+int			pick_up_fork(t_philo *philo, int hand);
+void		put_down_fork(t_info *info, int fork);
+int			eat(t_philo *philo);
+int			sleep_n_think(t_philo *philo);
 
 #endif
