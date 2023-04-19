@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 19:54:14 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/19 13:39:39 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/19 14:59:43 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	clean_process(t_info *info, t_philo *philos)
 	{
 		if (pthread_join(philos[i].philo, NULL))
 			return (1);
+		i++;
+	}
+	i = 0;
+	while (i < info->number_of_philo)
+	{
 		if (pthread_mutex_destroy(&(philos[i].m_eat)))
 			return (1);
 		if (pthread_mutex_destroy(&(info->m_forks[i])))
@@ -50,7 +55,7 @@ void	monitoring_loop(t_info *info, t_philo *philos)
 			pthread_mutex_lock(&(philos[i].m_eat));
 			if (info->number_of_must_eat == philos[i].number_of_eat)
 				count++;
-			if (info->time_to_die <= time - philos[i].time_of_last_eat)
+			else if (info->time_to_die <= time - philos[i].time_of_last_eat)
 			{
 				pthread_mutex_lock(&(info->m_end));
 				info->is_end = ON;
