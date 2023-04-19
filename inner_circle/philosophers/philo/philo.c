@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 19:54:14 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/17 22:21:28 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/19 13:39:39 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	clean_process(t_info *info, t_philo *philos)
 			return (1);
 		i++;
 	}
-	if (pthread_mutex_destroy(&(info->m_print)))
-		return (1);
 	if (pthread_mutex_destroy(&(info->m_end)))
 		return (1);
 	multy_free(info->forks, info->m_forks, philos);
@@ -56,9 +54,7 @@ void	monitoring_loop(t_info *info, t_philo *philos)
 			{
 				pthread_mutex_lock(&(info->m_end));
 				info->is_end = ON;
-				pthread_mutex_lock(&(info->m_print));
 				printf("%lld %d %s\n", time - info->start_time, philos[i].id, "died");
-				pthread_mutex_unlock(&(info->m_print));
 				pthread_mutex_unlock(&(info->m_end));
 				pthread_mutex_unlock(&(philos[i].m_eat));
 				return ;

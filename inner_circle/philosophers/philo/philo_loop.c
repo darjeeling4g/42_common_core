@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:27:15 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/17 22:12:37 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/19 13:32:53 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	*philo_loop(void *arg)
 	
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep(200);
-//		usleep(philo->info->time_to_eat * 500);
+		usleep(philo->info->time_to_eat * 500);
 	while (1)
 	{
 		if (pick_up_fork(philo, LEFT))
@@ -42,6 +41,7 @@ int	pick_up_fork(t_philo *philo, int hand)
 		fork = philo->l_fork;
 	else
 		fork = philo->r_fork;
+	/*
 	while (1)
 	{
 		pthread_mutex_lock(&(philo->info->m_forks[fork]));
@@ -61,11 +61,24 @@ int	pick_up_fork(t_philo *philo, int hand)
 		}
 		pthread_mutex_unlock(&(philo->info->m_forks[fork]));
 	}
+	*/
+
+	pthread_mutex_lock(&(philo->info->m_forks[fork]));
+	philo->info->forks[fork] = OFF;
+	if (safe_print(philo, "has taken a fork"))
+	{
+		if (hand == RIGHT)
+			put_down_fork(philo->info, philo->l_fork);
+		put_down_fork(philo->info, philo->r_fork);
+		return (1);
+	}
+	return (0);
+
 }
 
 void	put_down_fork(t_info *info, int fork)
 {
-	pthread_mutex_lock(&(info->m_forks[fork]));
+//	pthread_mutex_lock(&(info->m_forks[fork]));
 	info->forks[fork] = ON;
 	pthread_mutex_unlock(&(info->m_forks[fork]));
 }

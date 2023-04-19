@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 21:22:43 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/17 22:13:35 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/18 20:32:40 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ int	safe_print(t_philo *philo, char *msg)
 		pthread_mutex_unlock(&(philo->info->m_end));
 		return (1);
 	}
-	pthread_mutex_lock(&(philo->info->m_print));
 	time = get_time() - philo->info->start_time;
 	printf("%lld %d %s\n", time, philo->id, msg);
-	pthread_mutex_unlock(&(philo->info->m_print));
 	pthread_mutex_unlock(&(philo->info->m_end));
 	return (0);
 }

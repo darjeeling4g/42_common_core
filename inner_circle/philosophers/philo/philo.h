@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 20:27:06 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/18 20:31:52 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_info
 	int				*forks;
 
 	// philo vs philo vs monitor
-	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_end;
 
 	// philo vs philo

@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 15:12:55 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/15 20:07:56 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/18 20:32:19 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	setup_info(char **argv, t_info *info)
 		if (pthread_mutex_init(&(info->m_forks[i]), NULL))
 			return (multy_free(info->forks, info->m_forks, NULL));
 	}
-	if (pthread_mutex_init(&(info->m_print), NULL))
-		return (multy_free(info->forks, info->m_forks, NULL));
 	if (pthread_mutex_init(&(info->m_end), NULL))
 		return (multy_free(info->forks, info->m_forks, NULL));
 	return (0);
