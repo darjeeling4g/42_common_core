@@ -1,0 +1,93 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
+/*   Updated: 2023/04/20 18:56:58 by siyang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
+
+// memset
+# include <string.h>
+// printf
+# include <stdio.h>
+// malloc, free, exit
+# include <stdlib.h>
+// write, fork, usleep
+# include <unistd.h>
+// kill
+# include <signal.h>
+// gettimeofday
+# include <sys/time.h>
+// waitpid
+# include <sys/wait.h>
+// pthread_create, pthread_detach, pthread_join,
+# include <pthread.h>
+// sem_open, sem_close, sem_post, sem_wait, sem_unlink
+# include <semaphore.h>
+
+# define OFF 0
+# define ON 1
+
+# define LEFT 0
+# define RIGHT 1
+
+typedef struct s_info
+{
+	// Read only(philo, sub_monitor)
+	int			number_of_philo;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			number_of_must_eat;
+	int			id;
+	long long	start_time;
+	pthread_t	philo;
+
+	// Read(sub_monitor) & Write(philo) => need binary sem
+	int			number_of_eat;
+	long long	time_of_last_eat;
+
+	// Read(philo) & Write(sub_monitor) => need binary sem
+	int			is_end;
+
+	// philo vs sub_monitor ('one' or 'number_of philo' ???)
+	sem_t		*bs_eat;
+
+	// print or finish check
+	// philo vs philo vs ... vs main_monitor => need binary sem
+	sem_t		*bs_end;
+
+	// philo vs philo vs philo ... => need counting sem
+	sem_t		*cs_fork; // number_of_philo
+//	sem_t		*cs_pair; // number_of_philo / 2
+}	t_info;
+
+// philo_bonus.c
+void	main_monitor_loop(t_info *info);
+
+// philo_error_bonus.c
+int	print_error(char *msg);
+
+// philo_utils_bonus.c
+void		custom_usleep(int time);
+long long	get_time(void);
+int			safe_print(t_info *info, char *msg);
+int			ft_atoi(const char *str);
+
+// philo_setup_bonus.c
+int	setup(char **argv, t_info *info);
+
+// philo_loop_bonus.c
+void		*philo_loop(void *arg);
+int			pick_up_fork(t_info *info);
+int			eat(t_info *info);
+int			sleep_n_think(t_info *info);
+
+#endif
