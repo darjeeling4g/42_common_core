@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/20 18:56:58 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/22 08:30:53 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_info
 	int			id;
 	long long	start_time;
 	pthread_t	philo;
+	pid_t		*pid;
 
 	// Read(sub_monitor) & Write(philo) => need binary sem
 	int			number_of_eat;
@@ -60,17 +61,19 @@ typedef struct s_info
 	// philo vs sub_monitor ('one' or 'number_of philo' ???)
 	sem_t		*bs_eat;
 
-	// print or finish check
 	// philo vs philo vs ... vs main_monitor => need binary sem
 	sem_t		*bs_end;
+	sem_t		*bs_print;
 
 	// philo vs philo vs philo ... => need counting sem
 	sem_t		*cs_fork; // number_of_philo
-//	sem_t		*cs_pair; // number_of_philo / 2
 }	t_info;
 
 // philo_bonus.c
 void	main_monitor_loop(t_info *info);
+void	sub_monitor_loop(t_info *info);
+void	exit_process(t_info *info, int code);
+void	clean_process(t_info * info);
 
 // philo_error_bonus.c
 int	print_error(char *msg);

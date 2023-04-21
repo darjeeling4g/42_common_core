@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 17:48:27 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/20 18:57:12 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/22 08:43:27 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ void	*philo_loop(void *arg)
 
 int	pick_up_fork(t_info *info)
 {
-	// exception philo 1
-	//
 	sem_wait(info->cs_fork);
 	if (safe_print(info, "has taken a fork"))
+	{
+		sem_post(info->cs_fork);
+		return (1);
+	}
+	if (info->number_of_philo == 1)
 	{
 		sem_post(info->cs_fork);
 		return (1);

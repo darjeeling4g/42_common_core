@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 16:09:58 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/20 18:43:38 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/22 07:28:53 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ int	safe_print(t_info *info, char *msg)
 		return (1);
 	}
 	time = get_time() - info->start_time;
+	sem_wait(info->bs_print);
 	printf("%lld %d %s\n", time, info->id, msg);
+	sem_post(info->bs_print);
 	sem_post(info->bs_end);
 	return (0);
 }
