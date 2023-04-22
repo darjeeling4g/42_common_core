@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 17:48:27 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/22 09:14:40 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/22 18:14:28 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*philo_loop(void *arg)
 {
 	t_info	*info;
-	
+
 	info = (t_info *)arg;
 	if (info->id % 2 == 0)
 		usleep(info->time_to_eat * 500);
@@ -56,30 +56,30 @@ int	pick_up_fork(t_info *info)
 
 int	eat(t_info *info)
 {
-	sem_wait(info->bs_eat[info->id - 1]);
+	sem_wait(info->bs_eat);
 	if (safe_print(info, "is eating"))
 	{
-		sem_post(info->bs_eat[info->id - 1]);
+		sem_post(info->bs_eat);
 		sem_post(info->cs_fork);
 		sem_post(info->cs_fork);
 		return (1);
 	}
 	info->time_of_last_eat = get_time();
-	sem_post(info->bs_eat[info->id - 1]);
+	sem_post(info->bs_eat);
 	custom_usleep(info->time_to_eat);
 	sem_post(info->cs_fork);
 	sem_post(info->cs_fork);
-	sem_wait(info->bs_eat[info->id - 1]);
+	sem_wait(info->bs_eat);
 	if (info->number_of_must_eat > 0)
 	{
 		info->number_of_eat++;
 		if (info->number_of_eat == info->number_of_must_eat)
 		{
-			sem_post(info->bs_eat[info->id - 1]);
+			sem_post(info->bs_eat);
 			return (1);
 		}
 	}
-	sem_post(info->bs_eat[info->id - 1]);
+	sem_post(info->bs_eat);
 	return (0);
 }
 
@@ -92,4 +92,3 @@ int	sleep_n_think(t_info *info)
 		return (1);
 	return (0);
 }
-

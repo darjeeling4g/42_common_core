@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/22 09:15:40 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/22 18:20:44 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_info
 	long long	start_time;
 	pthread_t	philo;
 	pid_t		*pid;
-	char		**sem_name;
 
 	// Read(sub_monitor) & Write(philo) => need binary sem
 	int			number_of_eat;
@@ -60,7 +59,7 @@ typedef struct s_info
 	int			is_end;
 
 	// philo vs sub_monitor ('one' or 'number_of philo' ???)
-	sem_t		**bs_eat;
+	sem_t		*bs_eat;
 
 	// philo vs philo vs ... vs main_monitor => need binary sem
 	sem_t		*bs_end;
@@ -71,23 +70,24 @@ typedef struct s_info
 }	t_info;
 
 // philo_bonus.c
-void	main_monitor_loop(t_info *info);
-void	sub_monitor_loop(t_info *info);
-void	exit_process(t_info *info, int code);
-void	clean_process(t_info * info);
+void		main_monitor_loop(t_info *info);
+void		sub_monitor_loop(t_info *info);
+void		check_starvation(t_info *info, long long time);
 
 // philo_error_bonus.c
-int	print_error(char *msg);
+int			print_error(char *msg);
+void		clean_process(t_info *info);
+void		exit_process(t_info *info, int code);
 
 // philo_utils_bonus.c
 void		custom_usleep(int time);
 long long	get_time(void);
 int			safe_print(t_info *info, char *msg);
 int			ft_atoi(const char *str);
-char	*ft_itoa(int n);
 
 // philo_setup_bonus.c
-int	setup(char **argv, t_info *info);
+int			setup(char **argv, t_info *info);
+int			setup_arg(char **argv, t_info *info);
 
 // philo_loop_bonus.c
 void		*philo_loop(void *arg);
