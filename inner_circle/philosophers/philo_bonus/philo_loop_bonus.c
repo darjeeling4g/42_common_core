@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 17:48:27 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/22 08:43:27 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/22 09:14:40 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,30 @@ int	pick_up_fork(t_info *info)
 
 int	eat(t_info *info)
 {
-	sem_wait(info->bs_eat);
+	sem_wait(info->bs_eat[info->id - 1]);
 	if (safe_print(info, "is eating"))
 	{
-		sem_post(info->bs_eat);
+		sem_post(info->bs_eat[info->id - 1]);
 		sem_post(info->cs_fork);
 		sem_post(info->cs_fork);
 		return (1);
 	}
 	info->time_of_last_eat = get_time();
-	sem_post(info->bs_eat);
+	sem_post(info->bs_eat[info->id - 1]);
 	custom_usleep(info->time_to_eat);
 	sem_post(info->cs_fork);
 	sem_post(info->cs_fork);
-	sem_wait(info->bs_eat);
+	sem_wait(info->bs_eat[info->id - 1]);
 	if (info->number_of_must_eat > 0)
 	{
 		info->number_of_eat++;
 		if (info->number_of_eat == info->number_of_must_eat)
 		{
-			sem_post(info->bs_eat);
+			sem_post(info->bs_eat[info->id - 1]);
 			return (1);
 		}
 	}
-	sem_post(info->bs_eat);
+	sem_post(info->bs_eat[info->id - 1]);
 	return (0);
 }
 

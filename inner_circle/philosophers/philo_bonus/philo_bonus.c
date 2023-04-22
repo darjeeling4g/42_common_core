@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:59:43 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/22 08:49:28 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/22 09:16:40 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int	main(int argc, char **argv)
 		if (!info.pid[i])
 		{
 			info.id = i + 1;
+			info.sem_name[i] = ft_itoa(info.id);
+			sem_unlink(info.sem_name[i]);
+			info.bs_eat[i] = sem_open(info.sem_name[i], O_CREAT, 0644, 1);
 			pthread_create(&(info.philo), NULL, philo_loop, &info);
 			sub_monitor_loop(&info);
 		}
@@ -39,7 +42,7 @@ int	main(int argc, char **argv)
 
 void	clean_process(t_info * info)
 {
-	sem_close(info->bs_eat);
+//	sem_close(info->bs_eat);
 	sem_close(info->bs_end);
 	sem_close(info->bs_print);
 	sem_close(info->cs_fork);
@@ -53,7 +56,7 @@ void	clean_process(t_info * info)
 void	exit_process(t_info *info, int code)
 {
 	pthread_join(info->philo, NULL);
-	sem_close(info->bs_eat);
+//	sem_close(info->bs_eat);
 	sem_close(info->bs_end);
 	sem_close(info->bs_print);
 	sem_close(info->cs_fork);
@@ -67,14 +70,14 @@ void	sub_monitor_loop(t_info *info)
 
 	while (1)
 	{
-		sem_wait(info->bs_eat);
+		sem_wait(info->bs_eat[info->id - 1]);
 		time = get_time();
 		if (info->number_of_must_eat == info->number_of_eat)
 		{
 			sem_wait(info->bs_end);
 			info->is_end = ON;
 			sem_post(info->bs_end);
-			sem_post(info->bs_eat);
+			sem_post(info->bs_eat[info->id - 1]);
 			exit_process(info, 0);
 		}
 		else if (info->time_to_die <= time - info->time_of_last_eat)
@@ -84,10 +87,10 @@ void	sub_monitor_loop(t_info *info)
 			sem_wait(info->bs_print);
 			printf("%lld %d %s\n", time - info->start_time, info->id, "died");
 			sem_post(info->bs_end);
-			sem_post(info->bs_eat);
+			sem_post(info->bs_eat[info->id - 1]);
 			exit_process(info, 1);
 		}
-		sem_post(info->bs_eat);
+		sem_post(info->bs_eat[info->id - 1]);
 	}
 }
 

@@ -6,13 +6,14 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 16:09:58 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/22 07:28:53 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/22 09:06:24 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
 static int	handle_over_ll(unsigned long long result, int sign);
+static int	len_num(int n);
 
 void	custom_usleep(int time)
 {
@@ -89,3 +90,45 @@ static int	handle_over_ll(unsigned long long result, int sign)
 	return (result);
 }
 
+char	*ft_itoa(int n)
+{
+	char	*ptr;
+	int		sign;
+	int		i;
+
+	sign = 0;
+	if (n < 0)
+		sign = 1;
+	i = len_num(n) + sign;
+	ptr = malloc(i + 1);
+	if (ptr == NULL)
+		return (NULL);
+	ptr[i] = '\0';
+	while (i > 0)
+	{
+		if (sign == 0)
+			ptr[i - 1] = n % 10 + '0';
+		else if (sign == 1)
+			ptr[i - 1] = n % 10 * -1 + '0';
+		n = n / 10;
+		i--;
+	}
+	if (sign == 1)
+		ptr[0] = '-';
+	return (ptr);
+}
+
+static int	len_num(int n)
+{
+	int	len;
+
+	if (n == 0)
+		return (1);
+	len = 0;
+	while (n != 0)
+	{
+		n = n / 10;
+		len++;
+	}
+	return (len);
+}
