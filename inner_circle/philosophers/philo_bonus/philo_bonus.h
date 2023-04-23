@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 21:58:34 by siyang            #+#    #+#             */
-/*   Updated: 2023/04/22 18:35:42 by siyang           ###   ########.fr       */
+/*   Updated: 2023/04/22 18:37:53 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@
 
 # define OFF 0
 # define ON 1
-
-# define LEFT 0
-# define RIGHT 1
 
 typedef struct s_info
 {
