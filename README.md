@@ -9,6 +9,7 @@
 
 [![siyang's 42 Libft Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/2646118)](https://github.com/JaeSeoKim/badge42)
 
+---
 ### Circle '1'
 
 #### [Get\_next\_line](./inner_circle/get_next_line)
@@ -26,6 +27,7 @@
 
 [![siyang's 42 Born2beroot Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/2872381)](https://github.com/JaeSeoKim/badge42)
 
+---
 ### Circle '2'
 
 #### [fdf](./inner_circle/fdf)
@@ -43,6 +45,7 @@
 
 [![siyang's 42 push_swap Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/2923448)](https://github.com/JaeSeoKim/badge42)
 
+---
 ### Circle '3'
 
 #### [minishell](./inner_circle/minishell)
@@ -55,6 +58,7 @@
 
 [![siyang's 42 Philosophers Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/3007531)](https://github.com/JaeSeoKim/badge42)
 
+---
 ### Circle '4'
 
 #### [net\_practice](./inner_circle/net_practice)
