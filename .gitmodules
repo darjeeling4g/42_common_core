@@ -1,3 +1,6 @@
 [submodule "inner_circle/minishell"]
 	path = inner_circle/minishell
 	url = git@github.com:darjeeling4g/minishell.git
+[submodule "inner_circle/miniRT"]
+	path = inner_circle/miniRT
+	url = git@github.com:darjeeling4g/miniRT.git
