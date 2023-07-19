@@ -74,4 +74,4 @@
 #### [cpp-module\_00](./inner_circle/cpp-module/module_00)
 > "Namespace, classes, member functions, stdio streams, initialization lists, static, const, and some other basic stuff"
 
-[![siyang's 42 miniRT Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/3073709)](https://github.com/JaeSeoKim/badge42)
+[![siyang's 42 CPP Module 00 Score](https://badge42.vercel.app/api/v2/cl89m2jjk00060gkzooyajl8z/project/3135983)](https://github.com/JaeSeoKim/badge42)

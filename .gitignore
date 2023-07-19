@@ -53,3 +53,4 @@ dkms.conf
 
 *.swp
 .DS_Store
+.cache
