@@ -18,14 +18,14 @@ JSON_DIR	:= json
 #	Define the source files													  													 #
 # ---------------------------------------------------------------------------- #
 
-SRCS	:= Account.cpp tests.cpp
+SRCS	:= main.cpp Zombie.cpp zombieHorde.cpp
 OBJS	:= $(patsubst %.cpp, $(BUILD_DIR)/$(OBJ_DIR)/%.o, $(SRCS))
 
 # ---------------------------------------------------------------------------- #
 #	Define the target																													   #
 # ---------------------------------------------------------------------------- #
 
-NAME	:= account
+NAME	:= horde
 JSON	:= compile_commands.json
 
 # ---------------------------------------------------------------------------- #
@@ -37,8 +37,7 @@ all:
 
 $(NAME): $(OBJS)
 		@$(CC) $(CFLAGS) $(OBJS) -o $@
-		@./$(NAME) > out.log
-		@printf "\n$(MAGENTA)[$(NAME)] Linking Success and create 'out.log'\n$(DEF_COLOR)"
+		@printf "\n$(MAGENTA)[$(NAME)] Linking Success\n$(DEF_COLOR)"
 
 $(BUILD_DIR)/$(OBJ_DIR)/%.o : %.cpp | dir_guard
 		@$(CC) $(CFLAGS) -c $< -o $@ $(MJ)
@@ -48,7 +47,7 @@ clean:
 		@printf "$(BLUE)[$(NAME)] obj. files$(DEF_COLOR)$(GREEN)	=> Cleaned!\n$(DEF_COLOR)"
 
 fclean:
-		@$(RM) -r $(BUILD_DIR) $(NAME) $(JSON) out.log
+		@$(RM) -r $(BUILD_DIR) $(NAME) $(JSON)
 		@printf "$(BLUE)[$(NAME)] obj. files$(DEF_COLOR)$(GREEN)	=> Cleaned!\n$(DEF_COLOR)"
 		@printf "$(CYAN)[$(NAME)] exec. files$(DEF_COLOR)$(GREEN)	=> Cleaned!\n$(DEF_COLOR)"
 

@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 22:33:25 by siyang            #+#    #+#             */
-/*   Updated: 2023/07/19 23:47:54 by siyang           ###   ########.fr       */
+/*   Updated: 2023/07/20 14:15:08 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void PhoneBook::DisplayContact(int index) const
 {
     if (index > 0 && index < 9)
     {
-        if (contacts[index - 1].getFirstName() == "")
+        if (contacts[index - 1].getFirstName().empty())
         {
             std::cout << "=== Failure: No contact ===\n" << std::endl; 
         }

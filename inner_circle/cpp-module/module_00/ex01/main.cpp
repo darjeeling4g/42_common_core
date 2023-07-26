@@ -6,11 +6,13 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:21:55 by siyang            #+#    #+#             */
-/*   Updated: 2023/07/20 00:01:22 by siyang           ###   ########.fr       */
+/*   Updated: 2023/07/26 15:33:40 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <limits>
+#include <cstdio>
 #include "PhoneBook.h"
 
 #define FAIL (-1)
@@ -60,15 +62,15 @@ string getStringInput(string prompt)
 
 bool isCompleteField(const string input[7])
 {
-    if (input[FIRSTNAME] == "")
+    if (input[FIRSTNAME].empty())
         return (false);
-    if (input[LASTNAME] == "")
+    if (input[LASTNAME].empty())
         return (false);
-    if (input[NICKNAME] == "")
+    if (input[NICKNAME].empty())
         return (false);
-    if (input[PHONENUMBER] == "")
+    if (input[PHONENUMBER].empty())
         return (false);
-    if (input[SECRET] == "")
+    if (input[SECRET].empty())
         return (false);
     return (true);
 }

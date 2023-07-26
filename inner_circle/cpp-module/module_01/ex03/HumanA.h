@@ -1,45 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*   HumanA.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/15 17:22:01 by siyang            #+#    #+#             */
-/*   Updated: 2023/07/26 15:27:23 by siyang           ###   ########.fr       */
+/*   Created: 2023/07/21 14:10:31 by siyang            #+#    #+#             */
+/*   Updated: 2023/07/21 16:36:43 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MODULE01_EX03_HUMANA_H_
+#define MODULE01_EX03_HUMANA_H_
+
 #include <iostream>
+#include "Weapon.h"
 
-using std::cout;
-using std::endl;
 using std::string;
-using std::toupper;
 
-void PrintUpperString(string str)
-{
-  for (size_t i = 0; i < str.size(); i++)
-  {
-    str[i] = toupper(str[i]);
-  }
-  cout << str;
-}
-
-int main(int argc, char **argv)
+class HumanA
 {
 
-  if (argc == 1)
-  {
-    cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << endl;
-  }
-  else 
-  {
-    for (int i = 1; i < argc; i++)
-    {
-      PrintUpperString(argv[i]);
-    }
-    cout << endl;
-  }
-  return (0);
-}
+public:
+    HumanA(string name, Weapon& weapon);
+    ~HumanA();
+    HumanA& attack();
+
+private:
+    string name;
+    Weapon& weapon;
+
+};
+
+#endif // !MODULE01_EX03_HUMANA_H_

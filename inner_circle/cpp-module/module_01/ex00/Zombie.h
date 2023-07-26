@@ -1,45 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*   Zombie.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/15 17:22:01 by siyang            #+#    #+#             */
-/*   Updated: 2023/07/26 15:27:23 by siyang           ###   ########.fr       */
+/*   Created: 2023/07/21 12:27:48 by siyang            #+#    #+#             */
+/*   Updated: 2023/07/21 13:02:23 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MODULE01_EX00_ZOMBIE_H_
+#define MODULE01_EX00_ZOMBIE_H_
+
 #include <iostream>
 
-using std::cout;
-using std::endl;
 using std::string;
-using std::toupper;
 
-void PrintUpperString(string str)
-{
-  for (size_t i = 0; i < str.size(); i++)
-  {
-    str[i] = toupper(str[i]);
-  }
-  cout << str;
-}
-
-int main(int argc, char **argv)
+class Zombie
 {
 
-  if (argc == 1)
-  {
-    cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << endl;
-  }
-  else 
-  {
-    for (int i = 1; i < argc; i++)
-    {
-      PrintUpperString(argv[i]);
-    }
-    cout << endl;
-  }
-  return (0);
-}
+public:
+    Zombie( string name );
+    ~Zombie();
+    void announce(void);
+
+private:
+    string name;
+
+}; 
+
+Zombie* newZombie(string name);
+void randomChump(string name);
+
+#endif
