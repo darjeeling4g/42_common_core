@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:21:55 by siyang            #+#    #+#             */
-/*   Updated: 2023/07/26 15:33:40 by siyang           ###   ########.fr       */
+/*   Updated: 2023/07/26 18:51:22 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ enum
     NICKNAME,
     PHONENUMBER,
     SECRET,
-
 };
 
 int getNumberInput(string prompt)
@@ -62,15 +61,15 @@ string getStringInput(string prompt)
 
 bool isCompleteField(const string input[7])
 {
-    if (input[FIRSTNAME].empty())
+    if (input[FIRSTNAME].empty() || input[FIRSTNAME].find_first_not_of(' ', 0) == std::string::npos)
         return (false);
-    if (input[LASTNAME].empty())
+    if (input[LASTNAME].empty() || input[LASTNAME].find_first_not_of(' ', 0) == std::string::npos)
         return (false);
-    if (input[NICKNAME].empty())
+    if (input[NICKNAME].empty() || input[NICKNAME].find_first_not_of(' ', 0) == std::string::npos)
         return (false);
-    if (input[PHONENUMBER].empty())
+    if (input[PHONENUMBER].empty() || input[PHONENUMBER].find_first_not_of(' ', 0) == std::string::npos)
         return (false);
-    if (input[SECRET].empty())
+    if (input[SECRET].empty() || input[SECRET].find_first_not_of(' ', 0) == std::string::npos)
         return (false);
     return (true);
 }
@@ -78,7 +77,7 @@ bool isCompleteField(const string input[7])
 int main(void)
 {
     PhoneBook myPhoneBook;
-    string input[7];
+    string input[6];
     int index;
 
     while (true)

@@ -18,14 +18,14 @@ JSON_DIR	:= json
 #	Define the source files													  													 #
 # ---------------------------------------------------------------------------- #
 
-SRCS	:= main.cpp
+SRCS	:= main.cpp Fixed.cpp Point.cpp bsp.cpp
 OBJS	:= $(patsubst %.cpp, $(BUILD_DIR)/$(OBJ_DIR)/%.o, $(SRCS))
 
 # ---------------------------------------------------------------------------- #
 #	Define the target																													   #
 # ---------------------------------------------------------------------------- #
 
-NAME	:= replace
+NAME	:= bsp
 JSON	:= compile_commands.json
 
 # ---------------------------------------------------------------------------- #
@@ -47,7 +47,7 @@ clean:
 		@printf "$(BLUE)[$(NAME)] obj. files$(DEF_COLOR)$(GREEN)	=> Cleaned!\n$(DEF_COLOR)"
 
 fclean:
-		@$(RM) -r $(BUILD_DIR) $(NAME) $(JSON) *.replace
+		@$(RM) -r $(BUILD_DIR) $(NAME) $(JSON)
 		@printf "$(BLUE)[$(NAME)] obj. files$(DEF_COLOR)$(GREEN)	=> Cleaned!\n$(DEF_COLOR)"
 		@printf "$(CYAN)[$(NAME)] exec. files$(DEF_COLOR)$(GREEN)	=> Cleaned!\n$(DEF_COLOR)"
 
