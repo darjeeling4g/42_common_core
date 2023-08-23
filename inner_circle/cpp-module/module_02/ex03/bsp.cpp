@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 20:40:23 by siyang            #+#    #+#             */
-/*   Updated: 2023/08/17 14:56:36 by siyang           ###   ########.fr       */
+/*   Updated: 2023/08/17 18:10:45 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ bool bsp(Point const a, Point const b, Point const c, Point const point)
     }
     if (direction != getDirection(Vec(b - c), Vec(b - point)))
     {
-        std::cout << "3" << std::endl;
         return (false);
     }
     if (direction != getDirection(Vec(b - point), Vec(b - a)))
     {
-        std::cout << "4" << std::endl;
         return (false);
     }
     return (true);
