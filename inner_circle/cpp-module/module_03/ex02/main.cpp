@@ -6,30 +6,20 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:04:00 by siyang            #+#    #+#             */
-/*   Updated: 2023/08/23 18:25:08 by siyang           ###   ########.fr       */
+/*   Updated: 2023/08/24 13:08:01 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ClapTrap.h"
+#include "FragTrap.h"
 
 int main()
 {
-    ClapTrap mk1("MK-1");
-    ClapTrap duplicant(mk1);
+    FragTrap mk3("MK-3");
 
-    mk1.attack("MK-2");
-    mk1.takeDamage(3);
-    mk1.beRepaired(4);
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    std::cout << "===========duplicant==============" << std::endl;
-    duplicant.takeDamage(11);
-    duplicant.beRepaired(11);
+    mk3.attack("MK-3");
+    mk3.takeDamage(10);
+    mk3.beRepaired(15);
+    mk3.highFivesGuys();
+    mk3.takeDamage(100);
+    mk3.beRepaired(50);
 }

@@ -6,30 +6,20 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:04:00 by siyang            #+#    #+#             */
-/*   Updated: 2023/08/23 18:25:08 by siyang           ###   ########.fr       */
+/*   Updated: 2023/08/24 17:46:28 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ClapTrap.h"
+#include "ScavTrap.h"
 
 int main()
 {
-    ClapTrap mk1("MK-1");
-    ClapTrap duplicant(mk1);
+    ScavTrap mk2("MK-2");
 
-    mk1.attack("MK-2");
-    mk1.takeDamage(3);
-    mk1.beRepaired(4);
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    mk1.attack("MK-2");
-    std::cout << "===========duplicant==============" << std::endl;
-    duplicant.takeDamage(11);
-    duplicant.beRepaired(11);
+    mk2.attack("MK-2");
+    mk2.takeDamage(10);
+    mk2.beRepaired(15);
+    mk2.guardGate();
+    mk2.takeDamage(100);
+    mk2.beRepaired(50);
 }
