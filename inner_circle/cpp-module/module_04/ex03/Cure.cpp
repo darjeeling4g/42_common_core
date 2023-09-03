@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.h                                              :+:      :+:    :+:   */
+/*   Cure.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/24 18:55:47 by siyang            #+#    #+#             */
-/*   Updated: 2023/08/31 14:38:58 by siyang           ###   ########.fr       */
+/*   Created: 2023/08/31 16:42:34 by siyang            #+#    #+#             */
+/*   Updated: 2023/09/01 00:56:35 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MODULE04_EX03_DOG_H_
-#define MODULE04_EX03_DOG_H_
+#include "Cure.h"
 
-#include "Animal.h"
-#include "Brain.h"
+Cure::Cure()
+  : AMateria("cure") {}
 
-class Dog : public Animal
+Cure::Cure(const Cure& copy)
+  : AMateria(copy.getType()) {}
+
+Cure& Cure::operator=(const Cure& copy)
 {
-public:
-    Dog();
-    Dog(const Dog& copy);
-    Dog& operator=(const Dog& copy);
-    virtual ~Dog();
-    virtual void makeSound() const;
-    Brain* getBrain() const;
-private:
-    Brain* brain;
-};
+    return (*this);
+}
 
-#endif // !MODULE04_EX03_DOG_H_
+Cure::~Cure() {}
+
+Cure* Cure::clone() const
+{
+    return (new Cure());
+}
+
+void Cure::use(ICharacter& target)
+{
+    std::cout << "* heals " << target.getName() << " 's wounds *" << std::endl;
+}
+

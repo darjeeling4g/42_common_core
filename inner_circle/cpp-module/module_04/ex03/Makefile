@@ -18,7 +18,7 @@ JSON_DIR	:= json
 #	Define the source files													  													 #
 # ---------------------------------------------------------------------------- #
 
-SRCS	:= main.cpp Animal.cpp Dog.cpp Cat.cpp WrongAnimal.cpp WrongCat.cpp Brain.cpp
+SRCS	:= main.cpp AMateria.cpp Ice.cpp Cure.cpp Character.cpp IMateriaSource.cpp MateriaSource.cpp
 OBJS	:= $(patsubst %.cpp, $(BUILD_DIR)/$(OBJ_DIR)/%.o, $(SRCS))
 
 # ---------------------------------------------------------------------------- #

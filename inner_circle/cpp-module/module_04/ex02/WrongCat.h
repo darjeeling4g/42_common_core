@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.h                                              :+:      :+:    :+:   */
+/*   WrongCat.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/24 18:55:47 by siyang            #+#    #+#             */
-/*   Updated: 2023/08/31 14:38:58 by siyang           ###   ########.fr       */
+/*   Created: 2023/08/24 18:55:44 by siyang            #+#    #+#             */
+/*   Updated: 2023/08/29 22:07:33 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MODULE04_EX03_DOG_H_
-#define MODULE04_EX03_DOG_H_
+#ifndef MODULE04_EX00_WRONGCAT_H_
+#define MODULE04_EX00_WRONGCAT_H_
 
-#include "Animal.h"
-#include "Brain.h"
+#include "WrongAnimal.h"
 
-class Dog : public Animal
+class WrongCat : public WrongAnimal
 {
 public:
-    Dog();
-    Dog(const Dog& copy);
-    Dog& operator=(const Dog& copy);
-    virtual ~Dog();
-    virtual void makeSound() const;
-    Brain* getBrain() const;
-private:
-    Brain* brain;
+    WrongCat();
+    WrongCat(const WrongCat& copy);
+    WrongCat& operator=(const WrongCat& copy);
+    ~WrongCat();
+    void makeSound() const;
 };
 
-#endif // !MODULE04_EX03_DOG_H_
+#endif

@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.h                                              :+:      :+:    :+:   */
+/*   Brain.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/24 18:55:47 by siyang            #+#    #+#             */
-/*   Updated: 2023/08/31 14:38:58 by siyang           ###   ########.fr       */
+/*   Created: 2023/08/31 13:29:41 by siyang            #+#    #+#             */
+/*   Updated: 2023/08/31 14:44:53 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MODULE04_EX03_DOG_H_
-#define MODULE04_EX03_DOG_H_
+#ifndef MODULE04_EX01_BRAIN_H_
+#define MODULE04_EX01_BRAIN_H_
 
-#include "Animal.h"
-#include "Brain.h"
+#include <iostream>
+#include <string>
 
-class Dog : public Animal
+class Brain
 {
 public:
-    Dog();
-    Dog(const Dog& copy);
-    Dog& operator=(const Dog& copy);
-    virtual ~Dog();
-    virtual void makeSound() const;
-    Brain* getBrain() const;
+    Brain();
+    Brain(const Brain& copy);
+    Brain& operator=(const Brain& copy);
+    ~Brain();
+    Brain& setFirstIdea(std::string idea);
+    void printFirstIdea() const;
+
 private:
-    Brain* brain;
+    std::string ideas[100];
 };
 
-#endif // !MODULE04_EX03_DOG_H_
+#endif
