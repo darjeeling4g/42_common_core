@@ -13,9 +13,9 @@
 #include "AMateria.h"
 
 AMateria::AMateria(std::string const & type)
-  : type(type) {}
+  : _type(type) {}
 
 std::string const & AMateria::getType() const
 {
-    return (type);
+    return (_type);
 }

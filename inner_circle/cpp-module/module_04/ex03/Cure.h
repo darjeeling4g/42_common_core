@@ -22,7 +22,7 @@ public:
     Cure();
     Cure(const Cure& copy);
     Cure& operator=(const Cure& copy);
-    ~Cure();
+    virtual ~Cure();
     virtual Cure* clone() const;
     virtual void use(ICharacter& target);
 };
