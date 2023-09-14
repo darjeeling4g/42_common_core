@@ -18,14 +18,14 @@ JSON_DIR	:= json
 #	Define the source files													  													 #
 # ---------------------------------------------------------------------------- #
 
-SRCS	:= main.cpp AMateria.cpp Ice.cpp Cure.cpp Character.cpp IMateriaSource.cpp MateriaSource.cpp
+SRCS	:= main.cpp AMateria.cpp Ice.cpp Cure.cpp Character.cpp MateriaSource.cpp
 OBJS	:= $(patsubst %.cpp, $(BUILD_DIR)/$(OBJ_DIR)/%.o, $(SRCS))
 
 # ---------------------------------------------------------------------------- #
 #	Define the target																													   #
 # ---------------------------------------------------------------------------- #
 
-NAME	:= brain
+NAME	:= interface
 JSON	:= compile_commands.json
 
 # ---------------------------------------------------------------------------- #

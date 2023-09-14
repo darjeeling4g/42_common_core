@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 00:58:57 by siyang            #+#    #+#             */
-/*   Updated: 2023/09/01 00:59:33 by siyang           ###   ########.fr       */
+/*   Updated: 2023/09/14 14:33:49 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ Ice::Ice(const Ice& copy)
 
 Ice& Ice::operator=(const Ice& copy)
 {
+    (void)copy;
     return (*this);
 }
 
@@ -32,6 +33,6 @@ Ice* Ice::clone() const
 
 void Ice::use(ICharacter& target)
 {
-    std::cout << "* heals " << target.getName() << " 's wounds *" << std::endl;
+    std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
 }
 
