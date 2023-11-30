@@ -4,3 +4,6 @@
 [submodule "inner_circle/miniRT"]
 	path = inner_circle/miniRT
 	url = git@github.com:darjeeling4g/miniRT.git
+[submodule "inner_circle/webserv"]
+	path = inner_circle/webserv
+	url = git@github.com:ft-webserv/webserv.git
