@@ -6,26 +6,23 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 18:00:38 by siyang            #+#    #+#             */
-/*   Updated: 2023/08/29 21:56:31 by siyang           ###   ########.fr       */
+/*   Updated: 2023/11/22 13:00:52 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Animal.h"
 
-Animal::Animal()
-  : type("Invisible dragon") 
+Animal::Animal() : type("Invisible dragon")
 {
     std::cout << "Animal Default Constructor called" << std::endl;
 }
 
-Animal::Animal(std::string type)
-  : type(type) 
+Animal::Animal(std::string type) : type(type)
 {
     std::cout << "Animal Constructor called" << std::endl;
 }
 
-Animal::Animal(const Animal& copy)
-  : type(copy.type)
+Animal::Animal(const Animal& copy) : type(copy.type)
 {
     std::cout << "Animal Copy Constructor called" << std::endl;
 }

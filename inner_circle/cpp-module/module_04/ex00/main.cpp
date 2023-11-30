@@ -6,13 +6,13 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:04:00 by siyang            #+#    #+#             */
-/*   Updated: 2023/08/29 22:10:58 by siyang           ###   ########.fr       */
+/*   Updated: 2023/11/22 13:01:05 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Animal.h"
-#include "Dog.h"
 #include "Cat.h"
+#include "Dog.h"
 #include "WrongAnimal.h"
 #include "WrongCat.h"
 
@@ -23,7 +23,7 @@ int main()
     const Animal* cat = new Cat();
     std::cout << cat->getType() << " " << std::endl;
     std::cout << dog->getType() << " " << std::endl;
-    cat->makeSound(); //will output the cat sound!
+    cat->makeSound(); // will output the cat sound!
     dog->makeSound();
     animal->makeSound();
 

@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 18:00:42 by siyang            #+#    #+#             */
-/*   Updated: 2023/08/29 21:59:12 by siyang           ###   ########.fr       */
+/*   Updated: 2023/11/22 13:00:47 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 class Animal
 {
-public:
+  public:
     Animal();
     Animal(std::string type);
     Animal(const Animal& copy);
@@ -27,7 +27,7 @@ public:
     virtual void makeSound() const;
     std::string getType() const;
 
-protected:
+  protected:
     Animal& setType(std::string type);
     std::string type;
 };
