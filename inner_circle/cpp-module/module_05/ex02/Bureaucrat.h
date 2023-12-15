@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 13:29:53 by siyang            #+#    #+#             */
-/*   Updated: 2023/12/07 17:06:57 by siyang           ###   ########.fr       */
+/*   Updated: 2023/12/13 16:44:47 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,22 @@
 #include <iostream>
 #include <string>
 
-class Form;
+#include "Grade.h"
+
+class AForm;
 
 class Bureaucrat
 {
   public:
-    Bureaucrat(std::string name, int grade);
+    Bureaucrat(std::string name, Grade grade);
     Bureaucrat(Bureaucrat& copy);
     Bureaucrat& operator=(Bureaucrat& copy);
     ~Bureaucrat() throw();
     const std::string& getName() const throw();
-    const int& getGrade() const throw();
+    const Grade& getGrade() const throw();
     Bureaucrat& increaseGrade();
     Bureaucrat& decreaseGrade();
-    Bureaucrat& signForm(Form& form) throw();
+    Bureaucrat& signForm(AForm& form) throw();
 
   public:
     class GradeTooHighException : public std::exception
@@ -37,7 +39,7 @@ class Bureaucrat
       public:
         virtual const char* what() const throw()
         {
-            return ("Grade is too HIGH");
+            return ("Bureaucrat Grade is too HIGH");
         }
     };
     class GradeTooLowException : public std::exception
@@ -45,13 +47,13 @@ class Bureaucrat
       public:
         virtual const char* what() const throw()
         {
-            return ("Grade is too LOW");
+            return ("Bureaucrat Grade is too LOW");
         };
     };
 
   private:
     const std::string _name;
-    int _grade;
+    Grade _grade;
 };
 
 std::ostream& operator<<(std::ostream& out, Bureaucrat& rhs);

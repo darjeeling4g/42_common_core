@@ -6,23 +6,23 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 15:45:32 by siyang            #+#    #+#             */
-/*   Updated: 2023/12/13 13:50:19 by siyang           ###   ########.fr       */
+/*   Updated: 2023/12/13 17:20:52 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "AForm.h"
 #include "Bureaucrat.h"
-#include "Form.h"
 
 int main()
 {
     try
     {
-        Form form("topSecret", 1, 1);
+        AForm form("topSecret", Grade(1), Grade(1));
 
         std::cout << form;
 
-        Bureaucrat low("low", 150);
-        Bureaucrat high("high", 1);
+        Bureaucrat low("low", Grade(150));
+        Bureaucrat high("high", Grade(1));
 
         std::cout << low << high;
 
@@ -32,7 +32,7 @@ int main()
         low.signForm(form);
 
         // @error case
-        Form wrongForm("wrongForm", 0, 0);
+        AForm wrongForm("wrongForm", Grade(0), Grade(0));
     }
     catch (const std::exception& expn)
     {
