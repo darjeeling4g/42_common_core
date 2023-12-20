@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 12:43:33 by siyang            #+#    #+#             */
-/*   Updated: 2023/12/19 16:23:40 by siyang           ###   ########.fr       */
+/*   Updated: 2023/12/20 15:12:26 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ void RobotomyRequestForm::execute(Bureaucrat const& executor) const
     std::cout << "bzzzzz......";
     for (int i = 1; i < 4; i++)
     {
-        for (int j = 0; j < 5000; j++)
-        {
-        }
         std::cout << " " << i;
     }
     std::cout << " !" << std::endl;

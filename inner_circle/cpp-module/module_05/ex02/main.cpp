@@ -6,33 +6,43 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 15:45:32 by siyang            #+#    #+#             */
-/*   Updated: 2023/12/13 17:20:52 by siyang           ###   ########.fr       */
+/*   Updated: 2023/12/19 17:05:08 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "AForm.h"
 #include "Bureaucrat.h"
+#include "PresidentialPardonForm.h"
+#include "RobotomyRequestForm.h"
+#include "ShrubberyCreationForm.h"
 
 int main()
 {
     try
     {
-        AForm form("topSecret", Grade(1), Grade(1));
-
-        std::cout << form;
-
-        Bureaucrat low("low", Grade(150));
         Bureaucrat high("high", Grade(1));
+        Bureaucrat low("low", Grade(150));
 
-        std::cout << low << high;
+        ShrubberyCreationForm spaceShip("Heart of Gold");
 
-        high.signForm(form);
-        high.signForm(form);
-        std::cout << form;
-        low.signForm(form);
+        low.signForm(spaceShip);
+        low.executeForm(spaceShip);
+        high.signForm(spaceShip);
+        low.executeForm(spaceShip);
+        high.executeForm(spaceShip);
 
-        // @error case
-        AForm wrongForm("wrongForm", Grade(0), Grade(0));
+        RobotomyRequestForm marvin("Marvin");
+        low.signForm(marvin);
+        low.executeForm(marvin);
+        high.signForm(marvin);
+        low.executeForm(marvin);
+        high.executeForm(marvin);
+
+        PresidentialPardonForm ford("Ford Prefect");
+        low.signForm(ford);
+        low.executeForm(ford);
+        high.signForm(ford);
+        low.executeForm(ford);
+        high.executeForm(ford);
     }
     catch (const std::exception& expn)
     {
