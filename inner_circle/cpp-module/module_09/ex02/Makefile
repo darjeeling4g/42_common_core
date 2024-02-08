@@ -18,14 +18,14 @@ JSON_DIR	:= json
 #	Define the source files													   #
 # ---------------------------------------------------------------------------- #
 
-SRCS	:= main.cpp
+SRCS	:= main.cpp PmergeMe.cpp
 OBJS	:= $(patsubst %.cpp, $(BUILD_DIR)/$(OBJ_DIR)/%.o, $(SRCS))
 
 # ---------------------------------------------------------------------------- #
 #	Define the target														   #
 # ---------------------------------------------------------------------------- #
 
-NAME	:= mutantStack
+NAME	:= PmergeMe
 JSON	:= compile_commands.json
 
 # ---------------------------------------------------------------------------- #

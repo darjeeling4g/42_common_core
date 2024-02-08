@@ -5,27 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/05 16:27:42 by siyang            #+#    #+#             */
-/*   Updated: 2024/01/25 20:37:33 by siyang           ###   ########.fr       */
+/*   Created: 2024/01/22 15:28:09 by siyang            #+#    #+#             */
+/*   Updated: 2024/01/31 14:58:37 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.h"
+#include "BitcoinExchange.hpp"
 
-int main()
+int main(int argc, char* argv[])
 {
-    int arr[5] = {0, 1, 2, 3, 4};
+    (void)argv;
+    try
+    {
+        if (argc != 2)
+        {
+            throw BitcoinExchange::FileOpenException();
+        }
+        BitcoinExchange exchanger;
 
-    iter(arr, 5, print);
-    std::cout << std::endl;
-    iter(arr, 5, clear);
-    iter(arr, 5, print);
-    std::cout << std::endl;
-
-    char str[12] = "test string";
-    iter(str, 12, print);
-    std::cout << std::endl;
-    iter(str, 12, clear);
-    iter(str, 12, print);
-    std::cout << std::endl;
+        exchanger.setDataBase("data.csv");
+        exchanger.exchangeFile(argv[1]);
+    }
+    catch (const std::exception& expn)
+    {
+        std::cerr << expn.what() << std::endl;
+    }
 }

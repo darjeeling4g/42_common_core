@@ -5,27 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/05 16:27:42 by siyang            #+#    #+#             */
-/*   Updated: 2024/01/25 20:37:33 by siyang           ###   ########.fr       */
+/*   Created: 2024/01/31 15:14:51 by siyang            #+#    #+#             */
+/*   Updated: 2024/02/08 18:36:36 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iter.h"
+#include "RPN.hpp"
 
-int main()
+int main(int argc, char* argv[])
 {
-    int arr[5] = {0, 1, 2, 3, 4};
-
-    iter(arr, 5, print);
-    std::cout << std::endl;
-    iter(arr, 5, clear);
-    iter(arr, 5, print);
-    std::cout << std::endl;
-
-    char str[12] = "test string";
-    iter(str, 12, print);
-    std::cout << std::endl;
-    iter(str, 12, clear);
-    iter(str, 12, print);
-    std::cout << std::endl;
+    (void)argv;
+    try
+    {
+        if (argc != 2)
+        {
+            throw std::runtime_error("Error");
+        }
+        RPN rpn;
+        rpn.calculate(argv[1]);
+        std::cout << rpn.top() << std::endl;
+    }
+    catch (const std::exception& expn)
+    {
+        std::cerr << expn.what() << std::endl;
+    }
 }
