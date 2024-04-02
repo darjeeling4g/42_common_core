@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 22:32:47 by siyang            #+#    #+#             */
-/*   Updated: 2024/03/08 16:05:47 by yangsiseon       ###   ########.fr       */
+/*   Updated: 2024/03/08 16:27:11 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int main(const int argc, const char* argv[])
         }
         std::cout << std::endl;
         std::cout << "After:  " << vecPmergeMe << std::endl;
-        std::cout << "After:  " << lstPmergeMe << std::endl;
         std::cout << "Time to process a range of "
                   << "elements with std::vector : " << std::showpoint << vecPmergeMe.getTime() << std::noshowpoint
                   << " us" << std::endl;

@@ -6,7 +6,7 @@
 /*   By: siyang <siyang@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 22:32:39 by siyang            #+#    #+#             */
-/*   Updated: 2024/03/08 16:07:57 by yangsiseon       ###   ########.fr       */
+/*   Updated: 2024/03/08 16:32:30 by siyang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ template <typename T> void PmergeMe<T>::makeMainChain(const char** input)
     for (int i = 0; i < _size; i++)
     {
         num1 = std::strtol(input[i], &inputEnd, 10);
-        if (input[i] == inputEnd)
+        if (input[i] == inputEnd || num1 < 0)
         {
             throw std::runtime_error("Error: wrong input");
         }
@@ -126,7 +126,7 @@ template <typename T> void PmergeMe<T>::makeMainChain(const char** input)
             break;
         }
         num2 = std::strtol(input[i], &inputEnd, 10);
-        if (input[i] == inputEnd)
+        if (input[i] == inputEnd || num2 < 0)
         {
             throw std::runtime_error("Error: wrong input");
         }
